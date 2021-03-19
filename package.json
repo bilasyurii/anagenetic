@@ -1,0 +1,31 @@
+{
+  "name": "anagenetic",
+  "version": "1.0.0",
+  "description": "Anagenetic is an artificial life experiment. It is build using Anvas.js minimalistic game engine.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "webpack serve --config webpack.config.js",
+    "build": "webpack --config webpack.config.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bilasyurii/anvas.js.git"
+  },
+  "keywords": [],
+  "author": "Yurii Bilas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bilasyurii/anvas.js/issues"
+  },
+  "homepage": "https://github.com/bilasyurii/anvas.js#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^8.0.0",
+    "html-webpack-plugin": "^5.3.1",
+    "webpack": "^5.27.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  },
+  "dependencies": {}
+}

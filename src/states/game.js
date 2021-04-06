@@ -6,10 +6,36 @@ import RigidBody from '../anvas/physics/rigid-body.js';
 import CircleCollider from '../anvas/physics/colliders/circle-collider.js';
 import AABBCollider from '../anvas/physics/colliders/aabb-collider.js';
 import Vec2 from '../anvas/geom/vec2.js';
+import CellView from '../view/cell/cell-view.js';
+import Cell from '../core/cell/cell.js';
+import World from '../core/world/world.js';
+import WorldView from '../view/world/world-view.js';
+import Genome from '../core/genome/genome.js';
 
 export default class GameState extends State {
   onEnter() {
     const engine = this.engine;
+
+    const world = new World(new Vec2(700, 400));
+    const worldView = new WorldView(world);
+
+    worldView.position.set(100, 100);
+
+    engine.add(worldView);
+
+    const genome = Genome.random();
+    const cell = new Cell();
+    const cellView = new CellView(cell);
+
+    cell.genome = genome;
+    cellView.position.set(100, 100);
+
+    world.addCell(cell);
+    worldView.add(cellView);
+
+    // cellView.rigidBody.addForceXY(-3000, 3000);
+
+    return;
     const group = new Group();
 
     group.position.set(200);

@@ -59,7 +59,7 @@ export default class Collisions {
   static circle2AABB(c, b) {
     const circlePos = c.position;
     const closest = b.clampVec(circlePos);
-    const direction = closest.clone().subVec(circlePos);
+    const direction = circlePos.clone().subVec(closest);
     const depth = direction.length;
 
     if (depth >= c.radius) {

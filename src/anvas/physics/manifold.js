@@ -47,7 +47,7 @@ export default class Manifold {
     const invMass1 = rb1.invMass;
     const invMass2 = rb2.invMass;
     const data = this.data;
-    const correction = (Math2.max(data.depth - 0.05, 0) / (invMass1 + invMass2)) * 0.4;
+    const correction = (Math2.max(data.depth - 0.05, 0) / (invMass1 + invMass2)) * 0.01;
     const normal = data.normal;
     const correctedNormalX = normal.x * correction;
     const correctedNormalY = normal.y * correction;

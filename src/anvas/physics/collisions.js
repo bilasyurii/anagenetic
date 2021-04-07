@@ -13,13 +13,13 @@ export default class Collisions {
       if (b.isCircle === true) {
         return Collisions.circle2circle(a, b);
       } else if (b.isAABB === true) {
-        return Collisions.circle2AABB(a, b);
+        return Collisions.circle2AABB(a, b, false);
       } else {
         Debug.fail('Unknown collider');
       }
     } else if (a.isAABB === true) {
       if (b.isCircle === true) {
-        return Collisions.circle2AABB(b, a);
+        return Collisions.circle2AABB(b, a, true);
       } else {
         Debug.fail('Unknown collider');
       }
@@ -56,10 +56,10 @@ export default class Collisions {
       .addContact(contact);
   }
 
-  static circle2AABB(c, b) {
+  static circle2AABB(c, b, negate) {
     const circlePos = c.position;
     const closest = b.clampVec(circlePos);
-    const direction = circlePos.clone().subVec(closest);
+    const direction = closest.clone().subVec(circlePos);
     const depth = direction.length;
 
     if (depth >= c.radius) {
@@ -67,6 +67,10 @@ export default class Collisions {
     }
 
     direction.normalize();
+
+    if (negate === true) {
+      direction.negate();
+    }
 
     return new CollisionData(direction, depth)
       .addContact(closest);

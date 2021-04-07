@@ -24,7 +24,7 @@ export default class Engine {
     this.physics = null;
     this.state = null;
 
-    this.version = '0.2.0';
+    this.version = '0.2.1';
     this.elapsed = 0;
     this.elapsedMS = 0;
     this.physicsElapsed = 0;

@@ -1,5 +1,4 @@
-import Math2 from '../utils/math2.js';
-import CollisionPair from './collision-pair.js';
+import Manifold from './manifold.js';
 import Collisions from './collisions.js';
 
 export default class Physics {
@@ -10,7 +9,6 @@ export default class Physics {
     this._dt = engine.dt;
     this._forceGenerators = [];
     this._rigidBodies = [];
-    this.__applyImpulse = this._applyImpulse.bind(this);
   }
 
   addRigidBody(body) {
@@ -46,7 +44,7 @@ export default class Physics {
           const collision = Collisions.checkCollision(colliderI, colliderJ);
 
           if (collision.isColliding === true) {
-            collisions.push(new CollisionPair(rbI, rbJ, collision));
+            collisions.push(new Manifold(rbI, rbJ, collision));
           }
         }
       }
@@ -65,26 +63,25 @@ export default class Physics {
     // resolving collisions
     const iterations = this.solveIterations;
     const collisionsCount = collisions.length;
-    const applyImpulse = this.__applyImpulse;
 
     for (let s = 0; s < iterations; ++s) {
       for (let i = 0; i < collisionsCount; ++i) {
-        const collision = collisions[i];
-        const rb1 = collision.rb1;
-        const rb2 = collision.rb2;
-        const collisionData = collision.data;
-        const contactsCount = collisionData.contacts.length;
+        const manifold = collisions[i];
+        const contactsCount = manifold.data.contacts.length;
 
         for (let c = 0; c < contactsCount; ++c) {
-          applyImpulse(rb1, rb2, collisionData);
+          manifold.applyImpulse();
         }
       }
     }
 
     // updating bodies
-
     for (let i = 0; i < bodiesCount; ++i) {
       bodies[i].fixedUpdate(dt);
+    }
+
+    for (let i = 0; i < collisionsCount; ++i) {
+      collisions[i].positionalCorrection();
     }
   }
 
@@ -104,36 +101,5 @@ export default class Physics {
     for (let i = 0; i < count; ++i) {
       bodies[i].postUpdate();
     }
-  }
-
-  _applyImpulse(rb1, rb2, data) {
-    const invMass1 = rb1.invMass;
-    const invMass2 = rb2.invMass;
-    const invMasses = invMass1 + invMass2;
-
-    const relativeVelocity = rb2.velocity.clone().subVec(rb1.velocity);
-    const relativeNormal = data.normal;
-    const dot = relativeVelocity.dot(relativeNormal);
-
-    if (dot > 0) {
-      return;
-    }
-
-    const e = Math2.min(rb1.material.restitution, rb2.material.restitution);
-    let j = (-1 - e) * dot / invMasses;
-
-    if (j !== 0) {
-      const contactsCount = data.contacts.length;
-  
-      if (contactsCount !== 0) {
-        j /= contactsCount;
-      }
-    }
-
-    const impulseX = relativeNormal.x * j;
-    const impulseY = relativeNormal.y * j;
-
-    rb1.velocity.sub(impulseX * invMass1, impulseY * invMass1);
-    rb2.velocity.add(impulseX * invMass2, impulseY * invMass2);
   }
 }

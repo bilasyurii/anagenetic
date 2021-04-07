@@ -73,7 +73,7 @@ export default class Cell {
   }
 
   move(angle) {
-    const speed = 400;
+    const speed = 100;
     const x = Math.cos(angle) * speed;
     const y = Math.sin(angle) * speed;
 

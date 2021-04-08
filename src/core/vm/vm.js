@@ -13,6 +13,7 @@ import LessRRCommand from './commands/conditional/less-rr-command';
 import LessRVCommand from './commands/conditional/less-rv-command';
 import GreaterRRCommand from './commands/conditional/greater-rr-command';
 import GreaterRVCommand from './commands/conditional/greater-rv-command';
+import IfCommand from './commands/conditional/if-command';
 
 export default class VM {
   constructor(cell) {
@@ -83,6 +84,7 @@ export default class VM {
       LessRVCommand,
       GreaterRRCommand,
       GreaterRVCommand,
+      IfCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

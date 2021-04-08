@@ -9,6 +9,7 @@ import JumpCommand from './commands/control-commands/jump-command';
 import NoopCommand from './commands/control-commands/noop-command';
 import MoveCommand from './commands/cell-commands/move-command';
 import SetCommand from './commands/registry-commands/set-command';
+import CopyCommand from './commands/registry-commands/copy-command';
 import LessRRCommand from './commands/conditional/less-rr-command';
 import LessRVCommand from './commands/conditional/less-rv-command';
 import GreaterRRCommand from './commands/conditional/greater-rr-command';
@@ -85,6 +86,7 @@ export default class VM {
       GreaterRRCommand,
       GreaterRVCommand,
       IfCommand,
+      CopyCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

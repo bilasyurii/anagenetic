@@ -7,6 +7,5 @@ export default class NoopCommand {
 
   static execute(context) {
     context.iterator.next();
-    // Do nothing here
   }
 }

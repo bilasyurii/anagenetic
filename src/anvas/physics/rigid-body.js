@@ -13,6 +13,7 @@ export default class RigidBody {
 
     this.position = new Vec2();
     this.velocity = new Vec2();
+    this.drag = 0.0;
     this.collider = null;
 
     this._force = new Vec2();
@@ -63,6 +64,7 @@ export default class RigidBody {
     const velocity = this.velocity;
 
     velocity.addVec(force);
+    velocity.mul(1 - dt * this.drag);
     this.position.add(velocity.x * dt, velocity.y * dt);
 
     force.setZero();

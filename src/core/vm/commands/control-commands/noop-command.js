@@ -1,4 +1,4 @@
-import Debug from '../../../anvas/debug/debug';
+import Debug from '../../../../anvas/debug/debug';
 
 export default class NoopCommand {
   constructor() {

@@ -1,7 +1,7 @@
-import Debug from '../../../anvas/debug/debug';
-import Gene from '../../genome/gene';
+import Debug from '../../../../anvas/debug/debug';
+import Gene from '../../../genome/gene';
 
-export default class SubCommand {
+export default class AddCommand {
   constructor() {
     Debug.staticClass();
   }
@@ -26,10 +26,10 @@ export default class SubCommand {
       return;
     }
 
-    let result = leftGene.value - rightGene.value;
+    let result = leftGene.value + rightGene.value;
 
-    if (result < 0) {
-      result += Gene.MAX_VAL;
+    if (result > Gene.MAX_VAL) {
+      result -= Gene.MAX_VAL;
     }
 
     context.registries.set(targetGene.value, result);

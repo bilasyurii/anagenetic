@@ -1,5 +1,5 @@
-import Debug from '../../../anvas/debug/debug';
-import VMUtils from '../../utils/vm-utils';
+import Debug from '../../../../anvas/debug/debug';
+import VMUtils from '../../../utils/vm-utils';
 
 export default class MoveCommand {
   constructor() {

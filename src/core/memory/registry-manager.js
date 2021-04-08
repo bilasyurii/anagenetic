@@ -17,6 +17,10 @@ export default class RegistryManager {
     }
   }
 
+  get(registryCode) {
+    return this._getRegistry(registryCode);
+  }
+
   _init() {
     this._initRegistries();
     this._initLookup();

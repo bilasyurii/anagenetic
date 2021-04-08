@@ -2,10 +2,13 @@ import Gene from '../genome/gene';
 import CommandContext from './command-context';
 import AddCommand from './commands/add-command';
 import EndCommand from './commands/end-command';
+import EqualsRRCommand from './commands/equals-rr-command';
+import EqualsRVCommand from './commands/equals-rv-command';
 import JumpCommand from './commands/jump-command';
 import MoveCommand from './commands/move-command';
 import NoopCommand from './commands/noop-command';
 import SetCommand from './commands/set-command';
+import SubCommand from './commands/sub-command';
 
 export default class VM {
   constructor(cell) {
@@ -69,6 +72,9 @@ export default class VM {
       EndCommand,
       SetCommand,
       AddCommand,
+      SubCommand,
+      EqualsRRCommand,
+      EqualsRVCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

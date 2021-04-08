@@ -9,6 +9,10 @@ import JumpCommand from './commands/control-commands/jump-command';
 import NoopCommand from './commands/control-commands/noop-command';
 import MoveCommand from './commands/cell-commands/move-command';
 import SetCommand from './commands/registry-commands/set-command';
+import LessRRCommand from './commands/conditional/less-rr-command';
+import LessRVCommand from './commands/conditional/less-rv-command';
+import GreaterRRCommand from './commands/conditional/greater-rr-command';
+import GreaterRVCommand from './commands/conditional/greater-rv-command';
 
 export default class VM {
   constructor(cell) {
@@ -75,6 +79,10 @@ export default class VM {
       SubCommand,
       EqualsRRCommand,
       EqualsRVCommand,
+      LessRRCommand,
+      LessRVCommand,
+      GreaterRRCommand,
+      GreaterRVCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

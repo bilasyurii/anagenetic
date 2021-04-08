@@ -33,8 +33,6 @@ export default class GameState extends State {
     world.addCell(cell);
     worldView.add(cellView);
 
-    // cellView.rigidBody.addForceXY(-3000, 3000);
-
     return;
     const group = new Group();
 

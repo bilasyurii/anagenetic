@@ -6,7 +6,11 @@ export default class JumpCommand {
   }
 
   static execute(context) {
-    console.log('jump');
-    context.iterator.next();
+    const iterator = context.iterator;
+    const distance = iterator.next().current;
+
+    if (distance !== undefined) {
+      iterator.advance(distance);
+    }
   }
 }

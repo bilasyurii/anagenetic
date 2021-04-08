@@ -1,8 +1,11 @@
+import Gene from '../genome/gene';
 import CommandContext from './command-context';
+import AddCommand from './commands/add-command';
 import EndCommand from './commands/end-command';
 import JumpCommand from './commands/jump-command';
 import MoveCommand from './commands/move-command';
 import NoopCommand from './commands/noop-command';
+import SetCommand from './commands/set-command';
 
 export default class VM {
   constructor(cell) {
@@ -59,11 +62,13 @@ export default class VM {
       NoopCommand,
     ];
 
-    const count = 255;
+    const count = Gene.VARIETY;
     const commands = [
       MoveCommand,
       JumpCommand,
       EndCommand,
+      SetCommand,
+      AddCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

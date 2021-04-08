@@ -8,10 +8,11 @@ export default class Gene {
   }
 
   static random() {
-    const value = ~~(Math.random() * Gene.MAX_VAL);
+    const value = ~~(Math.random() * Gene.VARIETY);
 
     return new Gene(value);
   }
 }
 
-Gene.MAX_VAL = 256;
+Gene.VARIETY = 256;
+Gene.MAX_VAL = Gene.VARIETY - 1;

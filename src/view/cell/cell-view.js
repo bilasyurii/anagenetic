@@ -38,7 +38,7 @@ export default class CellView extends Group {
   _initBody() {
     const body = this.rigidBody = new RigidBody(this);
 
-    body.drag = 0.2;
+    body.drag = 0.5;
     body.collider = new CircleCollider(this.cell.radius);
 
     this.engine.physics.addRigidBody(body);

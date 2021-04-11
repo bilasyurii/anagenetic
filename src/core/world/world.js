@@ -2,10 +2,12 @@ import Bounds from '../../anvas/geom/bounds';
 import Cell from '../cell/cell';
 
 export default class World {
-  constructor(size) {
+  constructor(spacePartitioning, size) {
     this.size = size;
 
     this.updateInterval = 20;
+    
+    this._spacePartitioning = spacePartitioning;
 
     this._timeToUpdate = 1;
     this._walls = [];
@@ -41,6 +43,10 @@ export default class World {
     this._walls.forEach(callback);
 
     return this;
+  }
+
+  getTarget(position, angle) {
+    return this._spacePartitioning.getObjects();
   }
 
   _initWalls() {

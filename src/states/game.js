@@ -15,12 +15,14 @@ import ChemicalElement from '../core/chemicals/chemical-element.js';
 import ChemicalView from '../view/chemical/chemical-view.js';
 import Chemical from '../core/chemicals/chemical.js';
 import ChemicalViewFactory from '../view/chemical/chemical-view-factory.js';
+import SpacePartitioning from '../core/world/space-partitioning.js';
 
 export default class GameState extends State {
   onEnter() {
     const engine = this.engine;
 
-    const world = new World(new Vec2(700, 400));
+    const spacePartitioning = new SpacePartitioning(engine);
+    const world = new World(spacePartitioning, new Vec2(700, 400));
     const worldView = new WorldView(world);
 
     worldView.position.set(100, 100);

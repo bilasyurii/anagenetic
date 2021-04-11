@@ -92,7 +92,11 @@ export default class Cell {
   }
 
   eat(angle) {
-    console.log(angle);
+    const target = this.world.getTarget(this, angle);
+
+    if (target !== null) {
+      console.log(target);
+    }
   }
 
   _init() {

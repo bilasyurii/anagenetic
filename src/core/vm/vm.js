@@ -74,21 +74,21 @@ export default class VM {
 
     const count = Gene.VARIETY;
     const commands = [
-      MoveCommand,
+      // MoveCommand,
       MoveRCommand,
-      JumpCommand,
-      EndCommand,
-      SetCommand,
-      AddCommand,
-      SubCommand,
-      EqualsRRCommand,
-      EqualsRVCommand,
-      LessRRCommand,
-      LessRVCommand,
-      GreaterRRCommand,
-      GreaterRVCommand,
-      IfCommand,
-      CopyCommand,
+      // JumpCommand,
+      // EndCommand,
+      // SetCommand,
+      // AddCommand,
+      // SubCommand,
+      // EqualsRRCommand,
+      // EqualsRVCommand,
+      // LessRRCommand,
+      // LessRVCommand,
+      // GreaterRRCommand,
+      // GreaterRVCommand,
+      // IfCommand,
+      // CopyCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

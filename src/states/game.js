@@ -13,6 +13,8 @@ import WorldView from '../view/world/world-view.js';
 import Genome from '../core/genome/genome.js';
 import ChemicalElement from '../core/chemicals/chemical-element.js';
 import ChemicalView from '../view/chemical/chemical-view.js';
+import Chemical from '../core/chemicals/chemical.js';
+import ChemicalViewFactory from '../view/chemical/chemical-view-factory.js';
 
 export default class GameState extends State {
   onEnter() {
@@ -29,8 +31,10 @@ export default class GameState extends State {
     const cell = new Cell();
     const cellView = new CellView(cell);
 
-    const chemical = new ChemicalElement('test');
-    const chemicalView = new ChemicalView(chemical);
+    const element = new ChemicalElement('test', 'rgb(0, 255, 0)');
+    const chemical = new Chemical(element, 10);
+    const chemicalViewFactory = new ChemicalViewFactory(engine);
+    const chemicalView = chemicalViewFactory.create(chemical);
 
     cell.genome = genome;
     cellView.position.set(100, 100);

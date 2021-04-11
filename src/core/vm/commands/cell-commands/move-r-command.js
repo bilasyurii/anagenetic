@@ -1,7 +1,7 @@
 import Debug from '../../../../anvas/debug/debug';
 import VMUtils from '../../../utils/vm-utils';
 
-export default class MoveCommand {
+export default class MoveRCommand {
   constructor() {
     Debug.staticClass();
   }
@@ -14,7 +14,7 @@ export default class MoveCommand {
       return;
     }
 
-    const angle = angleGene.value;
+    const angle = context.registries.get(angleGene.value).value;
 
     context.cell.move(angle * VMUtils.VM2RAD);
 

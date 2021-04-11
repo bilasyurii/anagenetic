@@ -1,5 +1,5 @@
-import Gene from "../genome/gene";
-import Registry from "./registry";
+import Gene from '../genome/gene';
+import Registry from './registry';
 
 export default class RegistryManager {
   constructor() {

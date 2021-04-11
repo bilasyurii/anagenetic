@@ -20,7 +20,7 @@ export default class CopyCommand {
     }
 
     const registries = context.registries;
-    const sourceValue = registries.get(sourceGene.value);
+    const sourceValue = registries.get(sourceGene.value).value;
 
     registries.set(destinationGene.value, sourceValue);
 

@@ -6,7 +6,6 @@ export default class EndCommand {
   }
 
   static execute(context) {
-    console.log('end');
     context.iterator.advance(Infinity);
   }
 }

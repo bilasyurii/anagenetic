@@ -26,8 +26,8 @@ export default class ConditionalCommandUtils {
     }
 
     const registries = context.registries;
-    const leftValue = registries.get(leftGene.value);
-    const rightValue = registries.get(rightGene.value);
+    const leftValue = registries.get(leftGene.value).value;
+    const rightValue = registries.get(rightGene.value).value;
 
     iterator.next();
 

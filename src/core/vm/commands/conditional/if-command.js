@@ -18,7 +18,7 @@ export default class IfCommand {
       return;
     }
 
-    const conditionValue = context.registries.get(conditionGene.value);
+    const conditionValue = context.registries.get(conditionGene.value).value;
 
     iterator.next();
 

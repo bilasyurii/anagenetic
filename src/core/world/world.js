@@ -8,12 +8,19 @@ export default class World {
     this._timeToUpdate = 1;
     this._walls = [];
     this._cells = [];
+    this._chemicals = [];
 
     this._initWalls();
   }
 
   addCell(cell) {
     this._cells.push(cell);
+
+    return this;
+  }
+
+  addChemical(chemical) {
+    this._chemicals.push(chemical);
 
     return this;
   }

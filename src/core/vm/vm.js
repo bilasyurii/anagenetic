@@ -8,6 +8,7 @@ import EndCommand from './commands/control-commands/end-command';
 import JumpCommand from './commands/control-commands/jump-command';
 import NoopCommand from './commands/control-commands/noop-command';
 import MoveCommand from './commands/cell-commands/move-command';
+import MoveRCommand from './commands/cell-commands/move-r-command';
 import SetCommand from './commands/registry-commands/set-command';
 import CopyCommand from './commands/registry-commands/copy-command';
 import LessRRCommand from './commands/conditional/less-rr-command';
@@ -74,6 +75,7 @@ export default class VM {
     const count = Gene.VARIETY;
     const commands = [
       MoveCommand,
+      MoveRCommand,
       JumpCommand,
       EndCommand,
       SetCommand,

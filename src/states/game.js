@@ -11,6 +11,8 @@ import Cell from '../core/cell/cell.js';
 import World from '../core/world/world.js';
 import WorldView from '../view/world/world-view.js';
 import Genome from '../core/genome/genome.js';
+import ChemicalElement from '../core/chemicals/chemical-element.js';
+import ChemicalView from '../view/chemical/chemical-view.js';
 
 export default class GameState extends State {
   onEnter() {
@@ -27,11 +29,17 @@ export default class GameState extends State {
     const cell = new Cell();
     const cellView = new CellView(cell);
 
+    const chemical = new ChemicalElement('test');
+    const chemicalView = new ChemicalView(chemical);
+
     cell.genome = genome;
     cellView.position.set(100, 100);
+    chemicalView.position.set(300, 100);
 
     world.addCell(cell);
     worldView.add(cellView);
+    world.addChemical(chemical);
+    worldView.add(chemicalView);
 
     return;
     const group = new Group();

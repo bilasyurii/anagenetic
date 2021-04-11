@@ -27,20 +27,22 @@ export default class GameState extends State {
 
     engine.add(worldView);
 
-    const genome = Genome.random();
-    const cell = new Cell();
+    const cell = world.createCell();
+
+    cell.genome = Genome.random();
+    cell.position.set(100, 100);
+
     const cellView = new CellView(cell);
+
+    cell.view = cellView;
 
     const element = new ChemicalElement('test', 'rgb(0, 255, 0)');
     const chemical = new Chemical(element, 10);
     const chemicalViewFactory = new ChemicalViewFactory(engine);
     const chemicalView = chemicalViewFactory.create(chemical);
 
-    cell.genome = genome;
-    cellView.position.set(100, 100);
     chemicalView.position.set(300, 100);
 
-    world.addCell(cell);
     worldView.add(cellView);
     world.addChemical(chemical);
     worldView.add(chemicalView);

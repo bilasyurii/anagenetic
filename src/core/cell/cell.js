@@ -6,9 +6,15 @@ import RegistryManager from '../memory/registry-manager';
 import VM from '../vm/vm';
 
 export default class Cell {
-  constructor() {
-    this.onRadiusChanged = new Observable();
+  constructor(world) {
+    this.world = world;
+
+    this.position = new Vec2();
+    this.velocity = new Vec2();
     this.force = new Vec2();
+    this.onRadiusChanged = new Observable();
+
+    this.view = null;
 
     this._radius = 0;
     this._rotation = 0;
@@ -67,17 +73,26 @@ export default class Cell {
     return this._vm;
   }
 
-  update() {
+  preUpdate() {
+    this.view.preUpdate();
     this.force.setZero();
+  }
+
+  update() {
     this._vm.execute();
+    this.view.update();
   }
 
   move(angle) {
-    const speed = 100;
+    const speed = 50;
     const x = Math.cos(angle) * speed;
     const y = Math.sin(angle) * speed;
 
     this.force.add(x, y);
+  }
+
+  eat(angle) {
+    console.log(angle);
   }
 
   _init() {

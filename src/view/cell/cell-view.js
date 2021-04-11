@@ -10,9 +10,19 @@ export default class CellView extends Group {
     this.cell = cell;
 
     this._view = null;
+
+    this.position.copyFrom(cell.position);
   }
 
-  fixedUpdate() {
+  preUpdate() {
+    const cell = this.cell;
+    const body = this.rigidBody;
+
+    cell.position.copyFrom(body.position);
+    cell.velocity.copyFrom(body.velocity);
+  }
+
+  update() {
     this.rigidBody.addForce(this.cell.force);
   }
 

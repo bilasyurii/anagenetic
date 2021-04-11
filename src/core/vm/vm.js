@@ -16,6 +16,7 @@ import LessRVCommand from './commands/conditional/less-rv-command';
 import GreaterRRCommand from './commands/conditional/greater-rr-command';
 import GreaterRVCommand from './commands/conditional/greater-rv-command';
 import IfCommand from './commands/conditional/if-command';
+import EatRCommand from './commands/cell-commands/eat-r-command';
 
 export default class VM {
   constructor(cell) {
@@ -52,8 +53,6 @@ export default class VM {
       const command = lookup[value];
 
       command.execute(context);
-
-      break;
     }
   }
 
@@ -89,6 +88,7 @@ export default class VM {
       // GreaterRVCommand,
       // IfCommand,
       // CopyCommand,
+      EatRCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

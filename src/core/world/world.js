@@ -1,10 +1,12 @@
 import Bounds from '../../anvas/geom/bounds';
+import Cell from '../cell/cell';
 
 export default class World {
   constructor(size) {
     this.size = size;
 
     this.updateInterval = 20;
+
     this._timeToUpdate = 1;
     this._walls = [];
     this._cells = [];
@@ -13,10 +15,12 @@ export default class World {
     this._initWalls();
   }
 
-  addCell(cell) {
+  createCell() {
+    const cell = new Cell(this);
+
     this._cells.push(cell);
 
-    return this;
+    return cell;
   }
 
   addChemical(chemical) {
@@ -53,6 +57,10 @@ export default class World {
   _updateCells() {
     const cells = this._cells;
     const count = cells.length;
+
+    for (let i = 0; i < count; ++i) {
+      cells[i].preUpdate();
+    }
 
     for (let i = 0; i < count; ++i) {
       cells[i].update();

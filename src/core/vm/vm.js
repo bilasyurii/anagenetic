@@ -17,6 +17,8 @@ import GreaterRRCommand from './commands/conditional/greater-rr-command';
 import GreaterRVCommand from './commands/conditional/greater-rv-command';
 import IfCommand from './commands/conditional/if-command';
 import EatRCommand from './commands/cell-commands/eat-r-command';
+import StoreCommand from './commands/registry-commands/store-command';
+import GetCommand from './commands/registry-commands/get-command';
 
 export default class VM {
   constructor(cell) {
@@ -73,22 +75,24 @@ export default class VM {
 
     const count = Gene.VARIETY;
     const commands = [
-      // MoveCommand,
+      MoveCommand,
       MoveRCommand,
-      // JumpCommand,
-      // EndCommand,
-      // SetCommand,
-      // AddCommand,
-      // SubCommand,
-      // EqualsRRCommand,
-      // EqualsRVCommand,
-      // LessRRCommand,
-      // LessRVCommand,
-      // GreaterRRCommand,
-      // GreaterRVCommand,
-      // IfCommand,
-      // CopyCommand,
+      JumpCommand,
+      EndCommand,
+      SetCommand,
+      AddCommand,
+      SubCommand,
+      EqualsRRCommand,
+      EqualsRVCommand,
+      LessRRCommand,
+      LessRVCommand,
+      GreaterRRCommand,
+      GreaterRVCommand,
+      IfCommand,
+      CopyCommand,
       EatRCommand,
+      StoreCommand,
+      GetCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

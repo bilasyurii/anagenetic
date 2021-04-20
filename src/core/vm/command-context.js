@@ -3,5 +3,6 @@ export default class CommandContext {
     this.cell = cell;
     this.iterator = iterator;
     this.registries = cell.registries;
+    this.memory = cell.memory;
   }
 }

@@ -1,3 +1,4 @@
+import Observable from '../events/observable.js';
 import Vec2 from '../geom/vec2.js';
 import Material from './material.js';
 
@@ -11,9 +12,12 @@ export default class RigidBody {
       this.material = material;
     }
 
+    this.onPositionChanged = new Observable();
     this.position = new Vec2();
+    this.previousPosition = new Vec2();
     this.velocity = new Vec2();
     this.drag = 0.0;
+    this.id = RigidBody._id++;
     this.collider = null;
 
     this._force = new Vec2();
@@ -65,7 +69,11 @@ export default class RigidBody {
 
     velocity.addVec(force);
     velocity.mul(1 - dt * this.drag);
-    this.position.add(velocity.x * dt, velocity.y * dt);
+
+    const position = this.position;
+
+    this.previousPosition.copyFrom(position)
+    position.add(velocity.x * dt, velocity.y * dt);
 
     force.setZero();
   }
@@ -81,7 +89,10 @@ export default class RigidBody {
     const collider = this.collider;
 
     if (collider !== null) {
-      collider.updateTransform(position.x, position.y);
+      if (this.previousPosition.equals(position) === false) {
+        collider.updateTransform(position);
+        this.onPositionChanged.post(this);
+      }
     }
   }
 
@@ -95,3 +106,5 @@ export default class RigidBody {
     }
   }
 }
+
+RigidBody._id = 0;

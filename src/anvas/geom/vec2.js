@@ -479,3 +479,4 @@ Vec2.left = new Vec2(-1, 0);
 Vec2.right = new Vec2(1, 0);
 Vec2.up = new Vec2(0, -1);
 Vec2.down = new Vec2(0, 1);
+Vec2.temp = new Vec2();

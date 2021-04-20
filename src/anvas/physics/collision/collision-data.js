@@ -1,25 +1,56 @@
-import Debug from '../debug/debug.js';
-import Vec2 from '../geom/vec2.js';
-import Math2 from '../utils/math2.js';
-import CollisionData from './collision-data.js';
+import Debug from '../../debug/debug.js';
+import Vec2 from '../../geom/vec2.js';
+import Math2 from '../../utils/math2.js';
 
-export default class Collisions {
-  constructor() {
-    Debug.staticClass();
+export default class CollisionData {
+  constructor(normal, depth) {
+    if (normal === undefined) {
+      this._normal = new Vec2();
+      this._depth = 0;
+      this._isColliding = false;
+    } else {
+      this._normal = normal;
+      this._depth = depth;
+      this._isColliding = true;
+    }
+
+    this._contacts = [];
   }
 
-  static checkCollision(a, b) {
+  get isColliding() {
+    return this._isColliding;
+  }
+
+  get normal() {
+    return this._normal;
+  }
+
+  get depth() {
+    return this._depth;
+  }
+
+  get contacts() {
+    return this._contacts;
+  }
+
+  addContact(contact) {
+    this._contacts.push(contact);
+
+    return this;
+  }
+
+  static getFromColliders(a, b) {
     if (a.isCircle === true) {
       if (b.isCircle === true) {
-        return Collisions.circle2circle(a, b);
+        return CollisionData.circle2circle(a, b);
       } else if (b.isAABB === true) {
-        return Collisions.circle2AABB(a, b, false);
+        return CollisionData.circle2AABB(a, b, false);
       } else {
         Debug.fail('Unknown collider');
       }
     } else if (a.isAABB === true) {
       if (b.isCircle === true) {
-        return Collisions.circle2AABB(b, a, true);
+        return CollisionData.circle2AABB(b, a, true);
       } else {
         Debug.fail('Unknown collider');
       }

@@ -1,4 +1,5 @@
 import Math2 from '../utils/math2.js';
+import Bounds from './bounds.js';
 import Vec2 from './vec2.js';
 
 export default class Circle {
@@ -141,5 +142,24 @@ export default class Circle {
     this.x += (to.x - this.x) * time;
     this.y += (to.y - this.y) * time;
     this.radius += (to.radius - this.radius) * time;
+
+    return this;
+  }
+
+  getBounds(destination) {
+    const bounds = (destination === undefined ? new Bounds() : destination);
+
+    const x = this.x;
+    const y = this.y;
+    const radius = this.radius;
+
+    bounds.minX = x - radius;
+    bounds.minY = y - radius;
+    bounds.maxX = x + radius;
+    bounds.maxY = y + radius;
+
+    return bounds;
   }
 }
+
+Circle.temp = new Circle();

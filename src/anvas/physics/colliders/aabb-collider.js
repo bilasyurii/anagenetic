@@ -1,13 +1,19 @@
 import Collider from './collider.js';
 import Vec2 from '../../geom/vec2.js';
 import Math2 from '../../utils/math2.js';
+import ObservableVec2 from '../../geom/observable-vec2.js';
 
 export default class AABBCollider extends Collider {
   constructor(halfSize, offset) {
     super(offset);
 
-    this.halfSize = (halfSize === undefined ? new Vec2(100, 100) : halfSize);
     this.isAABB = true;
+
+    this.halfSize = new ObservableVec2(this._onBoundsDirty, this, 100, 100);
+
+    if (halfSize !== undefined) {
+      this.halfSize.copyFrom(halfSize);
+    }
   }
 
   clampVec(vec) {
@@ -22,6 +28,18 @@ export default class AABBCollider extends Collider {
     return new Vec2(
       Math2.max(x - hw, Math2.min(x + hw, vec.x)),
       Math2.max(y - hh, Math2.min(y + hh, vec.y))
+    );
+  }
+
+  _updateBounds() {
+    const position = this.position;
+    const halfSize = this.halfSize;
+
+    this._bounds.set(
+      position.x - halfSize.x,
+      position.y - halfSize.y,
+      position.x + halfSize.x,
+      position.y + halfSize.y
     );
   }
 }

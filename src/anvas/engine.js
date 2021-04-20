@@ -10,6 +10,7 @@ import TimeManager from './time/timer-manager.js';
 import CanvasPool from './rendering/canvas-pool.js';
 import Input from './input/input.js';
 import Physics from './physics/physics.js';
+import NoPartitioning from './physics/space-partitioning/no-partitioning.js';
 
 export default class Engine {
   constructor() {
@@ -24,7 +25,7 @@ export default class Engine {
     this.physics = null;
     this.state = null;
 
-    this.version = '0.2.2';
+    this.version = '0.3.0';
     this.elapsed = 0;
     this.elapsedMS = 0;
     this.physicsElapsed = 0;
@@ -45,6 +46,7 @@ export default class Engine {
     this._startingState = null;
     this._helloMessageEnabled = true;
     this._physicsSolveIterations = 5;
+    this._spacePartitioning = null;
   }
 
   get canvas() {
@@ -99,6 +101,12 @@ export default class Engine {
     return this;
   }
 
+  setSpacePartitioning(partitioning) {
+    this._spacePartitioning = partitioning;
+
+    return this;
+  }
+
   start() {
     this._showHello();
 
@@ -116,6 +124,7 @@ export default class Engine {
     this._initLoader();
     this._initInput();
     this._initObjectsFactory();
+    this._initSpacePartitioning();
     this._initPhysics();
     this._initStartingState();
 
@@ -153,7 +162,7 @@ export default class Engine {
 
   _configureHtml() {
     const html = document.getElementsByTagName('html')[0];
-    
+
     Debug.defined(html);
 
     this._configureStretchStyles(html);
@@ -232,8 +241,14 @@ export default class Engine {
     this.create = new ObjectsFactory(this);
   }
 
+  _initSpacePartitioning() {
+    if (this._spacePartitioning === null) {
+      this._spacePartitioning = new NoPartitioning();
+    }
+  }
+
   _initPhysics() {
-    this.physics = new Physics(this, this._physicsSolveIterations);
+    this.physics = new Physics(this, this._physicsSolveIterations, this._spacePartitioning);
   }
 
   _initStartingState() {

@@ -1,4 +1,4 @@
-import Math2 from '../utils/math2.js';
+import Math2 from '../../utils/math2.js';
 
 export default class Manifold {
   constructor(rb1, rb2, data) {

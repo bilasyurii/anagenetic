@@ -73,6 +73,15 @@ export default class Bounds {
     );
   }
 
+  containsBounds(bounds) {
+    return !(
+      this.minX > bounds.minX ||
+      this.maxX < bounds.maxX ||
+      this.minY > bounds.minY ||
+      this.maxY < bounds.maxY
+    );
+  }
+
   intersects(b) {
     return !(
       b.minX > this.maxX ||
@@ -91,11 +100,31 @@ export default class Bounds {
     );
   }
 
+  intersection(bounds, destination) {
+    const result = (destination === undefined ? new Bounds() : destination);
+
+    result.minX = Math2.max(this.minX, bounds.minX);
+    result.maxX = Math2.min(this.maxX, bounds.maxX);
+    result.minY = Math2.max(this.minY, bounds.minY);
+    result.maxY = Math2.min(this.maxY, bounds.maxY);
+
+    return result;
+  }
+
   translate(x, y) {
     this.minX += x;
     this.minY += y;
     this.maxX += x;
     this.maxY += y;
+
+    return this;
+  }
+
+  scale(factor) {
+    this.minX *= factor;
+    this.minY *= factor;
+    this.maxX *= factor;
+    this.maxY *= factor;
 
     return this;
   }
@@ -196,6 +225,15 @@ export default class Bounds {
     );
   }
 
+  roundUp() {
+    this.minX = Math.floor(this.minX);
+    this.minY = Math.floor(this.minY);
+    this.maxX = Math.ceil(this.maxX);
+    this.maxY = Math.ceil(this.maxY);
+
+    return this;
+  }
+
   toRect() {
     return new Rect(this.minX, this.minY, this.width, this.height);
   }
@@ -211,3 +249,5 @@ export default class Bounds {
     );
   }
 }
+
+Bounds.temp = new Bounds();

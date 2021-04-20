@@ -1,18 +1,34 @@
-import Manifold from './manifold.js';
-import Collisions from './collisions.js';
+import Manifold from './collision/manifold.js';
+import CollisionData from './collision/collision-data.js';
 
 export default class Physics {
-  constructor(engine, solveIterations) {
+  constructor(engine, solveIterations, spacePartitioning) {
     this.engine = engine;
     this.solveIterations = solveIterations;
-    
+
+    this._spacePartitioning = spacePartitioning;
     this._dt = engine.dt;
     this._forceGenerators = [];
     this._rigidBodies = [];
+    this._bodiesToRemove = [];
+  }
+
+  get spacePartitioning() {
+    return this._spacePartitioning;
   }
 
   addRigidBody(body) {
     this._rigidBodies.push(body);
+    this._spacePartitioning.addBody(body);
+
+    return this;
+  }
+
+  removeRigidBody(body) {
+    this._bodiesToRemove.push(body);
+    this._spacePartitioning.removeBody(body);
+
+    return this;
   }
 
   addForceGenerator(forceGenerator) {
@@ -25,27 +41,27 @@ export default class Physics {
     // finding collisions
     const collisions = [];
 
-    const bodies = this._rigidBodies;
-    const bodiesCount = bodies.length;
+    this._removePending();
 
-    for (let i = 0; i < bodiesCount; ++i) {
-      const rbI = bodies[i];
-      const colliderI = rbI.collider;
+    const pairs = this._spacePartitioning.broadPhase();
+    const pairsCount = pairs.length;
 
-      if (colliderI === null) {
+    for (let i = 0; i < pairsCount; ++i) {
+      const pair = pairs[i];
+      const rb1 = pair.rb1;
+      const rb2 = pair.rb2;
+      const collider1 = rb1.collider;
+      const collider2 = rb2.collider;
+
+      if (collider1 === null || collider2 === null) {
         continue;
       }
 
-      for (let j = i + 1; j < bodiesCount; ++j) {
-        const rbJ = bodies[j];
-        const colliderJ = rbJ.collider;
+      if (rb1.isStatic === false || rb2.isStatic === false) {
+        const collision = CollisionData.getFromColliders(collider1, collider2);
 
-        if (colliderJ !== null && !(rbI.isStatic === true && rbJ.isStatic === true)) {
-          const collision = Collisions.checkCollision(colliderI, colliderJ);
-
-          if (collision.isColliding === true) {
-            collisions.push(new Manifold(rbI, rbJ, collision));
-          }
+        if (collision.isColliding === true) {
+          collisions.push(new Manifold(rb1, rb2, collision));
         }
       }
     }
@@ -75,6 +91,9 @@ export default class Physics {
       }
     }
 
+    const bodies = this._rigidBodies;
+    const bodiesCount = bodies.length;
+
     // updating bodies
     for (let i = 0; i < bodiesCount; ++i) {
       bodies[i].fixedUpdate(dt);
@@ -101,5 +120,40 @@ export default class Physics {
     for (let i = 0; i < count; ++i) {
       bodies[i].postUpdate();
     }
+  }
+
+  _removePending() {
+    this._spacePartitioning.removePending();
+
+    const pending = this._bodiesToRemove;
+
+    let pendingCount = pending.length;
+
+    if (pendingCount === 0) {
+      return;
+    }
+
+    const bodies = this._rigidBodies;
+
+    for (let i = bodies.length - 1; i >= 0; --i) {
+      const body = bodies[i];
+
+      for (let j = 0; j < pendingCount; ++j) {
+        if (pending[j] === body) {
+          bodies.splice(i, 1);
+          pending.splice(j, 1);
+
+          if (--pendingCount === 0) {
+            this._bodiesToRemove = [];
+
+            return;
+          }
+
+          break;
+        }
+      }
+    }
+
+    this._bodiesToRemove = [];
   }
 }

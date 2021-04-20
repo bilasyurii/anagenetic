@@ -62,6 +62,12 @@ export default class Math2 {
   static zero(x) {
     return x < Math2.EPS && x > Math2.N_EPS;
   }
+
+  static angleDistanceRad(a, b) {
+    const diff = Math2.max(a, b) - Math2.min(a, b);
+
+    return diff > Math.PI ? Math2.PI2 - diff : diff;
+  }
 }
 
 Math2.RAD2DEG = 180 / Math.PI;

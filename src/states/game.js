@@ -7,21 +7,18 @@ import CircleCollider from '../anvas/physics/colliders/circle-collider.js';
 import AABBCollider from '../anvas/physics/colliders/aabb-collider.js';
 import Vec2 from '../anvas/geom/vec2.js';
 import CellView from '../view/cell/cell-view.js';
-import Cell from '../core/cell/cell.js';
 import World from '../core/world/world.js';
 import WorldView from '../view/world/world-view.js';
 import Genome from '../core/genome/genome.js';
 import ChemicalElement from '../core/chemicals/chemical-element.js';
-import ChemicalView from '../view/chemical/chemical-view.js';
 import Chemical from '../core/chemicals/chemical.js';
 import ChemicalViewFactory from '../view/chemical/chemical-view-factory.js';
-import SpacePartitioning from '../core/world/space-partitioning.js';
 
 export default class GameState extends State {
   onEnter() {
     const engine = this.engine;
 
-    const spacePartitioning = new SpacePartitioning(engine);
+    const spacePartitioning = engine.physics.spacePartitioning;
     const world = new World(spacePartitioning, new Vec2(700, 400));
     const worldView = new WorldView(world);
 
@@ -43,10 +40,11 @@ export default class GameState extends State {
     const chemicalViewFactory = new ChemicalViewFactory(engine);
     const chemicalView = chemicalViewFactory.create(chemical);
 
+    chemical.view = chemicalView;
     chemicalView.position.set(300, 100);
 
-    worldView.add(cellView);
     world.addChemical(chemical);
+    worldView.add(cellView);
     worldView.add(chemicalView);
 
     return;

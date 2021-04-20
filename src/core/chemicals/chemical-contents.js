@@ -19,25 +19,38 @@ export default class ChemicalContents {
     return this;
   }
 
-  add(name, amount) {
+  addMany(data) {
+    const count = data.length;
+
+    for (let i = 0; i < count; ++i) {
+      const item = data[i];
+
+      this.addSingle(item.element.name, item.amount);
+    }
+
+    return this;
+  }
+
+  addSingle(name, amount) {
+    if (amount === 0) {
+      return this;
+    }
+
     const elementsAmounts = this._elementsAmounts;
 
     let current = elementsAmounts[name];
 
     if (current === undefined) {
-      elementsAmounts[name] = amount;
-
-      this.onChanged.post();
-
-      return amount;
+      current = amount;
     } else {
       current += amount;
-      elementsAmounts[name] = current;
-
-      this.onChanged.post();
-
-      return current;
     }
+
+    elementsAmounts[name] = current;
+
+    this.onChanged.post();
+
+    return this;
   }
 
   spend(name, amount) {

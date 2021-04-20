@@ -3,6 +3,7 @@ import Vec2 from '../../anvas/geom/vec2';
 import ChemicalContents from '../chemicals/chemical-contents';
 import Memory from '../memory/memory';
 import RegistryManager from '../memory/registry-manager';
+import VMUtils from '../utils/vm-utils';
 import VM from '../vm/vm';
 
 export default class Cell {
@@ -92,11 +93,46 @@ export default class Cell {
   }
 
   eat(angle) {
-    const target = this.world.getTarget(this, angle);
+    const view = this.view;
+    const position = this.position;
+    const targets = this.world.getTargets(position, angle, Cell.ANGLE_THRESHOLD);
+    const count = targets.length;
 
-    if (target !== null) {
-      console.log(target);
+    let minDistanceSqr = Infinity;
+    let minAngleDiff = Infinity;
+    let bestEatable;
+
+    for (let i = 0; i < count; ++i) {
+      const data = targets[i];
+      const body = data.body;
+      const eatableView = body.gameObject;
+
+      if (eatableView === view) {
+        continue;
+      }
+
+      const angleDistance = data.angleDistance;
+
+      if (angleDistance < minAngleDiff) {
+        const distanceSqr = body.position.distanceSqr(position);
+
+        if (distanceSqr < minDistanceSqr) {
+          minDistanceSqr = distanceSqr;
+          minAngleDiff = angleDistance;
+          bestEatable = eatableView.dataObject;
+        }
+      }
     }
+
+    if (bestEatable !== undefined) {
+      const foodReceived = bestEatable.takeDamage(this._radius);
+
+      this._chemicals.addMany(foodReceived);
+    }
+  }
+
+  takeDamage(damage) {
+    //TODO
   }
 
   _init() {
@@ -144,3 +180,6 @@ export default class Cell {
     }
   }
 }
+
+Cell.VISION_RADIUS = 50;
+Cell.ANGLE_THRESHOLD = (256 / 8) * VMUtils.VM2RAD;

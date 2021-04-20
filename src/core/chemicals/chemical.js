@@ -1,7 +1,18 @@
+import Observable from '../../anvas/events/observable';
+
 export default class Chemical {
   constructor(element, count) {
+    this.view = null;
+
+    this.onRunOut = new Observable();
+
+    this._alive = true;
     this._element = element;
     this._count = count;
+  }
+
+  get isAlive() {
+    return this._alive;
   }
 
   get element() {
@@ -12,17 +23,26 @@ export default class Chemical {
     return this._count;
   }
 
-  eat(amount) {
+  takeDamage(amount) {
     const count = this._count;
 
-    if (count < amount) {
-      this._count = 0;
+    let eaten;
 
-      return count;
+    if (count > amount) {
+      eaten = amount;
+      this._count = count - amount;
+    } else {
+      eaten = count;
+      this._count = 0;
+      this._alive = false;
+      this.onRunOut.post(this);
     }
 
-    this._count = count - amount;
-
-    return amount;
+    return [
+      {
+        element: this._element,
+        amount: eaten,
+      }
+    ];
   }
 }

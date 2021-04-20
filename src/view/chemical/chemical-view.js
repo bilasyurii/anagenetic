@@ -13,11 +13,16 @@ export default class ChemicalView extends Group {
     this._view = null;
   }
 
+  get dataObject() {
+    return this.chemical;
+  }
+
   onAddedToScene() {
     super.onAddedToScene();
 
     this._initView();
     this._initBody();
+    this._setupEvents();
   }
 
   _initView() {
@@ -34,8 +39,22 @@ export default class ChemicalView extends Group {
 
     body.drag = 0.5;
     body.collider = new CircleCollider(ChemicalView.RADIUS);
+    body.mass = 0.1;
 
     this.engine.physics.addRigidBody(body);
+  }
+
+  _setupEvents() {
+    this.chemical.onRunOut.add(this._onRunOut, this);
+  }
+
+  _onRunOut() {
+    const parent = this.parent;
+
+    if (parent !== null) {
+      parent.remove(this);
+      this.engine.physics.removeRigidBody(this.rigidBody);
+    }
   }
 }
 

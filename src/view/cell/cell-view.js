@@ -14,6 +14,10 @@ export default class CellView extends Group {
     this.position.copyFrom(cell.position);
   }
 
+  get dataObject() {
+    return this.cell;
+  }
+
   preUpdate() {
     const cell = this.cell;
     const body = this.rigidBody;

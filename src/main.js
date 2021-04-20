@@ -1,6 +1,7 @@
 import Engine from './anvas/engine.js';
 import PreloadState from './states/preload.js';
 import GameState from './states/game.js';
+import HashGrid from './anvas/physics/space-partitioning/hash-grid.js';
 // import Stats from './utils/stats.js';
 
 new Engine()
@@ -10,6 +11,7 @@ new Engine()
   .registerState('preload', PreloadState)
   .registerState('game', GameState)
   .setStartingState('preload')
+  .setSpacePartitioning(new HashGrid())
   .start();
 
 // const stats = new Stats();

@@ -1,5 +1,4 @@
 import Debug from '../../../../anvas/debug/debug';
-import VMUtils from '../../../utils/vm-utils';
 
 export default class EatRCommand {
   constructor() {
@@ -16,7 +15,7 @@ export default class EatRCommand {
 
     const angle = context.registries.get(angleGene.value).value;
 
-    context.cell.eat(angle * VMUtils.VM2RAD);
+    context.cell.eat(angle);
 
     iterator.next();
   }

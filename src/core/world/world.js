@@ -1,4 +1,7 @@
 import Bounds from '../../anvas/geom/bounds';
+import Circle from '../../anvas/geom/circle';
+import Vec2 from '../../anvas/geom/vec2';
+import Math2 from '../../anvas/utils/math2';
 import Cell from '../cell/cell';
 
 export default class World {
@@ -28,6 +31,8 @@ export default class World {
   addChemical(chemical) {
     this._chemicals.push(chemical);
 
+    chemical.onRunOut.add(this._onChemicalRunOut, this);
+
     return this;
   }
 
@@ -45,8 +50,30 @@ export default class World {
     return this;
   }
 
-  getTarget(position, angle) {
-    return this._spacePartitioning.getObjects();
+  getTargets(position, angle, angleThreshold) {
+    const circle = Circle.temp.set(position.x, position.y, Cell.VISION_RADIUS);
+    const candidates = this._spacePartitioning.getInCircle(circle);
+    const count = candidates.length;
+    const temp = Vec2.temp;
+    const targets = [];
+
+    for (let i = 0; i < count; ++i) {
+      const body = candidates[i];
+      const targetAngle = temp
+        .copyFrom(body.position)
+        .subVec(position)
+        .radians();
+      const angleDistance = Math2.angleDistanceRad(targetAngle, angle);
+
+      if (angleDistance < angleThreshold) {
+        targets.push({
+          body,
+          angleDistance,
+        });
+      }
+    }
+
+    return targets;
   }
 
   _initWalls() {
@@ -70,6 +97,19 @@ export default class World {
 
     for (let i = 0; i < count; ++i) {
       cells[i].update();
+    }
+  }
+
+  _onChemicalRunOut(chemical) {
+    const chemicals = this._chemicals;
+    const count = chemicals.length;
+
+    for (let i = 0; i < count; ++i) {
+      if (chemicals[i] === chemical) {
+        chemicals.splice(i, 1);
+
+        return;
+      }
     }
   }
 }

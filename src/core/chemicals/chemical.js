@@ -1,11 +1,13 @@
 import Observable from '../../anvas/events/observable';
 
 export default class Chemical {
-  constructor(element, count) {
-    this.view = null;
+  constructor(world, element, count) {
+    this.world = world;
 
     this.onRunOut = new Observable();
 
+    this._view = null;
+    this._rigidBody = null;
     this._alive = true;
     this._element = element;
     this._count = count;
@@ -21,6 +23,33 @@ export default class Chemical {
 
   get count() {
     return this._count;
+  }
+
+  get view() {
+    return this._view;
+  }
+
+  set view(value) {
+    this._view = value;
+    this._rigidBody = value.rigidBody;
+  }
+
+  setPositionXY(x, y) {
+    this._rigidBody.position.set(x, y);
+
+    return this;
+  }
+
+  setPosition(pos) {
+    this._rigidBody.position.copyFrom(pos);
+
+    return this;
+  }
+
+  addForce(force) {
+    this._rigidBody.addForce(force);
+
+    return this;
   }
 
   takeDamage(amount) {

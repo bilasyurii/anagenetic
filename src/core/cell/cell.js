@@ -1,6 +1,7 @@
 import Observable from '../../anvas/events/observable';
 import Vec2 from '../../anvas/geom/vec2';
 import ChemicalContents from '../chemicals/chemical-contents';
+import ElementRegistry from '../chemicals/element-registry';
 import Memory from '../memory/memory';
 import RegistryManager from '../memory/registry-manager';
 import VMUtils from '../utils/vm-utils';
@@ -74,6 +75,13 @@ export default class Cell {
     return this._vm;
   }
 
+  setPosition(x, y) {
+    this.position.set(x, y);
+    this.view.position.set(x, y);
+
+    return this;
+  }
+
   preUpdate() {
     this.view.preUpdate();
     this.force.setZero();
@@ -129,6 +137,18 @@ export default class Cell {
 
       this._chemicals.addMany(foodReceived);
     }
+  }
+
+  spawnChemical(elementCode, angle) {
+    const element = ElementRegistry.get(elementCode);
+    const chemical = this.world.create.chemical(element, 10);
+    const force = VMUtils
+      .getDirection(angle, Vec2.temp)
+      .mul(100);
+
+    chemical
+      .setPosition(this.position)
+      .addForce(force);
   }
 
   takeDamage(damage) {

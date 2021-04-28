@@ -1,14 +1,20 @@
+import Observable from '../../anvas/events/observable';
 import Bounds from '../../anvas/geom/bounds';
 import Circle from '../../anvas/geom/circle';
 import Vec2 from '../../anvas/geom/vec2';
 import Math2 from '../../anvas/utils/math2';
 import Cell from '../cell/cell';
+import EntityFactory from './entity-factory';
 
 export default class World {
   constructor(spacePartitioning, size) {
     this.size = size;
 
+    this.onChemicalAdded = new Observable();
+    this.onCellAdded = new Observable();
     this.updateInterval = 20;
+
+    this.create = null;
     
     this._spacePartitioning = spacePartitioning;
 
@@ -17,21 +23,21 @@ export default class World {
     this._cells = [];
     this._chemicals = [];
 
-    this._initWalls();
+    this._init();
   }
 
-  createCell() {
-    const cell = new Cell(this);
-
+  addCell(cell) {
     this._cells.push(cell);
+    this.onCellAdded.post(cell);
 
-    return cell;
+    return this;
   }
 
   addChemical(chemical) {
     this._chemicals.push(chemical);
 
     chemical.onRunOut.add(this._onChemicalRunOut, this);
+    this.onChemicalAdded.post(chemical);
 
     return this;
   }
@@ -74,6 +80,15 @@ export default class World {
     }
 
     return targets;
+  }
+
+  _init() {
+    this._initFactory();
+    this._initWalls();
+  }
+
+  _initFactory() {
+    this.create = new EntityFactory(this);
   }
 
   _initWalls() {

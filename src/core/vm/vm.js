@@ -19,6 +19,7 @@ import IfCommand from './commands/conditional/if-command';
 import EatRCommand from './commands/cell-commands/eat-r-command';
 import StoreCommand from './commands/registry-commands/store-command';
 import GetCommand from './commands/registry-commands/get-command';
+import SpreadRCommand from './commands/cell-commands/spread-r-command';
 
 export default class VM {
   constructor(cell) {
@@ -93,6 +94,7 @@ export default class VM {
       EatRCommand,
       StoreCommand,
       GetCommand,
+      SpreadRCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

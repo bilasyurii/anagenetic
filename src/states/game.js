@@ -13,6 +13,7 @@ import Genome from '../core/genome/genome.js';
 import ChemicalElement from '../core/chemicals/chemical-element.js';
 import Chemical from '../core/chemicals/chemical.js';
 import ChemicalViewFactory from '../view/chemical/chemical-view-factory.js';
+import ElementRegistry from '../core/chemicals/element-registry.js';
 
 export default class GameState extends State {
   onEnter() {
@@ -26,26 +27,33 @@ export default class GameState extends State {
 
     engine.add(worldView);
 
-    const cell = world.createCell();
+    const element = new ChemicalElement('test', 'rgb(0, 255, 0)');
+
+    ElementRegistry.register(element);
+    ElementRegistry.initLookup();
+
+    const chemicalViewFactory = new ChemicalViewFactory(engine);
+
+    world.onCellAdded.add((cell) => {
+      const cellView = new CellView(cell);
+
+      worldView.add(cellView);
+
+      cell.view = cellView;
+    });
+
+    world.onChemicalAdded.add((chemical) => {
+      const chemicalView = chemicalViewFactory.create(chemical);
+
+      worldView.add(chemicalView);
+
+      chemical.view = chemicalView;
+    });
+
+    const cell = world.create.cell();
 
     cell.genome = Genome.random();
-    cell.position.set(100, 100);
-
-    const cellView = new CellView(cell);
-
-    cell.view = cellView;
-
-    const element = new ChemicalElement('test', 'rgb(0, 255, 0)');
-    const chemical = new Chemical(element, 10);
-    const chemicalViewFactory = new ChemicalViewFactory(engine);
-    const chemicalView = chemicalViewFactory.create(chemical);
-
-    chemical.view = chemicalView;
-    chemicalView.position.set(300, 100);
-
-    world.addChemical(chemical);
-    worldView.add(cellView);
-    worldView.add(chemicalView);
+    cell.setPosition(100, 100);
 
     return;
     const group = new Group();

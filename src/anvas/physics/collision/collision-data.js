@@ -68,7 +68,6 @@ export default class CollisionData {
     const bPos = b.position;
     const dx = bPos.x - aX;
     const dy = bPos.y - aY;
-
     const distanceSqr = dx * dx + dy * dy;
 
     if (distanceSqr - radiuses * radiuses > 0) {
@@ -76,6 +75,12 @@ export default class CollisionData {
     }
 
     const distance = Math.sqrt(distanceSqr);
+
+    if (distance === 0) {
+      return new CollisionData(new Vec2(1, 0), aR)
+        .addContact(aPos.clone());
+    }
+
     const depth = Math2.abs(distance - radiuses) * 0.5;
     const distanceInv = 1 / distance;
     const normal = new Vec2(dx * distanceInv, dy * distanceInv);
@@ -91,10 +96,23 @@ export default class CollisionData {
     const circlePos = c.position;
     const closest = b.clampVec(circlePos);
     const direction = closest.clone().subVec(circlePos);
-    const depth = direction.length;
+    const depthSqr = direction.lengthSqr;
 
-    if (depth >= c.radius) {
+    if (depthSqr >= c.radiusSqr) {
       return new CollisionData();
+    }
+
+    let depth;
+
+    if (depthSqr === 0) {
+      direction
+        .copyFrom(b.position)
+        .subVec(circlePos)
+        .lengthSqr;
+
+      depth = c.radius;
+    } else {
+      depth = Math.sqrt(depthSqr);
     }
 
     direction.normalize();

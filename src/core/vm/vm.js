@@ -22,8 +22,8 @@ import GetCommand from './commands/registry-commands/get-command';
 import SpreadRCommand from './commands/cell-commands/spread-r-command';
 import SpreadCommand from './commands/cell-commands/spread-command';
 import DivideCommand from './commands/cell-commands/divide-command';
-import CheckRCommand from './commands/check-commands/check-r-command';
-import CheckCommand from './commands/check-commands/check-command';
+import CheckRCommand from './commands/vision-commands/check-r-command';
+import CheckCommand from './commands/vision-commands/check-command';
 
 export default class VM {
   constructor(cell) {

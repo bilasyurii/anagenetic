@@ -1,3 +1,5 @@
+import Random from '../utils/random';
+
 export default class Gene {
   constructor(value) {
     this.value = (value === undefined ? 0 : value);
@@ -8,7 +10,7 @@ export default class Gene {
   }
 
   static random() {
-    const value = ~~(Math.random() * Gene.VARIETY);
+    const value = Random.int() % Gene.VARIETY;
 
     return new Gene(value);
   }

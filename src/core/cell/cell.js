@@ -125,39 +125,10 @@ export default class Cell {
   }
 
   eat(angle) {
-    const view = this._view;
-    const position = this.position;
-    const targets = this.world.getTargets(position, angle, Cell.ANGLE_THRESHOLD);
-    const count = targets.length;
+    const target = this.world.getClosestTarget(this, angle);
 
-    let minDistanceSqr = Infinity;
-    let minAngleDiff = Infinity;
-    let bestEatable;
-
-    for (let i = 0; i < count; ++i) {
-      const data = targets[i];
-      const body = data.body;
-      const eatableView = body.gameObject;
-
-      if (eatableView === view) {
-        continue;
-      }
-
-      const angleDistance = data.angleDistance;
-
-      if (angleDistance < minAngleDiff) {
-        const distanceSqr = body.position.distanceSqr(position);
-
-        if (distanceSqr < minDistanceSqr) {
-          minDistanceSqr = distanceSqr;
-          minAngleDiff = angleDistance;
-          bestEatable = eatableView.dataObject;
-        }
-      }
-    }
-
-    if (bestEatable !== undefined) {
-      const foodReceived = bestEatable.takeDamage(this._radius);
+    if (target !== null) {
+      const foodReceived = target.takeDamage(this._radius);
 
       this._chemicals.addMany(foodReceived);
     }
@@ -185,6 +156,25 @@ export default class Cell {
     cell
       .setPosition(this.position)
       .addForce(force);
+  }
+
+  check(angle) {
+    const targets = this.world.getTargets(this.position, angle, Cell.ANGLE_THRESHOLD);
+
+    if (targets.length === 0) {
+      return false;
+    }
+
+    const view = this._view;
+
+    if (targets.length === 1) {
+      return targets[0].body.gameObject !== view;
+    }
+
+    return (
+      targets[0].body.gameObject !== view ||
+      targets[1].body.gameObject !== view
+    );
   }
 
   takeDamage(damage) {

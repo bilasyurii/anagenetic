@@ -82,6 +82,41 @@ export default class World {
     return targets;
   }
 
+  getClosestTarget(cell, angle) {
+    const view = cell.view;
+    const position = cell.position;
+    const targets = this.world.getTargets(position, angle, Cell.ANGLE_THRESHOLD);
+    const count = targets.length;
+
+    let minDistanceSqr = Infinity;
+    let minAngleDiff = Infinity;
+    let bestTarget = null;
+
+    for (let i = 0; i < count; ++i) {
+      const data = targets[i];
+      const body = data.body;
+      const targetView = body.gameObject;
+
+      if (targetView === view) {
+        continue;
+      }
+
+      const angleDistance = data.angleDistance;
+
+      if (angleDistance < minAngleDiff) {
+        const distanceSqr = body.position.distanceSqr(position);
+
+        if (distanceSqr < minDistanceSqr) {
+          minDistanceSqr = distanceSqr;
+          minAngleDiff = angleDistance;
+          bestTarget = targetView.dataObject;
+        }
+      }
+    }
+
+    return bestTarget;
+  }
+
   _init() {
     this._initFactory();
     this._initWalls();

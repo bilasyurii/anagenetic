@@ -55,6 +55,9 @@ export default class GameState extends State {
     cell.genome = Genome.random();
     cell.setPositionXY(100, 100);
 
+    // world.create.chemical(element, 10)
+    //   .setPositionXY(130, 100);
+
     return;
     const group = new Group();
 

@@ -35,12 +35,14 @@ export default class Chemical {
   }
 
   setPositionXY(x, y) {
+    this._view.position.set(x, y);
     this._rigidBody.position.set(x, y);
 
     return this;
   }
 
   setPosition(pos) {
+    this._view.position.copyFrom(pos);
     this._rigidBody.position.copyFrom(pos);
 
     return this;

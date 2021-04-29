@@ -21,6 +21,7 @@ import StoreCommand from './commands/registry-commands/store-command';
 import GetCommand from './commands/registry-commands/get-command';
 import SpreadRCommand from './commands/cell-commands/spread-r-command';
 import SpreadCommand from './commands/cell-commands/spread-command';
+import DivideCommand from './commands/cell-commands/divide-command';
 
 export default class VM {
   constructor(cell) {
@@ -97,6 +98,7 @@ export default class VM {
       GetCommand,
       SpreadRCommand,
       SpreadCommand,
+      DivideCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

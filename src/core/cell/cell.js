@@ -16,13 +16,13 @@ export default class Cell {
     this.force = new Vec2();
     this.onRadiusChanged = new Observable();
 
-    this.view = null;
-
     this._radius = 0;
     this._rotation = 0;
     this._energy = 0;
     this._energyCapacity = 0;
 
+    this._view = null;
+    this._rigidBody = null;
     this._genome = null;
     this._memory = null;
     this._registries = null;
@@ -75,21 +75,45 @@ export default class Cell {
     return this._vm;
   }
 
-  setPosition(x, y) {
+  get view() {
+    return this._view;
+  }
+
+  set view(value) {
+    this._view = value;
+    this._rigidBody = value.rigidBody;
+  }
+
+  setPositionXY(x, y) {
     this.position.set(x, y);
-    this.view.position.set(x, y);
+    this._view.position.set(x, y);
+    this._rigidBody.position.set(x, y);
+
+    return this;
+  }
+
+  setPosition(pos) {
+    this.position.copyFrom(pos);
+    this._view.position.copyFrom(pos);
+    this._rigidBody.position.copyFrom(pos);
+
+    return this;
+  }
+
+  addForce(force) {
+    this._rigidBody.addForce(force);
 
     return this;
   }
 
   preUpdate() {
-    this.view.preUpdate();
+    this._view.preUpdate();
     this.force.setZero();
   }
 
   update() {
     this._vm.execute();
-    this.view.update();
+    this._view.update();
   }
 
   move(angle) {
@@ -101,7 +125,7 @@ export default class Cell {
   }
 
   eat(angle) {
-    const view = this.view;
+    const view = this._view;
     const position = this.position;
     const targets = this.world.getTargets(position, angle, Cell.ANGLE_THRESHOLD);
     const count = targets.length;
@@ -144,9 +168,21 @@ export default class Cell {
     const chemical = this.world.create.chemical(element, 10);
     const force = VMUtils
       .getDirection(angle, Vec2.temp)
-      .mul(200);
+      .mul(500);
 
     chemical
+      .setPosition(this.position)
+      .addForce(force);
+  }
+
+  divide() {
+    const cell = this.world.create.cell();
+    const force = VMUtils
+      .randomDirection(Vec2.temp)
+      .mul(500);
+
+    cell.genome = this.genome.clone();
+    cell
       .setPosition(this.position)
       .addForce(force);
   }

@@ -1,4 +1,5 @@
 import Debug from '../../anvas/debug/debug';
+import Random from './random';
 
 export default class VMUtils {
   constructor() {
@@ -11,6 +12,10 @@ export default class VMUtils {
     target.set(Math.cos(radians), Math.sin(radians));
 
     return target;
+  }
+
+  static randomDirection(target) {
+    return VMUtils.getDirection(Random.int() & 255, target);
   }
 }
 

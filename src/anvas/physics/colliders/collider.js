@@ -1,7 +1,6 @@
 import Debug from '../../debug/debug.js';
 import Bounds from '../../geom/bounds.js';
 import ObservableVec2 from '../../geom/observable-vec2.js';
-import Vec2 from '../../geom/vec2.js';
 
 export default class Collider {
   constructor(offset) {

@@ -23,6 +23,7 @@ import SpreadRCommand from './commands/cell-commands/spread-r-command';
 import SpreadCommand from './commands/cell-commands/spread-command';
 import DivideCommand from './commands/cell-commands/divide-command';
 import CheckRCommand from './commands/check-commands/check-r-command';
+import CheckCommand from './commands/check-commands/check-command';
 
 export default class VM {
   constructor(cell) {
@@ -101,6 +102,7 @@ export default class VM {
       /* 20 */ SpreadCommand,
       /* 21 */ DivideCommand,
       /* 22 */ CheckRCommand,
+      /* 23 */ CheckCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

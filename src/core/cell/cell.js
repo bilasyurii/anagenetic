@@ -144,7 +144,7 @@ export default class Cell {
     const chemical = this.world.create.chemical(element, 10);
     const force = VMUtils
       .getDirection(angle, Vec2.temp)
-      .mul(100);
+      .mul(200);
 
     chemical
       .setPosition(this.position)

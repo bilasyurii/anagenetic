@@ -86,6 +86,12 @@ export default class Cell {
     this._rigidBody = value.rigidBody;
   }
 
+  getChemicalAmount(type) {
+    const element = ElementRegistry.get(type);
+
+    return this._chemicals.getAmount(element.name);
+  }
+
   setPositionXY(x, y) {
     this.position.set(x, y);
     this._view.position.set(x, y);

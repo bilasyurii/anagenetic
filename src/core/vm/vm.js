@@ -28,6 +28,7 @@ import DistinguishRCommand from './commands/vision-commands/distinguish-r-comman
 import CompareRCommand from './commands/genome-commands/compare-r-command';
 import Compare0RCommand from './commands/genome-commands/compare-0-r-command';
 import CompareLessRCommand from './commands/genome-commands/compare-less-r-command';
+import GetChemicalCommand from './commands/registry-commands/get-chemical-command';
 
 export default class VM {
   constructor(cell) {
@@ -109,6 +110,7 @@ export default class VM {
       /* 25 */ CompareRCommand,
       /* 26 */ Compare0RCommand,
       /* 27 */ CompareLessRCommand,
+      /* 28 */ GetChemicalCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = ((count - 1) % knownCount) + 1;

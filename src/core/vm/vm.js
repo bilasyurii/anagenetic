@@ -26,6 +26,7 @@ import CheckRCommand from './commands/vision-commands/check-r-command';
 import CheckCommand from './commands/vision-commands/check-command';
 import DistinguishRCommand from './commands/vision-commands/distinguish-r-command';
 import CompareRCommand from './commands/genome-commands/compare-r-command';
+import Compare0RCommand from './commands/genome-commands/compare-0-r-command';
 
 export default class VM {
   constructor(cell) {
@@ -107,6 +108,7 @@ export default class VM {
       /* 23 */ CheckCommand,
       /* 24 */ DistinguishRCommand,
       /* 25 */ CompareRCommand,
+      /* 26 */ Compare0RCommand,
     ];
     const knownCount = commands.length;
     const bufferSize = count % knownCount;

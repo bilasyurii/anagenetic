@@ -78,9 +78,7 @@ export default class VM {
       return;
     }
 
-    lookup = VM._commandsLookup = [
-      NoopCommand,
-    ];
+    lookup = VM._commandsLookup = [];
 
     const count = Gene.VARIETY;
     const commands = [
@@ -113,7 +111,7 @@ export default class VM {
       /* 27 */ CompareLessRCommand,
     ];
     const knownCount = commands.length;
-    const bufferSize = count % knownCount;
+    const bufferSize = ((count - 1) % knownCount) + 1;
 
     for (let i = 0; i < bufferSize; ++i) {
       lookup.push(NoopCommand);

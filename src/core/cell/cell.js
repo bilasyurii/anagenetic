@@ -6,6 +6,7 @@ import Memory from '../memory/memory';
 import RegistryManager from '../memory/registry-manager';
 import VMUtils from '../utils/vm-utils';
 import VM from '../vm/vm';
+import Gene from '../genome/gene';
 
 export default class Cell {
   constructor(world) {
@@ -157,6 +158,16 @@ export default class Cell {
     cell
       .setPosition(this.position)
       .addForce(force);
+  }
+
+  compare(angle) {
+    const target = this.world.getClosestTarget(this, angle);
+
+    if (target === null || target.isCell === false) {
+      return Gene.MAX_VAL;
+    }
+
+    return this.genome.compare(target.genome);
   }
 
   check(angle) {

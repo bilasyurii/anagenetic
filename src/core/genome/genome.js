@@ -10,6 +10,22 @@ export default class Genome {
     return new GenomeIterator(this._genes);
   }
 
+  compare(other) {
+    const otherGenes = other._genes;
+    const genes = this._genes;
+    const count = genes.length;
+
+    let result = 0;
+
+    for (let i = 0; i < count; ++i) {
+      if (genes[i].value !== otherGenes[i].value) {
+        ++result;
+      }
+    }
+
+    return result;
+  }
+
   clone() {
     const genesCopy = [];
     const genes = this._genes;

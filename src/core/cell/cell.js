@@ -163,7 +163,7 @@ export default class Cell {
   compare(angle) {
     const target = this.world.getClosestTarget(this, angle);
 
-    if (target === null || target.isCell === false) {
+    if (target === null || target.isCell !== true) {
       return Gene.MAX_VAL;
     }
 

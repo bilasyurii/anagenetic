@@ -1,4 +1,5 @@
 import Debug from '../../../../anvas/debug/debug';
+import VMUtils from '../../../utils/vm-utils';
 
 export default class CheckCommand {
   constructor() {
@@ -23,7 +24,7 @@ export default class CheckCommand {
 
     iterator.next();
 
-    if (context.cell.check(angle) === true) {
+    if (context.cell.check(angle * VMUtils.VM2RAD) === true) {
       iterator.advance(jumpGene.value + 1);
     }
   }

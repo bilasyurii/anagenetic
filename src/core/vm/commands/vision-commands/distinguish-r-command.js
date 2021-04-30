@@ -1,7 +1,7 @@
 import Debug from '../../../../anvas/debug/debug';
 import VMUtils from '../../../utils/vm-utils';
 
-export default class EatRCommand {
+export default class DistinguishRCommand {
   constructor() {
     Debug.staticClass();
   }
@@ -14,9 +14,16 @@ export default class EatRCommand {
       return;
     }
 
-    const angle = context.registries.get(angleGene.value).value;
+    const registryGene = iterator.next().current;
 
-    context.cell.eat(angle * VMUtils.VM2RAD);
+    if (registryGene === undefined) {
+      return;
+    }
+
+    const angle = context.registries.get(angleGene.value).value;
+    const type = context.cell.distinguish(angle * VMUtils.VM2RAD);
+
+    context.registries.set(registryGene.value, type);
 
     iterator.next();
   }

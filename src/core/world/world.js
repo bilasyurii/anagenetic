@@ -85,7 +85,7 @@ export default class World {
   getClosestTarget(cell, angle) {
     const view = cell.view;
     const position = cell.position;
-    const targets = this.world.getTargets(position, angle, Cell.ANGLE_THRESHOLD);
+    const targets = this.getTargets(position, angle, Cell.ANGLE_THRESHOLD);
     const count = targets.length;
 
     let minDistanceSqr = Infinity;

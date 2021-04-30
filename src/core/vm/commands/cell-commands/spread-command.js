@@ -1,4 +1,5 @@
 import Debug from '../../../../anvas/debug/debug';
+import VMUtils from '../../../utils/vm-utils';
 
 export default class SpreadCommand {
   constructor() {
@@ -22,7 +23,7 @@ export default class SpreadCommand {
 
     const angle = angleGene.value;
 
-    context.cell.spawnChemical(chemicalGene.value, angle);
+    context.cell.spawnChemical(chemicalGene.value, angle * VMUtils.VM2RAD);
 
     iterator.next();
   }

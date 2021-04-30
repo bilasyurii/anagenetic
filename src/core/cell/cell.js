@@ -15,6 +15,7 @@ export default class Cell {
     this.velocity = new Vec2();
     this.force = new Vec2();
     this.onRadiusChanged = new Observable();
+    this.isCell = true;
 
     this._radius = 0;
     this._rotation = 0;
@@ -175,6 +176,24 @@ export default class Cell {
       targets[0].body.gameObject !== view ||
       targets[1].body.gameObject !== view
     );
+  }
+
+  distinguish(angle) {
+    const target = this.world.getClosestTarget(this, angle);
+
+    if (target === null) {
+      return 0;
+    }
+
+    if (target.isCell === true) {
+      return 1;
+    }
+
+    if (target.isChemical === true) {
+      return 2;
+    }
+
+    return 3; // wall
   }
 
   takeDamage(damage) {

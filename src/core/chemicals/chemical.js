@@ -5,6 +5,7 @@ export default class Chemical {
     this.world = world;
 
     this.onRunOut = new Observable();
+    this.isChemical = true;
 
     this._view = null;
     this._rigidBody = null;

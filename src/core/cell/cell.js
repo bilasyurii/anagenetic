@@ -160,6 +160,7 @@ export default class Cell {
       .randomDirection(Vec2.temp)
       .mul(500);
 
+    this.memory.copyTo(cell.memory);
     cell.genome = this.genome.clone();
     cell
       .setPosition(this.position)

@@ -21,6 +21,12 @@ export default class Memory {
   clone() {
     const memory = new Memory();
 
+    this.copyTo(memory);
+
+    return memory;
+  }
+
+  copyTo(memory) {
     const data = this._data;
     const count = data.length;
 
@@ -28,7 +34,7 @@ export default class Memory {
       memory.setByte(i, data[i]);
     }
 
-    return memory;
+    return this;
   }
 
   _init() {

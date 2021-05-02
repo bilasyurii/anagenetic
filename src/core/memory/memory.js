@@ -1,4 +1,4 @@
-import Gene from "../genome/gene";
+import Gene from '../genome/gene';
 
 export default class Memory {
   constructor() {
@@ -16,6 +16,19 @@ export default class Memory {
     this._lookup[index].value = value;
 
     return this;
+  }
+
+  clone() {
+    const memory = new Memory();
+
+    const data = this._data;
+    const count = data.length;
+
+    for (let i = 0; i < count; ++i) {
+      memory.setByte(i, data[i]);
+    }
+
+    return memory;
   }
 
   _init() {

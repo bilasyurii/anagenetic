@@ -150,6 +150,7 @@ export default class HashGrid extends SpacePartitioning {
   }
 
   getInCircle(circle) {
+    const circle2collider = Collisions.circle2collider;
     const bounds = circle.getBounds(Bounds.temp);
     const inBounds = this.getInBounds(bounds);
     const count = inBounds.length;
@@ -158,7 +159,7 @@ export default class HashGrid extends SpacePartitioning {
     for (let i = 0; i < count; ++i) {
       const body = inBounds[i];
 
-      if (Collisions.circle2collider(circle, body.collider)) {
+      if (circle2collider(circle, body.collider)) {
         found.push(body);
       }
     }

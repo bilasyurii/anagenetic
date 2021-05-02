@@ -89,10 +89,8 @@ export default class Cell {
     this._rigidBody = value.rigidBody;
   }
 
-  getChemicalAmount(type) {
-    const element = ElementRegistry.get(type);
-
-    return this._chemicals.getAmount(element.name);
+  get chemicals() {
+    return this._chemicals;
   }
 
   setPositionXY(x, y) {
@@ -127,7 +125,6 @@ export default class Cell {
     this._updateRegistries();
     this._vm.execute();
     this._view.update();
-    console.log(this._registries.get(6).value);
   }
 
   move(angle) {

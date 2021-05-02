@@ -1,4 +1,5 @@
 import Debug from '../../../../anvas/debug/debug';
+import ElementRegistry from '../../../chemicals/element-registry';
 
 export default class GetChemicalCommand {
   constructor() {
@@ -20,9 +21,10 @@ export default class GetChemicalCommand {
       return;
     }
 
-    const value = context.cell.getChemicalAmount(chemicalGene.value);
+    const element = ElementRegistry.get(chemicalGene.value);
+    const amount = context.chemicals.getAmount(element.name);
 
-    context.registries.set(registryGene.value, value);
+    context.registries.set(registryGene.value, amount);
 
     iterator.next();
   }

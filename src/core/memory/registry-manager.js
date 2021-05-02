@@ -69,6 +69,15 @@ export default class RegistryManager {
     return this;
   }
 
+  setEvent(type, angle) {
+    const registries = this._registries;
+
+    registries[10].value = type;
+    registries[11].value = angle;
+
+    return this;
+  }
+
   _init() {
     this._initRegistries();
     this._initLookup();

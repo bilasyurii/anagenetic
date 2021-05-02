@@ -22,6 +22,9 @@ export default class Cell {
     this._rotation = 0;
     this._energy = 0;
     this._energyCapacity = 0;
+    this._ttl = Gene.MAX_VAL;
+    this._isAlive = true;
+    this._directionAngle = 0;
 
     this._view = null;
     this._rigidBody = null;
@@ -109,7 +112,7 @@ export default class Cell {
   }
 
   addForce(force) {
-    this._rigidBody.addForce(force);
+    this.force.addVec(force);
 
     return this;
   }
@@ -120,8 +123,11 @@ export default class Cell {
   }
 
   update() {
+    this._updateStats();
+    this._updateRegistries();
     this._vm.execute();
     this._view.update();
+    console.log(this._registries.get(6).value);
   }
 
   move(angle) {
@@ -218,6 +224,10 @@ export default class Cell {
     //TODO
   }
 
+  die() {
+    this._isAlive = false;
+  }
+
   _init() {
     this._initMemory();
     this._initRegistries();
@@ -261,6 +271,29 @@ export default class Cell {
     if (silent === false) {
       this.onRadiusChanged.post(this._radius);
     }
+  }
+
+  _updateStats() {
+    const ttl = this._ttl - 1;
+
+    if (ttl === 0) {
+      this.die();
+      return;
+    } else {
+      this._ttl = ttl;
+    }
+
+    this._directionAngle = VMUtils.angleFromVec(this._rigidBody.velocity);
+  }
+
+  _updateRegistries() {
+    const registries = this._registries;
+
+    registries
+      .setTTL(this._ttl)
+      .setRndTick(this.world.rndTick)
+      .setDirection(this._directionAngle)
+      .setEnergy(this._energy);
   }
 }
 

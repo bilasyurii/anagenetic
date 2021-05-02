@@ -21,6 +21,54 @@ export default class RegistryManager {
     return this._getRegistry(registryCode);
   }
 
+  setTTL(value) {
+    this._registries[4].value = value;
+
+    return this;
+  }
+
+  setRndTick(value) {
+    this._registries[5].value = value;
+
+    return this;
+  }
+
+  setDirection(value) {
+    this._registries[6].value = value;
+
+    return this;
+  }
+
+  setLoad(value) {
+    this._registries[7].value = value;
+
+    return this;
+  }
+
+  setEnergy(value) {
+    this._registries[8].value = value;
+
+    return this;
+  }
+
+  setSize(value) {
+    this._registries[9].value = value;
+
+    return this;
+  }
+
+  setEventType(value) {
+    this._registries[10].value = value;
+
+    return this;
+  }
+
+  setEventAngle(value) {
+    this._registries[11].value = value;
+
+    return this;
+  }
+
   _init() {
     this._initRegistries();
     this._initLookup();

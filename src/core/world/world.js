@@ -4,6 +4,8 @@ import Circle from '../../anvas/geom/circle';
 import Vec2 from '../../anvas/geom/vec2';
 import Math2 from '../../anvas/utils/math2';
 import Cell from '../cell/cell';
+import Gene from '../genome/gene';
+import Random from '../utils/random';
 import EntityFactory from './entity-factory';
 
 export default class World {
@@ -15,15 +17,20 @@ export default class World {
     this.updateInterval = 20;
 
     this.create = null;
-    
+
     this._spacePartitioning = spacePartitioning;
 
+    this._rndTick = 0;
     this._timeToUpdate = 1;
     this._walls = [];
     this._cells = [];
     this._chemicals = [];
 
     this._init();
+  }
+
+  get rndTick() {
+    return this._rndTick;
   }
 
   addCell(cell) {
@@ -45,6 +52,8 @@ export default class World {
   update() {
     if (--this._timeToUpdate === 0) {
       this._timeToUpdate = this.updateInterval;
+
+      this._rndTick = Random.int() % Gene.VARIETY;
 
       this._updateCells();
     }

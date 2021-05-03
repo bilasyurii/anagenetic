@@ -168,7 +168,12 @@ export default class Cell {
 
   spawnChemical(elementCode, angle) {
     const element = ElementRegistry.get(elementCode);
-    const chemical = this.world.create.chemical(element, 10);
+
+    if (this._chemicals.spend(element.name, 1) === false) {
+      return false;
+    }
+
+    const chemical = this.world.create.chemical(element, 1);
     const force = VMUtils
       .getDirection(angle, Vec2.temp)
       .mul(500);
@@ -176,6 +181,8 @@ export default class Cell {
     chemical
       .setPosition(this.position)
       .addForce(force);
+
+    return false;
   }
 
   divide() {

@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
 import ElementRegistry from '../../../chemicals/element-registry';
+import Command from '../../command';
 
-export default class GetChemicalCommand {
+export default class GetChemicalCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('get chemical');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
 
     const chemicalGene = iterator.next().current;

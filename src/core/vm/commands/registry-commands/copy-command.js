@@ -1,11 +1,11 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 
-export default class CopyCommand {
+export default class CopyCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('copy');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
     const sourceGene = iterator.next().current;
 

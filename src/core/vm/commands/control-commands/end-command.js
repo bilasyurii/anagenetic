@@ -1,11 +1,11 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 
-export default class EndCommand {
+export default class EndCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('end');
   }
 
-  static execute(context) {
+  execute(context) {
     context.iterator.advance(Infinity);
   }
 }

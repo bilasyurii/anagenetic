@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
 import VMUtils from '../../../utils/vm-utils';
+import Command from '../../command';
 
-export default class CompareRCommand {
+export default class CompareRCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('compare r');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
     const angleGene = iterator.next().current;
 

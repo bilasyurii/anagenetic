@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 import ConditionalCommandUtils from '../../command-utils/conditional-command-utils';
 
-export default class LessRRCommand {
+export default class LessRRCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('less rr');
   }
 
-  static execute(context) {
+  execute(context) {
     ConditionalCommandUtils.RRCommand(context, LessRRCommand.condition);
   }
 

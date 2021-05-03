@@ -55,10 +55,6 @@ export default class Cell {
     return this._energy;
   }
 
-  set energy(value) {
-    this._energy = value;
-  }
-
   get genome() {
     return this._genome;
   }
@@ -91,6 +87,31 @@ export default class Cell {
 
   get chemicals() {
     return this._chemicals;
+  }
+
+  reduceEnergy(amount) {
+    const newEnergy = this._energy - amount;
+
+    if (newEnergy < 0) {
+      this._isAlive = false;
+    } else {
+      this._energy = newEnergy;
+    }
+
+    return this;
+  }
+
+  addEnergy(amount) {
+    const newEnergy = this._energy + amount;
+    const capacity = this._energyCapacity;
+
+    if (newEnergy > capacity) {
+      this._energy = capacity;
+    } else {
+      this._energy = newEnergy;
+    }
+
+    return this;
   }
 
   setPositionXY(x, y) {

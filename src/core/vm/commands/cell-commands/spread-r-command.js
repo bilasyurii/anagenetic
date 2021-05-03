@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
 import VMUtils from '../../../utils/vm-utils';
+import Command from '../../command';
 
-export default class SpreadRCommand {
+export default class SpreadRCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('spread r');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
 
     const chemicalGene = iterator.next().current;

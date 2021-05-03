@@ -20,6 +20,7 @@ export default class World {
 
     this._spacePartitioning = spacePartitioning;
 
+    this._energyLoss = 0;
     this._rndTick = 0;
     this._timeToUpdate = 1;
     this._walls = [];
@@ -47,6 +48,10 @@ export default class World {
     this.onChemicalAdded.post(chemical);
 
     return this;
+  }
+
+  registerEnergyLoss(loss) {
+    this._energyLoss += loss;
   }
 
   update() {

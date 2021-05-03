@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
 import VMUtils from '../../../utils/vm-utils';
+import Command from '../../command';
 
-export default class CheckRCommand {
+export default class CheckRCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('check r');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
     const angleGene = iterator.next().current;
 

@@ -31,7 +31,7 @@ export default class ChemicalContents {
     return this;
   }
 
-  addSingle(name, amount) {
+  addSingle(name, amount, silent) {
     if (amount === 0) {
       return this;
     }
@@ -48,12 +48,14 @@ export default class ChemicalContents {
 
     elementsAmounts[name] = current;
 
-    this.onChanged.post();
+    if (silent !== true) {
+      this.onChanged.post();
+    }
 
     return this;
   }
 
-  spend(name, amount) {
+  spend(name, amount, silent) {
     const elementsAmounts = this._elementsAmounts;
     const current = elementsAmounts[name];
 
@@ -65,7 +67,9 @@ export default class ChemicalContents {
 
     elementsAmounts[name] = current - amount;
 
-    this.onChanged.post();
+    if (silent !== true) {
+      this.onChanged.post();
+    }
 
     return true;
   }

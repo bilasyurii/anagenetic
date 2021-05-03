@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 import ConditionalCommandUtils from '../../command-utils/conditional-command-utils';
 
-export default class EqualsRVCommand {
+export default class EqualsRVCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('equals rv');
   }
 
-  static execute(context) {
+  execute(context) {
     ConditionalCommandUtils.RRCommand(context, EqualsRVCommand.condition);
   }
 

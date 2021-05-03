@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
 import Gene from '../../../genome/gene';
+import Command from '../../command';
 
-export default class SubCommand {
+export default class SubCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('sub');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
     const leftGene = iterator.next().current;
 

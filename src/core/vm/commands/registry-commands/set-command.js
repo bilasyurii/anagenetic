@@ -1,11 +1,11 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 
-export default class SetCommand {
+export default class SetCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('set');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
     const registryGene = iterator.next().current;
 

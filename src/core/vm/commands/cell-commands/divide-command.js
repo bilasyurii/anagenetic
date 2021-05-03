@@ -1,11 +1,11 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 
-export default class DivideCommand {
+export default class DivideCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('divide');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
 
     context.cell.divide();

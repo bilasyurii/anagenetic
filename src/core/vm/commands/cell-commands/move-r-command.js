@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
 import VMUtils from '../../../utils/vm-utils';
+import Command from '../../command';
 
-export default class MoveRCommand {
+export default class MoveRCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('move r');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
     const angleGene = iterator.next().current;
 

@@ -1,12 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
 import VMUtils from '../../../utils/vm-utils';
+import Command from '../../command';
 
-export default class DistinguishRCommand {
+export default class DistinguishRCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('distinguish r');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
     const angleGene = iterator.next().current;
 

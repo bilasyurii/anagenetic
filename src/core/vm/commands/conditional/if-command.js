@@ -1,11 +1,12 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 
-export default class IfCommand {
+export default class IfCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('if');
   }
 
-  static execute(context) {const iterator = context.iterator;
+  execute(context) {
+    const iterator = context.iterator;
     const conditionGene = iterator.next().current;
 
     if (conditionGene === undefined) {

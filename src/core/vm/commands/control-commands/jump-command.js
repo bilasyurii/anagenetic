@@ -1,11 +1,11 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 
-export default class JumpCommand {
+export default class JumpCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('jump');
   }
 
-  static execute(context) {
+  execute(context) {
     const iterator = context.iterator;
     const distance = iterator.next().current;
 

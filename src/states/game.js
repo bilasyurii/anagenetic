@@ -11,7 +11,6 @@ import World from '../core/world/world.js';
 import WorldView from '../view/world/world-view.js';
 import Genome from '../core/genome/genome.js';
 import ChemicalElement from '../core/chemicals/chemical-element.js';
-import Chemical from '../core/chemicals/chemical.js';
 import ChemicalViewFactory from '../view/chemical/chemical-view-factory.js';
 import ElementRegistry from '../core/chemicals/element-registry.js';
 
@@ -27,9 +26,10 @@ export default class GameState extends State {
 
     engine.add(worldView);
 
-    const element = new ChemicalElement('test', 'rgb(0, 255, 0)');
-
-    ElementRegistry.register(element);
+    ElementRegistry.register(new ChemicalElement('billanium', 'rgb(0, 0, 255)'));
+    ElementRegistry.register(new ChemicalElement('hillagen', 'rgb(255, 0, 0)'));
+    ElementRegistry.register(new ChemicalElement('chubium', 'rgb(0, 255, 0)'));
+    ElementRegistry.register(new ChemicalElement('dion', 'rgb(255, 0, 255)'));
     ElementRegistry.initLookup();
 
     const chemicalViewFactory = new ChemicalViewFactory(engine);

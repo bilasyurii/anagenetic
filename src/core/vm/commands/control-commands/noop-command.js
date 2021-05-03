@@ -1,11 +1,11 @@
-import Debug from '../../../../anvas/debug/debug';
+import Command from '../../command';
 
-export default class NoopCommand {
+export default class NoopCommand extends Command {
   constructor() {
-    Debug.staticClass();
+    super('noop');
   }
 
-  static execute(context) {
+  execute(context) {
     context.iterator.next();
   }
 }

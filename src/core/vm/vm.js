@@ -29,6 +29,14 @@ import CompareRCommand from './commands/genome-commands/compare-r-command';
 import Compare0RCommand from './commands/genome-commands/compare-0-r-command';
 import CompareLessRCommand from './commands/genome-commands/compare-less-r-command';
 import GetChemicalCommand from './commands/registry-commands/get-chemical-command';
+import ChubiumGenerationCommand from './commands/reaction-commands/chubium-generation-command';
+import DefragmentationBillaniumCommand from './commands/reaction-commands/defragmentation-billanium-command';
+import DefragmentationChubiumCommand from './commands/reaction-commands/defragmentation-chubium-command';
+import DigestionBillaniumCommand from './commands/reaction-commands/digestion-billanium-command';
+import DigestionHillagenCommand from './commands/reaction-commands/digestion-hillagen-command';
+import FragmentationBillaniumCommand from './commands/reaction-commands/fragmentation-billanium-command';
+import FragmentationHillagenCommand from './commands/reaction-commands/fragmentation-hillagen-command';
+import PhotosynthesisCommand from './commands/reaction-commands/photosynthesis-command';
 
 export default class VM {
   constructor(cell) {
@@ -83,40 +91,49 @@ export default class VM {
 
     const count = Gene.VARIETY;
     const commands = [
-      /* 01 */ MoveCommand,
-      /* 02 */ MoveRCommand,
-      /* 03 */ JumpCommand,
-      /* 04 */ EndCommand,
-      /* 05 */ SetCommand,
-      /* 06 */ AddCommand,
-      /* 07 */ SubCommand,
-      /* 08 */ EqualsRRCommand,
-      /* 09 */ EqualsRVCommand,
-      /* 10 */ LessRRCommand,
-      /* 11 */ LessRVCommand,
-      /* 12 */ GreaterRRCommand,
-      /* 13 */ GreaterRVCommand,
-      /* 14 */ IfCommand,
-      /* 15 */ CopyCommand,
-      /* 16 */ EatRCommand,
-      /* 17 */ StoreCommand,
-      /* 18 */ GetCommand,
-      /* 19 */ SpreadRCommand,
-      /* 20 */ SpreadCommand,
-      /* 21 */ DivideCommand,
-      /* 22 */ CheckRCommand,
-      /* 23 */ CheckCommand,
-      /* 24 */ DistinguishRCommand,
-      /* 25 */ CompareRCommand,
-      /* 26 */ Compare0RCommand,
-      /* 27 */ CompareLessRCommand,
-      /* 28 */ GetChemicalCommand,
+      /* 01 */ new MoveCommand,
+      /* 02 */ new MoveRCommand(),
+      /* 03 */ new JumpCommand(),
+      /* 04 */ new EndCommand(),
+      /* 05 */ new SetCommand(),
+      /* 06 */ new AddCommand(),
+      /* 07 */ new SubCommand(),
+      /* 08 */ new EqualsRRCommand(),
+      /* 09 */ new EqualsRVCommand(),
+      /* 10 */ new LessRRCommand(),
+      /* 11 */ new LessRVCommand(),
+      /* 12 */ new GreaterRRCommand(),
+      /* 13 */ new GreaterRVCommand(),
+      /* 14 */ new IfCommand(),
+      /* 15 */ new CopyCommand(),
+      /* 16 */ new EatRCommand(),
+      /* 17 */ new StoreCommand(),
+      /* 18 */ new GetCommand(),
+      /* 19 */ new SpreadRCommand(),
+      /* 20 */ new SpreadCommand(),
+      /* 21 */ new DivideCommand(),
+      /* 22 */ new CheckRCommand(),
+      /* 23 */ new CheckCommand(),
+      /* 24 */ new DistinguishRCommand(),
+      /* 25 */ new CompareRCommand(),
+      /* 26 */ new Compare0RCommand(),
+      /* 27 */ new CompareLessRCommand(),
+      /* 28 */ new GetChemicalCommand(),
+      /* 29 */ new ChubiumGenerationCommand(),
+      /* 30 */ new DefragmentationBillaniumCommand(),
+      /* 31 */ new DefragmentationChubiumCommand(),
+      /* 32 */ new DigestionBillaniumCommand(),
+      /* 33 */ new DigestionHillagenCommand(),
+      /* 34 */ new FragmentationBillaniumCommand(),
+      /* 35 */ new FragmentationHillagenCommand(),
+      /* 36 */ new PhotosynthesisCommand(),
     ];
     const knownCount = commands.length;
     const bufferSize = ((count - 1) % knownCount) + 1;
+    const noop = new NoopCommand();
 
     for (let i = 0; i < bufferSize; ++i) {
-      lookup.push(NoopCommand);
+      lookup.push(noop);
     }
 
     let commandIndex = 0;

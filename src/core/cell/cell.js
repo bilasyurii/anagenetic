@@ -179,16 +179,38 @@ export default class Cell {
   }
 
   divide() {
+    const chemicals = this._chemicals;
+
+    // 10 hillagen is needed to make new cell's body
+    if (chemicals.spend('hillagen', 10, true) === false) {
+      return false;
+    }
+
+    const currentEnergy = this._energy;
+
+    if (currentEnergy < 20) {
+      return false;
+    }
+
+    const energy = (currentEnergy - 10) * 0.5;
+
+    this._energy = energy;
+    this.world.registerEnergyLoss(10);
+
     const cell = this.world.create.cell();
     const force = VMUtils
       .randomDirection(Vec2.temp)
       .mul(500);
 
+    chemicals.divideTo(cell.chemicals);
     this.memory.copyTo(cell.memory);
     cell.genome = this.genome.clone();
     cell
+      .addEnergy(energy)
       .setPosition(this.position)
       .addForce(force);
+
+    return true;
   }
 
   compare(angle) {
@@ -280,6 +302,7 @@ export default class Cell {
 
   _updateEnergyCapacity() {
     // TODO
+    this._energyCapacity = 255;
   }
 
   _updateRadius(silent = false) {

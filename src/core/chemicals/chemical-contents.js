@@ -7,6 +7,12 @@ export default class ChemicalContents {
     this._elementsAmounts = {};
   }
 
+  updateChanges() {
+    this.onChanged.post();
+
+    return this;
+  }
+
   getAmount(name) {
     return this._elementsAmounts[name] || 0;
   }
@@ -25,8 +31,10 @@ export default class ChemicalContents {
     for (let i = 0; i < count; ++i) {
       const item = data[i];
 
-      this.addSingle(item.element.name, item.amount);
+      this.addSingle(item.element.name, item.amount, true);
     }
+
+    this.onChanged.post();
 
     return this;
   }
@@ -72,5 +80,25 @@ export default class ChemicalContents {
     }
 
     return true;
+  }
+
+  divideTo(other) {
+    const elementsAmounts = this._elementsAmounts;
+
+    for (const name in elementsAmounts) {
+      const amount = elementsAmounts[name];
+      const half = ~~(amount * 0.5);
+
+      if (half === 0) {
+        continue;
+      }
+
+      other.addSingle(name, half, true);
+      elementsAmounts[name] = amount - half;
+    }
+
+    other.updateChanges();
+
+    return this;
   }
 }

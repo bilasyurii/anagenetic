@@ -14,6 +14,10 @@ export default class ElementRegistry {
     return ElementRegistry._lookup[index];
   }
 
+  static getDamageQueue() {
+    return ElementRegistry._damageQueue;
+  }
+
   static initLookup() {
     const lookup = ElementRegistry._lookup = [];
     const lookupSize = Gene.VARIETY;
@@ -28,7 +32,19 @@ export default class ElementRegistry {
       elementIndex = (elementIndex + 1) % elementsCount;
     }
   }
+
+  static initDamageQueue() {
+    ElementRegistry._damageQueue = ElementRegistry._elements
+      .slice(0)
+      .sort(ElementRegistry._comparator)
+      .map((element) => element.name);
+  }
+
+  static _comparator(a, b) {
+    return b.damagePriority - b.damagePriority;
+  }
 }
 
 ElementRegistry._elements = [];
+ElementRegistry._damageQueue = null;
 ElementRegistry._lookup = null;

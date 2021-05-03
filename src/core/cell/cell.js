@@ -19,6 +19,8 @@ export default class Cell {
     this.isCell = true;
 
     this._radius = 0;
+    this._damage = 10;
+    this._armor = 10;
     this._rotation = 0;
     this._energy = 0;
     this._energyCapacity = 0;
@@ -93,7 +95,7 @@ export default class Cell {
     const newEnergy = this._energy - amount;
 
     if (newEnergy < 0) {
-      this._isAlive = false;
+      this.die();
     } else {
       this._energy = newEnergy;
     }
@@ -160,7 +162,7 @@ export default class Cell {
     const target = this.world.getClosestTarget(this, angle);
 
     if (target !== null) {
-      const foodReceived = target.takeDamage(this._radius);
+      const foodReceived = target.takeDamage(this._damage);
 
       this._chemicals.addMany(foodReceived);
     }
@@ -268,11 +270,24 @@ export default class Cell {
   }
 
   takeDamage(damage) {
-    //TODO
+    let reducedDamage = damage - this._armor;
+
+    if (reducedDamage < 1) {
+      reducedDamage = 1;
+    }
+
+    const { food, left } = this._chemicals.takeDamage(reducedDamage);
+
+    if (left !== 0) {
+      this.reduceEnergy(left);
+    }
+
+    return food;
   }
 
   die() {
     this._isAlive = false;
+    this.world.registerEnergyLoss(this._energy);
   }
 
   _init() {

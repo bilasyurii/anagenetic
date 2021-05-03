@@ -33,6 +33,7 @@ import ChubiumGenerationCommand from './commands/reaction-commands/chubium-gener
 import DefragmentationBillaniumCommand from './commands/reaction-commands/defragmentation-billanium-command';
 import DefragmentationChubiumCommand from './commands/reaction-commands/defragmentation-chubium-command';
 import DigestionBillaniumCommand from './commands/reaction-commands/digestion-billanium-command';
+import DigestionChubiumCommand from './commands/reaction-commands/digestion-chubium-command';
 import DigestionHillagenCommand from './commands/reaction-commands/digestion-hillagen-command';
 import FragmentationBillaniumCommand from './commands/reaction-commands/fragmentation-billanium-command';
 import FragmentationHillagenCommand from './commands/reaction-commands/fragmentation-hillagen-command';
@@ -123,10 +124,11 @@ export default class VM {
       /* 30 */ new DefragmentationBillaniumCommand(),
       /* 31 */ new DefragmentationChubiumCommand(),
       /* 32 */ new DigestionBillaniumCommand(),
-      /* 33 */ new DigestionHillagenCommand(),
-      /* 34 */ new FragmentationBillaniumCommand(),
-      /* 35 */ new FragmentationHillagenCommand(),
-      /* 36 */ new PhotosynthesisCommand(),
+      /* 33 */ new DigestionChubiumCommand(),
+      /* 34 */ new DigestionHillagenCommand(),
+      /* 35 */ new FragmentationBillaniumCommand(),
+      /* 36 */ new FragmentationHillagenCommand(),
+      /* 37 */ new PhotosynthesisCommand(),
     ];
     const knownCount = commands.length;
     const bufferSize = ((count - 1) % knownCount) + 1;

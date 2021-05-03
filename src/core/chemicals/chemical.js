@@ -72,7 +72,7 @@ export default class Chemical {
 
     return [
       {
-        element: this._element,
+        name: this._element.name,
         amount: eaten,
       }
     ];

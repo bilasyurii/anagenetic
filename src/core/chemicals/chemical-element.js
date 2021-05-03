@@ -1,6 +1,7 @@
 export default class ChemicalElement {
-  constructor(name, color) {
+  constructor(name, damagePriority, color) {
     this.name = name;
+    this.damagePriority = damagePriority;
     this.color = color;
   }
 }

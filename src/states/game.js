@@ -26,11 +26,12 @@ export default class GameState extends State {
 
     engine.add(worldView);
 
-    ElementRegistry.register(new ChemicalElement('billanium', 'rgb(0, 0, 255)'));
-    ElementRegistry.register(new ChemicalElement('hillagen', 'rgb(255, 0, 0)'));
-    ElementRegistry.register(new ChemicalElement('chubium', 'rgb(0, 255, 0)'));
-    ElementRegistry.register(new ChemicalElement('dion', 'rgb(255, 0, 255)'));
+    ElementRegistry.register(new ChemicalElement('billanium', 4, 'rgb(0, 0, 255)'));
+    ElementRegistry.register(new ChemicalElement('hillagen', 3, 'rgb(255, 0, 0)'));
+    ElementRegistry.register(new ChemicalElement('chubium', 1, 'rgb(0, 255, 0)'));
+    ElementRegistry.register(new ChemicalElement('dion', 2, 'rgb(255, 0, 255)'));
     ElementRegistry.initLookup();
+    ElementRegistry.initDamageQueue();
 
     const chemicalViewFactory = new ChemicalViewFactory(engine);
 

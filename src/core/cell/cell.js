@@ -207,13 +207,18 @@ export default class Cell {
     this.world.registerEnergyLoss(10);
 
     const cell = this.world.create.cell();
+
+    chemicals.divideTo(cell.chemicals);
+    this.memory.copyTo(cell.memory);
+
+    cell.genome = this.genome
+      .clone()
+      .mutate();
+
     const force = VMUtils
       .randomDirection(Vec2.temp)
       .mul(500);
 
-    chemicals.divideTo(cell.chemicals);
-    this.memory.copyTo(cell.memory);
-    cell.genome = this.genome.clone();
     cell
       .addEnergy(energy)
       .setPosition(this.position)

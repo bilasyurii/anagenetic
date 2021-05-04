@@ -13,6 +13,9 @@ import Genome from '../core/genome/genome.js';
 import ChemicalElement from '../core/chemicals/chemical-element.js';
 import ChemicalViewFactory from '../view/chemical/chemical-view-factory.js';
 import ElementRegistry from '../core/chemicals/element-registry.js';
+import MutationStrategy from '../core/genome/mutation/mutation-strategy.js';
+import ForceMutationStrategy from '../core/genome/mutation/force-mutation-strategy.js';
+import PickMutationStrategy from '../core/genome/mutation/pick-mutation-strategy.js';
 
 export default class GameState extends State {
   onEnter() {
@@ -32,6 +35,9 @@ export default class GameState extends State {
     ElementRegistry.register(new ChemicalElement('dion', 2, 'rgb(255, 0, 255)'));
     ElementRegistry.initLookup();
     ElementRegistry.initDamageQueue();
+
+    MutationStrategy.setActive(new PickMutationStrategy());
+    MutationStrategy.setActive(new ForceMutationStrategy());
 
     const chemicalViewFactory = new ChemicalViewFactory(engine);
 

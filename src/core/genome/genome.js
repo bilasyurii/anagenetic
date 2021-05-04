@@ -1,5 +1,7 @@
+import Random from '../utils/random';
 import Gene from './gene';
 import GenomeIterator from './genome-iterator';
+import MutationStrategy from './mutation/mutation-strategy';
 
 export default class Genome {
   constructor(genes) {
@@ -24,6 +26,12 @@ export default class Genome {
     }
 
     return result;
+  }
+
+  mutate() {
+    MutationStrategy.mutate(this._genes);
+
+    return this;
   }
 
   clone() {

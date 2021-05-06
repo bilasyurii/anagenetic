@@ -25,7 +25,7 @@ export default class Engine {
     this.physics = null;
     this.state = null;
 
-    this.version = '0.3.2';
+    this.version = '0.3.3';
     this.elapsed = 0;
     this.elapsedMS = 0;
     this.physicsElapsed = 0;
@@ -108,27 +108,37 @@ export default class Engine {
   }
 
   start() {
-    this._showHello();
+    const setup = () => {
+      this._showHello();
 
-    this._configureHtml();
-    this._configureBody();
-    this._configureCanvas();
+      this._configureHtml();
+      this._configureBody();
+      this._configureCanvas();
 
-    this._initRoot();
-    this._initCanvasPool();
-    this._initScreenUtils();
-    this._initTimerManager();
-    this._initRenderer();
-    this._initTextureManager();
-    this._initCache();
-    this._initLoader();
-    this._initInput();
-    this._initObjectsFactory();
-    this._initSpacePartitioning();
-    this._initPhysics();
-    this._initStartingState();
+      this._initRoot();
+      this._initCanvasPool();
+      this._initScreenUtils();
+      this._initTimerManager();
+      this._initRenderer();
+      this._initTextureManager();
+      this._initCache();
+      this._initLoader();
+      this._initInput();
+      this._initObjectsFactory();
+      this._initSpacePartitioning();
+      this._initPhysics();
+      this._initStartingState();
 
-    this._setupRAF();
+      this._setupRAF();
+    }
+    if (
+      document.readyState === 'complete' ||
+      document.readyState === 'interactive'
+    ) {
+      setTimeout(setup, 1);
+    } else {
+      document.addEventListener('DOMContentLoaded', setup);
+    }
 
     return this;
   }

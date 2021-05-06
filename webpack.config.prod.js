@@ -10,8 +10,9 @@ module.exports = merge(baseConfig, {
         {
           from: 'assets',
           to: 'assets',
-        }
-      ]
+          noErrorOnMissing: true,
+        },
+      ],
     }),
   ],
 });

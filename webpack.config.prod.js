@@ -1,4 +1,5 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const { merge } = require('webpack-merge');
 const baseConfig = require('./webpack.config.js');
 
@@ -14,5 +15,8 @@ module.exports = merge(baseConfig, {
         },
       ],
     }),
+		new ScriptExtHtmlWebpackPlugin({
+			inline: /\.js$/,
+		}),
   ],
 });

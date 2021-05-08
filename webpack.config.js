@@ -1,6 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const path = require('path');
 
 module.exports = {
@@ -23,8 +22,5 @@ module.exports = {
       template: './index.html',
     }),
     new CleanWebpackPlugin(),
-		new ScriptExtHtmlWebpackPlugin({
-			inline: /\.js$/,
-		}),
   ],
 };

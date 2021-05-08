@@ -184,7 +184,7 @@ export default class Cell {
       .setPosition(this.position)
       .addForce(force);
 
-    return false;
+    return true;
   }
 
   divide() {

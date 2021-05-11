@@ -1,7 +1,10 @@
-import Engine from './anvas/engine.js';
-import GameState from './states/game.js';
-import HashGrid from './anvas/physics/space-partitioning/hash-grid.js';
-// import Stats from './utils/stats.js';
+import Engine from './anvas/engine';
+import GameState from './states/game';
+import HashGrid from './anvas/physics/space-partitioning/hash-grid';
+import UI from './ui/ui';
+// import Stats from './utils/stats';
+
+new UI();
 
 new Engine()
   .setCanvasId('canvas')

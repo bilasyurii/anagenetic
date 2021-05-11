@@ -42,9 +42,7 @@ export default class HashGrid extends SpacePartitioning {
     body._hashBounds = new Bounds();
     body.onPositionChanged.add(this._onBodyMoved, this);
     body._gridCells = [];
-
     this._bodies.push(body);
-
     this._updateHashBounds(body);
 
     if (this._bounds.containsBounds(bounds) === false) {
@@ -57,8 +55,8 @@ export default class HashGrid extends SpacePartitioning {
   }
 
   removeBody(body) {
+    body.onPositionChanged.remove(this._onBodyMoved, this);
     this._bodiesToRemove.push(body);
-
     this._removeFromGrid(body);
 
     const bodies = this._bodies;
@@ -78,7 +76,7 @@ export default class HashGrid extends SpacePartitioning {
   removePending() {
     const pending = this._bodiesToRemove;
 
-    let pendingCount = pending;
+    let pendingCount = pending.length;
 
     if (pendingCount === 0) {
       return;

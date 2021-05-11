@@ -1,9 +1,9 @@
 import VMUtils from '../../../utils/vm-utils';
 import Command from '../../command';
 
-export default class Compare0RCommand extends Command {
+export default class Compare3RCommand extends Command {
   constructor() {
-    super('compare 0 r');
+    super('compare 3 r');
   }
 
   execute(context) {
@@ -25,7 +25,7 @@ export default class Compare0RCommand extends Command {
 
     iterator.next();
 
-    if (difference === 0) {
+    if (difference <= 3) {
       iterator.advance(jumpGene.value + 1);
     }
   }

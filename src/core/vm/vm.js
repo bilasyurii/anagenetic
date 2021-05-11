@@ -67,6 +67,7 @@ export default class VM {
     const iterator = this._genomeIterator.reset();
     const lookup = VM._commandsLookup;
     const context = this._context;
+    const cell = this._cell;
 
     while (iterator.hasNext === true) {
       const gene = iterator.current;
@@ -74,6 +75,7 @@ export default class VM {
       const command = lookup[value];
 
       command.execute(context);
+      cell.reduceEnergy(command.energy);
     }
   }
 
@@ -94,41 +96,41 @@ export default class VM {
     const commands = [
       /* 01 */ new MoveCommand,
       /* 02 */ new MoveRCommand(),
-      /* 03 */ new JumpCommand(),
-      /* 04 */ new EndCommand(),
-      /* 05 */ new SetCommand(),
-      /* 06 */ new AddCommand(),
-      /* 07 */ new SubCommand(),
-      /* 08 */ new EqualsRRCommand(),
-      /* 09 */ new EqualsRVCommand(),
-      /* 10 */ new LessRRCommand(),
-      /* 11 */ new LessRVCommand(),
-      /* 12 */ new GreaterRRCommand(),
-      /* 13 */ new GreaterRVCommand(),
-      /* 14 */ new IfCommand(),
-      /* 15 */ new CopyCommand(),
-      /* 16 */ new EatRCommand(),
-      /* 17 */ new StoreCommand(),
-      /* 18 */ new GetCommand(),
-      /* 19 */ new SpreadRCommand(),
-      /* 20 */ new SpreadCommand(),
-      /* 21 */ new DivideCommand(),
-      /* 22 */ new CheckRCommand(),
-      /* 23 */ new CheckCommand(),
-      /* 24 */ new DistinguishRCommand(),
-      /* 25 */ new CompareRCommand(),
-      /* 26 */ new Compare0RCommand(),
-      /* 27 */ new CompareLessRCommand(),
-      /* 28 */ new GetChemicalCommand(),
-      /* 29 */ new ChubiumGenerationCommand(),
-      /* 30 */ new DefragmentationBillaniumCommand(),
-      /* 31 */ new DefragmentationChubiumCommand(),
-      /* 32 */ new DigestionBillaniumCommand(),
-      /* 33 */ new DigestionChubiumCommand(),
-      /* 34 */ new DigestionHillagenCommand(),
-      /* 35 */ new FragmentationBillaniumCommand(),
-      /* 36 */ new FragmentationHillagenCommand(),
-      /* 37 */ new PhotosynthesisCommand(),
+      // /* 03 */ new JumpCommand(),
+      // /* 04 */ new EndCommand(),
+      // /* 05 */ new SetCommand(),
+      // /* 06 */ new AddCommand(),
+      // /* 07 */ new SubCommand(),
+      // /* 08 */ new EqualsRRCommand(),
+      // /* 09 */ new EqualsRVCommand(),
+      // /* 10 */ new LessRRCommand(),
+      // /* 11 */ new LessRVCommand(),
+      // /* 12 */ new GreaterRRCommand(),
+      // /* 13 */ new GreaterRVCommand(),
+      // /* 14 */ new IfCommand(),
+      // /* 15 */ new CopyCommand(),
+      // /* 16 */ new EatRCommand(),
+      // /* 17 */ new StoreCommand(),
+      // /* 18 */ new GetCommand(),
+      // /* 19 */ new SpreadRCommand(),
+      // /* 20 */ new SpreadCommand(),
+      // /* 21 */ new DivideCommand(),
+      // /* 22 */ new CheckRCommand(),
+      // /* 23 */ new CheckCommand(),
+      // /* 24 */ new DistinguishRCommand(),
+      // /* 25 */ new CompareRCommand(),
+      // /* 26 */ new Compare0RCommand(),
+      // /* 27 */ new CompareLessRCommand(),
+      // /* 28 */ new GetChemicalCommand(),
+      // /* 29 */ new ChubiumGenerationCommand(),
+      // /* 30 */ new DefragmentationBillaniumCommand(),
+      // /* 31 */ new DefragmentationChubiumCommand(),
+      // /* 32 */ new DigestionBillaniumCommand(),
+      // /* 33 */ new DigestionChubiumCommand(),
+      // /* 34 */ new DigestionHillagenCommand(),
+      // /* 35 */ new FragmentationBillaniumCommand(),
+      // /* 36 */ new FragmentationHillagenCommand(),
+      // /* 37 */ new PhotosynthesisCommand(),
     ];
     const knownCount = commands.length;
     const bufferSize = ((count - 1) % knownCount) + 1;

@@ -36,6 +36,7 @@ export default class World {
 
   addCell(cell) {
     this._cells.push(cell);
+    cell.onDied.add(this._onCellDied, this);
     this.onCellAdded.post(cell);
 
     return this;
@@ -171,6 +172,19 @@ export default class World {
     for (let i = 0; i < count; ++i) {
       if (chemicals[i] === chemical) {
         chemicals.splice(i, 1);
+
+        return;
+      }
+    }
+  }
+
+  _onCellDied(cell) {
+    const cells = this._cells;
+    const count = cells.length;
+
+    for (let i = 0; i < count; ++i) {
+      if (cells[i] === cell) {
+        cells.splice(i, 1);
 
         return;
       }

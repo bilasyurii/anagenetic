@@ -60,6 +60,7 @@ export default class CellView extends Group {
 
   _setupEvents() {
     this.cell.onRadiusChanged.add(this._onRadiusChanged, this);
+    this.cell.onDied.add(this._onDied, this);
   }
 
   _onRadiusChanged(radius) {
@@ -71,6 +72,15 @@ export default class CellView extends Group {
     view.height = size;
 
     this.rigidBody.collider.radius = radius;
+  }
+
+  _onDied() {
+    const parent = this.parent;
+
+    if (parent !== null) {
+      parent.remove(this);
+      this.engine.physics.removeRigidBody(this.rigidBody);
+    }
   }
 
   static _getBitmap(engine) {

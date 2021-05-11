@@ -16,6 +16,7 @@ export default class Cell {
     this.velocity = new Vec2();
     this.force = new Vec2();
     this.onRadiusChanged = new Observable();
+    this.onDied = new Observable();
     this.isCell = true;
 
     this._radius = 0;
@@ -27,6 +28,7 @@ export default class Cell {
     this._ttl = Gene.MAX_VAL;
     this._isAlive = true;
     this._directionAngle = 0;
+    this._vmUpdated = false;
 
     this._view = null;
     this._rigidBody = null;
@@ -94,10 +96,10 @@ export default class Cell {
   reduceEnergy(amount) {
     const newEnergy = this._energy - amount;
 
-    if (newEnergy < 0) {
-      this.die();
-    } else {
+    if (newEnergy > 0 || this._vmUpdated === false) {
       this._energy = newEnergy;
+    } else {
+      this.die();
     }
 
     return this;
@@ -141,6 +143,7 @@ export default class Cell {
   preUpdate() {
     this._view.preUpdate();
     this.force.setZero();
+    this._vmUpdated = false;
   }
 
   update() {
@@ -148,6 +151,11 @@ export default class Cell {
     this._updateRegistries();
     this._vm.execute();
     this._view.update();
+    this._vmUpdated = true;
+
+    if (this._energy <= 0) {
+      this.die();
+    }
   }
 
   move(angle) {
@@ -293,6 +301,7 @@ export default class Cell {
   die() {
     this._isAlive = false;
     this.world.registerEnergyLoss(this._energy);
+    this.onDied.post(this);
   }
 
   _init() {

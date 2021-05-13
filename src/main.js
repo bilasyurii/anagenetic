@@ -4,8 +4,6 @@ import HashGrid from './anvas/physics/space-partitioning/hash-grid';
 import UI from './ui/ui';
 // import Stats from './utils/stats';
 
-new UI();
-
 new Engine()
   .setCanvasId('canvas')
   .setBodyColor('#222222')
@@ -13,7 +11,8 @@ new Engine()
   .registerState('game', GameState)
   .setStartingState('game')
   .setSpacePartitioning(new HashGrid())
-  .start();
+  .start()
+  .onDocumentReady.add(() => new UI());
 
 // const stats = new Stats();
 

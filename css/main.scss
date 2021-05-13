@@ -1,0 +1,121 @@
+#uiWrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+
+  #uiRoot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+$text: rgb(24, 24, 24);
+$primary: rgb(24, 160, 251);
+$primaryFocus: rgb(75, 183, 255);
+$red: rgb(255, 110, 110);
+
+.blue {
+  &.button {
+    background-color: $primary;
+    border-color: $primary;
+
+    &:hover, &:focus {
+      background-color: $primaryFocus;
+      border-color: transparent;
+    }
+
+    &.button-outline, &.button-clear {
+      color: $primary;
+      background-color: transparent;
+
+      &:hover, &:focus {
+        color: $primaryFocus;
+        border-color: $primaryFocus;
+      }
+    }
+  }
+}
+
+@function grey($value) {
+  @return rgb($value, $value, $value);
+}
+
+@function elevationColor($value) {
+  @if $value == 0 {
+    @return grey(18);
+  } @else if $value == 1 {
+    @return grey(29);
+  } @else if $value == 2 {
+    @return grey(34);
+  } @else if $value == 3 {
+    @return grey(36);
+  } @else if $value == 4 {
+    @return grey(39);
+  } @else if $value == 5 {
+    @return grey(44);
+  } @else if $value == 6 {
+    @return grey(45);
+  } @else if $value == 7 {
+    @return grey(50);
+  } @else if $value == 8 {
+    @return grey(53);
+  } @else if $value == 9 {
+    @return grey(55);
+  }
+}
+
+@mixin elevationBg($value) {
+  background-color: elevationColor($value);
+}
+
+$padding: 2rem;
+
+@mixin scrollbar($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+  // Chrome
+  &::-webkit-scrollbar {
+    width:  $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+.side-panel {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  width: 300px;
+  overflow-y: auto;
+  max-height: calc(100% - 4rem);
+  border-radius: 2rem;
+  @include elevationBg(3);
+  color: grey(220);
+  padding: $padding;
+  @include scrollbar(10px, rgb(24, 160, 251), elevationColor(9));
+  transition: transform 0.5s;
+
+  &.hidden {
+    transform: translate(100%, 0);
+  }
+}
+
+.close-button {
+  color: $red;
+  font-size: 3rem;
+  cursor: pointer;
+}

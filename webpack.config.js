@@ -16,6 +16,7 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '',
   },
   module: {
     rules: [
@@ -26,6 +27,16 @@ module.exports = {
           'css-loader',
           'sass-loader',
         ],
+      },
+      // {
+      //   test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      //   use: [
+      //     'file-loader',
+      //   ],
+      // },
+      {
+        test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+        use: 'base64-inline-loader',
       },
     ],
   },

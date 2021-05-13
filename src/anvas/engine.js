@@ -11,9 +11,12 @@ import CanvasPool from './rendering/canvas-pool.js';
 import Input from './input/input.js';
 import Physics from './physics/physics.js';
 import NoPartitioning from './physics/space-partitioning/no-partitioning.js';
+import Observable from './events/observable.js';
 
 export default class Engine {
   constructor() {
+    this.onDocumentReady = new Observable();
+
     this.renderer = null;
     this.load = null;
     this.cache = null;
@@ -130,6 +133,8 @@ export default class Engine {
       this._initStartingState();
 
       this._setupRAF();
+
+      this.onDocumentReady.post();
     }
     if (
       document.readyState === 'complete' ||

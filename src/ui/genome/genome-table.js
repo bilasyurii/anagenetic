@@ -18,10 +18,9 @@ export default class GenomeTable extends UIElement {
     this._initGrid();
   }
 
-  resetGenesStates() {
+  setGenesState(state) {
     const genes = this.genes;
     const count = genes.length;
-    const state = GeneItem.State.Default;
 
     for (let i = 0; i < count; ++i) {
       genes[i].setState(state);

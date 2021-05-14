@@ -43,13 +43,9 @@ export default class GenomeViewer extends UIElement {
   }
 
   _onGeneClicked(geneItem) {
-    const selected = this._selected;
+    this._table.setGenesState(GeneItem.State.Default);
 
-    if (selected !== null) {
-      selected.setState(GeneItem.State.Default);
-    }
-
-    if (geneItem === selected) {
+    if (geneItem === this._selected) {
       this._selected = null;
       this._descriptor.html('');
     } else {

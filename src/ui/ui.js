@@ -8,6 +8,7 @@ import $ from 'jquery';
 import SidePanel from './side-panel/side-panel';
 import GenomeTable from './genome/genome-table';
 import Genome from '../core/genome/genome';
+import GenomeViewer from './genome/genome-viewer';
 
 export default class UI extends UIElement {
   constructor() {
@@ -39,11 +40,19 @@ export default class UI extends UIElement {
 
     const genomeTable = this.create
       .custom('genome-table', GenomeTable)
-      .injectTo(sidePanel, 'genome')
       .setFromGenome(Genome.random());
 
+    const descriptor = this.create
+      .template('gene-descriptor');
+
+    const genomeViewer = this.create
+      .custom('genome-viewer', GenomeViewer)
+      .injectTo(sidePanel, 'genome')
+      .setTable(genomeTable)
+      .setDescriptor(descriptor);
+
     setTimeout(() => {
-      sidePanel.show()
+      sidePanel.show(descriptor)
     }, 500);
   }
 }

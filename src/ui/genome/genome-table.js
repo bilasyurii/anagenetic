@@ -1,10 +1,13 @@
 import UIElement from '../core/ui-element';
 import GeneItem from './gene-item';
 import VM from '../../core/vm/vm';
+import Observable from '../../anvas/events/observable';
 
 export default class GenomeTable extends UIElement {
   constructor(factory, dom) {
     super(factory, dom);
+
+    this.onGeneClicked = new Observable();
 
     this.genome = null;
     this.iterator = null;
@@ -31,6 +34,8 @@ export default class GenomeTable extends UIElement {
     }
 
     this.updateGenes();
+
+    return this;
   }
 
   updateGenes() {
@@ -58,7 +63,6 @@ export default class GenomeTable extends UIElement {
       for (let j = 0; j < cols; ++j) {
         const gene = this._initGene();
 
-        this.add(gene);
         row.push(gene);
         genes.push(gene);
       }
@@ -66,7 +70,16 @@ export default class GenomeTable extends UIElement {
   }
 
   _initGene() {
-    return this.create
-      .custom('gene-item', GeneItem);
+    const gene = this.create
+      .custom('gene-item', GeneItem)
+      .addTo(this);
+
+    gene.onClick.add(this._onGeneClicked, this);
+
+    return gene;
+  }
+
+  _onGeneClicked(gene) {
+    this.onGeneClicked.post(gene);
   }
 }

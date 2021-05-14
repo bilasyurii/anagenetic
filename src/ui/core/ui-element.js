@@ -23,6 +23,14 @@ export default class UIElement {
     child.parent = this;
 
     this.dom.appendChild(child.dom);
+
+    return this;
+  }
+
+  html(html) {
+    this.dom$.html(html);
+
+    return this;
   }
 
   addTo(parent) {

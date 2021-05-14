@@ -18,6 +18,10 @@ export default class GenomeTable extends UIElement {
     this._initGrid();
   }
 
+  getByIndex(index) {
+    return this.genes[index];
+  }
+
   setGenesState(state) {
     const genes = this.genes;
     const count = genes.length;
@@ -64,6 +68,8 @@ export default class GenomeTable extends UIElement {
     const rows = 8;
     const cols = 8;
 
+    let index = 0;
+
     for (let i = 0; i < rows; ++i) {
       const row = [];
 
@@ -72,6 +78,7 @@ export default class GenomeTable extends UIElement {
       for (let j = 0; j < cols; ++j) {
         const gene = this._initGene();
 
+        gene.index = index++;
         row.push(gene);
         genes.push(gene);
       }

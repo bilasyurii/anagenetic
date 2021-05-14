@@ -34,8 +34,8 @@ $text: grey(220);
 $textDisabled: grey(170);
 $primary: rgb(24, 160, 251);
 $primaryFocus: rgb(75, 183, 255);
-$highlight: rgb(251, 232, 24);
-$highlightFocus: rgb(255, 240, 74);
+$highlight: rgb(103, 24, 251);
+$highlightFocus: rgb(121, 49, 255);
 $red: rgb(255, 110, 110);
 $redFocus: rgb(255, 123, 123);
 $padding: 2rem;
@@ -173,6 +173,7 @@ $padding: 2rem;
 
       &:hover {
         background-color: lighten(elevationColor(0), 10%);
+        color: white;
       }
     }
 
@@ -181,6 +182,7 @@ $padding: 2rem;
 
       &:hover {
         background-color: $highlightFocus;
+        color: white;
       }
     }
 
@@ -189,6 +191,7 @@ $padding: 2rem;
 
       &:hover {
         background-color: $redFocus;
+        color: white;
       }
     }
   }

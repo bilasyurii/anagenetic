@@ -7,6 +7,7 @@ export default class GeneItem extends UIElement {
 
     this.onClick = new Observable();
 
+    this.index = 0;
     this.gene = null;
 
     this._state = GeneItem.State.Default;

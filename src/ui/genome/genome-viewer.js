@@ -43,7 +43,9 @@ export default class GenomeViewer extends UIElement {
   }
 
   _onGeneClicked(geneItem) {
-    this._table.setGenesState(GeneItem.State.Default);
+    const table = this._table;
+
+    table.setGenesState(GeneItem.State.Default);
 
     if (geneItem === this._selected) {
       this._selected = null;
@@ -56,6 +58,20 @@ export default class GenomeViewer extends UIElement {
       const command = gene.command;
 
       this._descriptor.html(command.description);
+
+      const argsCount = command.argsCount;
+      const index = geneItem.index;
+      const highlightedState = GeneItem.State.Highlighted1;
+
+      for (let i = 0; i < argsCount; ++i) {
+        const item = table.getByIndex(index + i + 1);
+
+        if (item === undefined) {
+          continue;
+        }
+
+        item.setState(highlightedState);
+      }
     }
   }
 }

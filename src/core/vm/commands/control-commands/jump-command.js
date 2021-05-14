@@ -1,3 +1,4 @@
+import Genome from '../../../genome/genome';
 import Command from '../../command';
 
 export default class JumpCommand extends Command {
@@ -10,7 +11,7 @@ export default class JumpCommand extends Command {
     const distance = iterator.next().current;
 
     if (distance !== undefined) {
-      iterator.advance(distance);
+      iterator.advance((distance % (Genome.GENES_COUNT - 1)) + 1);
     }
   }
 }

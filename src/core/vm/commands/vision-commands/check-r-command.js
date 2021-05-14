@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class CheckRCommand extends Command {
   constructor() {
-    super('check r', 'CHR', 2);
+    super('check r', 'CHR', 'Description', 2);
   }
 
   execute(context) {

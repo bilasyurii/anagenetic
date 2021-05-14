@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class GetChemicalCommand extends Command {
   constructor() {
-    super('get chemical', 'CHM', 2);
+    super('get chemical', 'CHM', 'Description', 2);
   }
 
   execute(context) {

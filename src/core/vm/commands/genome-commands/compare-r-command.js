@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class CompareRCommand extends Command {
   constructor() {
-    super('compare r', 'CMP', 2);
+    super('compare r', 'CMP', 'Description', 2);
   }
 
   execute(context) {

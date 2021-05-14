@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class EatRCommand extends Command {
   constructor() {
-    super('eat r', 'EAT', 1);
+    super('eat r', 'EAT', 'Description', 1);
   }
 
   execute(context) {

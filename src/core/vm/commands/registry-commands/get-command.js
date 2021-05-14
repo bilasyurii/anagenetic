@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class GetCommand extends Command {
   constructor() {
-    super('get', 'GET', 2);
+    super('get', 'GET', 'Description', 2);
   }
 
   execute(context) {

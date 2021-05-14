@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class StoreCommand extends Command {
   constructor() {
-    super('store', 'STR', 2);
+    super('store', 'STR', 'Description', 2);
   }
 
   execute(context) {

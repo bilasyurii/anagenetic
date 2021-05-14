@@ -3,7 +3,7 @@ import ConditionalCommandUtils from '../../command-utils/conditional-command-uti
 
 export default class GreaterRVCommand extends Command {
   constructor() {
-    super('greater rv', 'GRV', 3);
+    super('greater rv', 'GRV', 'Description', 3);
   }
 
   execute(context) {

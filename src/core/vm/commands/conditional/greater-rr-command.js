@@ -3,7 +3,7 @@ import ConditionalCommandUtils from '../../command-utils/conditional-command-uti
 
 export default class GreaterRRCommand extends Command {
   constructor() {
-    super('greater rr', 'GRR', 3);
+    super('greater rr', 'GRR', 'Description', 3);
   }
 
   execute(context) {

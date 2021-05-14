@@ -3,7 +3,7 @@ import ConditionalCommandUtils from '../../command-utils/conditional-command-uti
 
 export default class EqualsRVCommand extends Command {
   constructor() {
-    super('equals rv');
+    super('equals rv', 'EQV', 3);
   }
 
   execute(context) {

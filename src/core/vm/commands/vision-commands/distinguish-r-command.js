@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class DistinguishRCommand extends Command {
   constructor() {
-    super('distinguish r');
+    super('distinguish r', 'DIS', 2);
   }
 
   execute(context) {

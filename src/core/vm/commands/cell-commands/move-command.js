@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class MoveCommand extends Command {
   constructor() {
-    super('move');
+    super('move', 'MOV', 1);
   }
 
   execute(context) {

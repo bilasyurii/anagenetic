@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class Compare3RCommand extends Command {
   constructor() {
-    super('compare 3 r');
+    super('compare 3 r', 'CM3', 2);
   }
 
   execute(context) {

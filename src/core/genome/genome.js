@@ -1,4 +1,3 @@
-import Random from '../utils/random';
 import Gene from './gene';
 import GenomeIterator from './genome-iterator';
 import MutationStrategy from './mutation/mutation-strategy';

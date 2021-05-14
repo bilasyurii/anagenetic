@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class SpreadCommand extends Command {
   constructor() {
-    super('spread');
+    super('spread', 'SPR', 2);
   }
 
   execute(context) {

@@ -3,7 +3,7 @@ import ConditionalCommandUtils from '../../command-utils/conditional-command-uti
 
 export default class LessRVCommand extends Command {
   constructor() {
-    super('less rv')
+    super('less rv', 'LEV', 3)
   }
 
   execute(context) {

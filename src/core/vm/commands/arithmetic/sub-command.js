@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class SubCommand extends Command {
   constructor() {
-    super('sub');
+    super('sub', 'SUB', 3);
   }
 
   execute(context) {

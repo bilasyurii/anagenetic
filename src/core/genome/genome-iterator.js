@@ -12,6 +12,10 @@ export default class GenomeIterator {
     return this._index < this._genes.length - 1;
   }
 
+  get hasCurrent() {
+    return this._index < this._genes.length;
+  }
+
   next() {
     ++this._index;
 

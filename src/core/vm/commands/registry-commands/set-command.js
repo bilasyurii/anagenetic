@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class SetCommand extends Command {
   constructor() {
-    super('set');
+    super('set', 'SET', 2);
   }
 
   execute(context) {

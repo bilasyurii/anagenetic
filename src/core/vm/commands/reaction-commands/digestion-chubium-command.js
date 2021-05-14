@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class DigestionChubiumCommand extends Command {
   constructor() {
-    super('digestion chubium')
+    super('digestion chubium', 'DGC', 0)
   }
 
   execute(context) {

@@ -3,7 +3,7 @@ import ConditionalCommandUtils from '../../command-utils/conditional-command-uti
 
 export default class EqualsRRCommand extends Command {
   constructor() {
-    super('equals rr');
+    super('equals rr', 'EQR', 3);
   }
 
   execute(context) {

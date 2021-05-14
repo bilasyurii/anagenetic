@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class DivideCommand extends Command {
   constructor() {
-    super('divide');
+    super('divide', 'DIV', 0);
   }
 
   execute(context) {

@@ -6,6 +6,8 @@ import UIFactory from './ui-factory';
 import UIElement from './core/ui-element';
 import $ from 'jquery';
 import SidePanel from './side-panel/side-panel';
+import GenomeTable from './genome/genome-table';
+import Genome from '../core/genome/genome';
 
 export default class UI extends UIElement {
   constructor() {
@@ -27,13 +29,18 @@ export default class UI extends UIElement {
       .inject(button);
 
     const sidePanel = this.create
-      .custom('side-panel', SidePanel)
+      .custom('cell-side-panel', SidePanel)
       .addTo(this)
-      .inject(header, '');
+      .inject(header, 'header');
 
     sidePanel.onClose.add(() => console.log('closed'));
 
     header.dom$.find('.close-button').click(() => sidePanel.close());
+
+    const genomeTable = this.create
+      .custom('genome-table', GenomeTable)
+      .injectTo(sidePanel, 'genome')
+      .setFromGenome(Genome.random());
 
     setTimeout(() => {
       sidePanel.show()

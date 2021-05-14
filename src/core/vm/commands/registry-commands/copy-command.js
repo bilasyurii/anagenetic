@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class CopyCommand extends Command {
   constructor() {
-    super('copy');
+    super('copy', 'CPY', 2);
   }
 
   execute(context) {

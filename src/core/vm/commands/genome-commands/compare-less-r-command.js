@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class CompareLessRCommand extends Command {
   constructor() {
-    super('compare less r');
+    super('compare less r', 'CML', 3);
   }
 
   execute(context) {

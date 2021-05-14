@@ -9,8 +9,8 @@ export default class TemplateMaster {
   static init() {
     const templates = TemplateMaster._templates;
 
-    $('.template').each(function() {
-      const name = this.getAttribute('template-name');
+    $('ins').each(function() {
+      const name = this.getAttribute('name');
       const childNodes = this.childNodes;
       const count = childNodes.length;
 

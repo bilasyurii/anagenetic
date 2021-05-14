@@ -44,7 +44,7 @@ export default class UIElement {
     for (let i = 0; i < count; ++i) {
       const placeholder = placeholders[i];
 
-      if (placeholder.getAttribute(placeholderName) === placeholderName) {
+      if (placeholder.getAttribute('name') === placeholderName) {
         placeholder.replaceWith(child.dom);
 
         replaced = true;
@@ -58,6 +58,12 @@ export default class UIElement {
     }
 
     child.parent = this;
+
+    return this;
+  }
+
+  injectTo(parent, placeholderName) {
+    parent.inject(this, placeholderName);
 
     return this;
   }

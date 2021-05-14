@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class NoopCommand extends Command {
   constructor() {
-    super('noop');
+    super('noop', 'NOP', 0);
   }
 
   execute(context) {

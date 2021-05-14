@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class DefragmentationChubiumCommand extends Command {
   constructor() {
-    super('defragmentation chubium')
+    super('defragmentation chubium', 'DFC', 0)
   }
 
   execute(context) {

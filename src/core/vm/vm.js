@@ -69,7 +69,7 @@ export default class VM {
     const context = this._context;
     const cell = this._cell;
 
-    while (iterator.hasNext === true) {
+    while (iterator.hasCurrent === true) {
       const gene = iterator.current;
       const value = gene.value;
       const command = lookup[value];
@@ -81,6 +81,21 @@ export default class VM {
 
   _initCommandContext() {
     this._context = new CommandContext(this._cell, null);
+  }
+
+  static describeGenome(iterator) {
+    iterator.reset();
+
+    const describeCommandGene = VM.describeCommandGene;
+
+    while (iterator.hasCurrent) {
+      describeCommandGene(iterator.current);
+      iterator.next();
+    }
+  }
+
+  static describeCommandGene(gene) {
+    gene.command = VM._commandsLookup[gene.value];
   }
 
   static _initCommandsLookup() {

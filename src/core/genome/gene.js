@@ -4,6 +4,11 @@ export default class Gene {
   constructor(value, mutationChance) {
     this.value = (value === undefined ? 0 : value);
     this.mutationChance = (mutationChance === undefined ? Gene.MAX_MUTATION_VALUE : mutationChance);
+    this.command = null;
+  }
+
+  get mnemonic() {
+    return (this.command === null ? '---' : this.command.mnemonic);
   }
 
   mutate() {

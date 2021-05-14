@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class IfCommand extends Command {
   constructor() {
-    super('if');
+    super('if', 'IFF', 2);
   }
 
   execute(context) {

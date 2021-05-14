@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class ChubiumGenerationCommand extends Command {
   constructor() {
-    super('chubium generation')
+    super('chubium generation', 'CHU', 0)
   }
 
   execute(context) {

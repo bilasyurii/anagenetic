@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class PhotosynthesisCommand extends Command {
   constructor() {
-    super('photosynthesis')
+    super('photosynthesis', 'PHO', 0)
   }
 
   execute(context) {

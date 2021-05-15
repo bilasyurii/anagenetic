@@ -1,10 +1,14 @@
 import UIElement from './core/ui-element';
 import Button from './shared/button';
-import SidePanel from './side-panel/side-panel';
+import TextNode from './shared/text-node';
 import TemplateMaster from './template-master';
 
 export default class UIFactory {
   constructor() {
+  }
+
+  text() {
+    return new TextNode(this, TemplateMaster.createText());
   }
 
   button() {

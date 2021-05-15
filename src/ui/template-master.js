@@ -35,6 +35,11 @@ export default class TemplateMaster {
   static get(name) {
     return TemplateMaster._templates[name];
   }
+
+  static createText() {
+    return document.createTextNode('');
+  }
 }
 
 TemplateMaster._templates = {};
+TemplateMaster._textNode = null;

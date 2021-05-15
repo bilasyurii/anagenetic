@@ -25,9 +25,11 @@ export default class UI extends UIElement {
       .setText('Test')
       .setClick(() => console.log('test'))
 
+    const cellName = this.create.text().setText('Hello');
+
     const header = this.create
       .template('side-panel-header')
-      .inject(button);
+      .inject(cellName);
 
     const sidePanel = this.create
       .custom('cell-side-panel', SidePanel)

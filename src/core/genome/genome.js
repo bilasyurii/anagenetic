@@ -45,6 +45,19 @@ export default class Genome {
     return new Genome(genesCopy);
   }
 
+  toString() {
+    let str = '';
+
+    const genes = this._genes;
+    const count = genes.length;
+
+    for (let i = 0; i < count; ++i) {
+      str += ('00' + genes[i].value).slice(-3);
+    }
+
+    return str;
+  }
+
   static random() {
     const genes = [];
     const count = Genome.GENES_COUNT;

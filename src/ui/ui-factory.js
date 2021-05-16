@@ -15,6 +15,14 @@ export default class UIFactory {
     return new Button(this, TemplateMaster.create('button'));
   }
 
+  tag(tag) {
+    return new UIElement(this, TemplateMaster.createTag(tag));
+  }
+
+  block() {
+    return new UIElement(this, TemplateMaster.createTag('div'));
+  }
+
   template(name) {
     return new UIElement(this, TemplateMaster.create(name));
   }

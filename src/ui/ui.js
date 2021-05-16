@@ -1,6 +1,6 @@
 import '../../node_modules/milligram/dist/milligram.min.css';
-import '../../css/main.scss';
 import '../../css/font-awesome.css';
+import '../../css/main.scss';
 import TemplateMaster from './template-master';
 import UIFactory from './ui-factory';
 import UIElement from './core/ui-element';
@@ -20,11 +20,6 @@ export default class UI extends UIElement {
   }
 
   _init() {
-    // const button = this.create
-    //   .button()
-    //   .setText('Test')
-    //   .setClick(() => console.log('test'))
-
     const sidePanel = this.create
       .custom('cell-side-panel', SidePanel)
       .addTo(this);
@@ -73,6 +68,22 @@ export default class UI extends UIElement {
     createCellInfo('Chubium');
     createCellInfo('Dion');
     createCellInfo('Hillagen');
+
+    const buttons = this.create
+      .template('cell-panel-buttons')
+      .injectTo(sidePanel, 'buttons');
+
+    const saveToLibrary = this.create
+      .button()
+      .setText('Save to Library')
+      .setClick(() => console.log('Save to Library'))
+      .addTo(buttons);
+
+    const exportToFile = this.create
+      .button()
+      .setText('Export to File')
+      .setClick(() => console.log('Export to File'))
+      .addTo(buttons);
 
     setTimeout(() => {
       sidePanel.show()

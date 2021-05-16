@@ -5,11 +5,8 @@ import $ from 'jquery';
 import TemplateMaster from './template-master';
 import UIFactory from './ui-factory';
 import UIElement from './core/ui-element';
-import SidePanel from './side-panel/side-panel';
-import Genome from '../core/genome/genome';
-import GenomeViewer from './genome/genome-viewer';
-import hashGenome from '../utils/hash-genome';
 import SimulationControls from './controls/simulation-controls';
+import SimulationUI from './simulation/simulation-ui';
 
 export default class UI extends UIElement {
   constructor() {
@@ -17,15 +14,24 @@ export default class UI extends UIElement {
 
     super(new UIFactory(), $('#uiRoot')[0]);
 
+    this._header = null;
+    this._simulationControls = null;
+    this._simulationUI = null;
+
     this._init();
   }
 
   _init() {
-    const navHeader = this.create
+    this._initHeader();
+    this._initSimulationUI();
+  }
+
+  _initHeader() {
+    const navHeader = this._header = this.create
       .template('nav-header')
       .addTo(this);
 
-    const controls = this.create
+    const controls = this._simulationControls = this.create
       .custom('simulation-controls', SimulationControls)
       .injectTo(navHeader);
 
@@ -33,78 +39,9 @@ export default class UI extends UIElement {
     controls.onPause.add(() => console.log('pause'));
     controls.onStop.add(() => console.log('stop'));
     controls.onSpeedChanged.add((speed) => console.log('speed ' + speed));
+  }
 
-    const sidePanel = this.create
-      .custom('side-panel', SidePanel)
-      .addTo(this);
-
-    const cellPanelContent = this.create
-      .template('cell-side-panel-content')
-      .injectTo(sidePanel);
-
-    const genome = Genome.random();
-    const genomeHash = hashGenome(genome);
-
-    const cellName = this.create.text().setText(genomeHash);
-
-    const header = this.create
-      .template('side-panel-header')
-      .inject(cellName)
-      .injectTo(cellPanelContent, 'header');
-
-    sidePanel.onClose.add(() => console.log('closed'));
-    header.dom$.find('.close-button').click(() => sidePanel.close());
-
-    this.create
-      .custom('genome-viewer', GenomeViewer)
-      .injectTo(cellPanelContent, 'genome')
-      .setFromGenome(genome);
-
-    const cellInfoWrapper = this.create
-      .template('cell-info-wrapper')
-      .injectTo(cellPanelContent, 'cell-info');
-
-    const cellInfos = {};
-
-    const createCellInfo = (key, value = 0) => {
-      cellInfos[key] = this.create
-        .template('cell-info-item')
-        .addTo(cellInfoWrapper)
-        .inject(this.create.text(key), 'key')
-        .inject(this.create.text(value), 'value');
-    };
-
-    createCellInfo('Energy');
-    createCellInfo('Energy capacity');
-    createCellInfo('TTL');
-    createCellInfo('Radius');
-    createCellInfo('Armor');
-    createCellInfo('Damage');
-    createCellInfo('Ancestors');
-    createCellInfo('Generation');
-    createCellInfo('Billanium');
-    createCellInfo('Chubium');
-    createCellInfo('Dion');
-    createCellInfo('Hillagen');
-
-    const buttons = this.create
-      .template('cell-panel-buttons')
-      .injectTo(cellPanelContent, 'buttons');
-
-    this.create
-      .button()
-      .setText('Save to Library')
-      .setClick(() => console.log('Save to Library'))
-      .addTo(buttons);
-
-    this.create
-      .button()
-      .setText('Export to File')
-      .setClick(() => console.log('Export to File'))
-      .addTo(buttons);
-
-    setTimeout(() => {
-      sidePanel.show()
-    }, 500);
+  _initSimulationUI() {
+    this._simulationUI = new SimulationUI(this.create, this)
   }
 }

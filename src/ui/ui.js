@@ -20,10 +20,14 @@ export default class UI extends UIElement {
   }
 
   _init() {
-    const button = this.create
-      .button()
-      .setText('Test')
-      .setClick(() => console.log('test'))
+    // const button = this.create
+    //   .button()
+    //   .setText('Test')
+    //   .setClick(() => console.log('test'))
+
+    const sidePanel = this.create
+      .custom('cell-side-panel', SidePanel)
+      .addTo(this);
 
     const genome = Genome.random();
     const genomeHash = hashGenome(genome);
@@ -32,21 +36,43 @@ export default class UI extends UIElement {
 
     const header = this.create
       .template('side-panel-header')
-      .inject(cellName);
-
-    const sidePanel = this.create
-      .custom('cell-side-panel', SidePanel)
-      .addTo(this)
-      .inject(header, 'header');
+      .inject(cellName)
+      .injectTo(sidePanel, 'header');
 
     sidePanel.onClose.add(() => console.log('closed'));
-
     header.dom$.find('.close-button').click(() => sidePanel.close());
 
     const genomeViewer = this.create
       .custom('genome-viewer', GenomeViewer)
       .injectTo(sidePanel, 'genome')
       .setFromGenome(genome);
+
+    const cellInfoWrapper = this.create
+      .template('cell-info-wrapper')
+      .injectTo(sidePanel, 'cell-info');
+
+    const cellInfos = {};
+
+    const createCellInfo = (key, value = 0) => {
+      cellInfos[key] = this.create
+        .template('cell-info-item')
+        .addTo(cellInfoWrapper)
+        .inject(this.create.text(key), 'key')
+        .inject(this.create.text(value), 'value');
+    };
+
+    createCellInfo('Energy');
+    createCellInfo('Energy capacity');
+    createCellInfo('TTL');
+    createCellInfo('Radius');
+    createCellInfo('Armor');
+    createCellInfo('Damage');
+    createCellInfo('Ancestors');
+    createCellInfo('Generation');
+    createCellInfo('Billanium');
+    createCellInfo('Chubium');
+    createCellInfo('Dion');
+    createCellInfo('Hillagen');
 
     setTimeout(() => {
       sidePanel.show()

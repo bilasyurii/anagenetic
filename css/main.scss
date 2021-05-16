@@ -198,3 +198,20 @@ $padding: 2rem;
     }
   }
 }
+
+.cell-info-wrapper {
+  margin-bottom: 1rem;
+
+  .cell-info-item {
+    display: flex;
+    align-items: center;
+
+    .cell-info-key {
+      flex-basis: 50%;
+    }
+
+    .cell-info-value {
+      flex-basis: 50%;
+    }
+  }
+}

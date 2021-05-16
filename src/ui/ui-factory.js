@@ -7,8 +7,8 @@ export default class UIFactory {
   constructor() {
   }
 
-  text() {
-    return new TextNode(this, TemplateMaster.createText());
+  text(str = '') {
+    return new TextNode(this, TemplateMaster.createText(str));
   }
 
   button() {

@@ -1,5 +1,5 @@
-import Observable from '../../anvas/events/observable';
-import UIElement from '../core/ui-element';
+import Observable from '../../../anvas/events/observable';
+import UIElement from '../../core/ui-element';
 import $ from 'jquery';
 
 export default class SimulationControls extends UIElement {

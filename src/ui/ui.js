@@ -5,7 +5,7 @@ import $ from 'jquery';
 import TemplateMaster from './template-master';
 import UIFactory from './ui-factory';
 import UIElement from './core/ui-element';
-import SimulationControls from './controls/simulation-controls';
+import SimulationControls from './simulation/controls/simulation-controls';
 import SimulationUI from './simulation/simulation-ui';
 
 export default class UI extends UIElement {

@@ -179,6 +179,27 @@ $mobileWidth: 500px;
   }
 }
 
+.zoom-controls {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  overflow: hidden;
+
+  .zoom-button {
+    color: $text;
+    padding: 1rem;
+    cursor: pointer;
+    background-color: rgba(127, 127, 127, 0.2);
+
+    &:hover {
+      background-color: rgba(127, 127, 127, 0.3);
+    }
+  }
+}
+
 .blue {
   &.button {
     background-color: $primary;

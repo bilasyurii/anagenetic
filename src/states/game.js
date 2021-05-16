@@ -22,6 +22,7 @@ import Observable from '../anvas/events/observable.js';
 export default class GameState extends State {
   onInit() {
     this.onCellSelected = new Observable();
+    this.onUpdate = new Observable();
   }
 
   onEnter() {
@@ -80,6 +81,8 @@ export default class GameState extends State {
     //   .setPositionXY(130, 100);
 
     UIMediator.registerSimulation(this);
+
+    engine.onUpdate.add(() => this.onUpdate.post());
 
     engine.time.events.once(500, () => {
       this.onCellSelected.post(cell);

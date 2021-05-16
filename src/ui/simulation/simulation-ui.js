@@ -16,6 +16,16 @@ export default class SimulationUI {
     this._init();
   }
 
+  update() {
+    if (this._cell === null) {
+      return;
+    }
+
+    if (this._sidePanel.isOpened() === true) {
+      this._cellPanelContent.updateInfo();
+    }
+  }
+
   onCellSelected(cell) {
     this._cell = cell;
     this._cellPanelContent.setCell(cell);

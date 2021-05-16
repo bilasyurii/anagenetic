@@ -44,10 +44,15 @@ export default class UIMediator {
     const simulation = this._simulation;
 
     simulation.onCellSelected.add(this._onCellSelected, this);
+    simulation.onUpdate.add(this._onUpdate, this);
   }
 
   _onCellSelected(cell) {
     this._ui.onCellSelected(cell);
+  }
+
+  _onUpdate() {
+    this._ui.update();
   }
 }
 

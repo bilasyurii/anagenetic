@@ -7,15 +7,45 @@ export default class SidePanel extends UIElement {
 
     this.onClose = new Observable();
     this.onShow = new Observable();
+
+    this._isOpened = false;
+
+    this.close(true);
   }
 
-  close() {
-    this.onClose.post(this);
+  isOpened() {
+    return this._isOpened;
+  }
+
+  close(silent) {
+    if (this._isOpened === false) {
+      return this;
+    }
+
+    this._isOpened = false;
+
     this.dom$.addClass('panel-hidden');
+
+    if (silent !== true) {
+      this.onClose.post(this);
+    }
+
+    return this;
   }
 
-  show() {
-    this.onShow.post(this);
+  show(silent) {
+    if (this._isOpened === true) {
+      return this;
+    }
+
+    this._isOpened = true;
+
     this.dom$.removeClass('panel-hidden');
+
+    if (silent !== true) {
+      this.onShow.post(this);
+    }
+
+    return this;
   }
 }

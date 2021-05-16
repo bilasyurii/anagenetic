@@ -21,6 +21,10 @@ export default class UI extends UIElement {
     this._init();
   }
 
+  update() {
+    this._simulationUI.update();
+  }
+
   onCellSelected(cell) {
     this._simulationUI.onCellSelected(cell);
   }

@@ -59,6 +59,22 @@ export default class Cell {
     return this._energy;
   }
 
+  get energyCapacity() {
+    return this._energyCapacity;
+  }
+
+  get ttl() {
+    return this._ttl;
+  }
+
+  get armor() {
+    return this._armor;
+  }
+
+  get damage() {
+    return this._damage;
+  }
+
   get genome() {
     return this._genome;
   }

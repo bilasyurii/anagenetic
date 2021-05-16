@@ -16,6 +16,7 @@ import Observable from './events/observable.js';
 export default class Engine {
   constructor() {
     this.onDocumentReady = new Observable();
+    this.onUpdate = new Observable();
 
     this.renderer = null;
     this.load = null;
@@ -324,6 +325,8 @@ export default class Engine {
     this.physics.postUpdate();
 
     this.renderer.render();
+
+    this.onUpdate.post();
 
     window.requestAnimationFrame(this._loop);
   }

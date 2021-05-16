@@ -26,6 +26,26 @@ export default class CellPanelContent extends UIElement {
     return this;
   }
 
+  updateInfo() {
+    const cell = this._cell;
+
+    const chemicals = cell.chemicals;
+    const cellInfos = this._cellInfos;
+
+    cellInfos['Energy'].valueNode.setText(cell.energy.toFixed(2));
+    cellInfos['Energy capacity'].valueNode.setText(cell.energyCapacity);
+    cellInfos['TTL'].valueNode.setText(cell.ttl);
+    cellInfos['Radius'].valueNode.setText(cell.radius);
+    cellInfos['Armor'].valueNode.setText(cell.armor);
+    cellInfos['Damage'].valueNode.setText(cell.damage);
+    cellInfos['Ancestors'].valueNode.setText(0);
+    cellInfos['Generation'].valueNode.setText(0);
+    cellInfos['Billanium'].valueNode.setText(chemicals.getAmount('billanium'));
+    cellInfos['Chubium'].valueNode.setText(chemicals.getAmount('chubium'));
+    cellInfos['Dion'].valueNode.setText(chemicals.getAmount('dion'));
+    cellInfos['Hillagen'].valueNode.setText(chemicals.getAmount('hillagen'));
+  }
+
   _init() {
     this._initHeader();
     this._initCellInfos();
@@ -88,18 +108,30 @@ export default class CellPanelContent extends UIElement {
   }
 
   _initCellInfo(key, value = 0) {
-    this._cellInfos[key] = this.create
+    const valueNode = this.create.text(value);
+    const info = this._cellInfos[key] = this.create
       .template('cell-info-item')
       .addTo(this._cellInfoWrapper)
       .inject(this.create.text(key), 'key')
-      .inject(this.create.text(value), 'value');
+      .inject(valueNode, 'value');
+
+    info.valueNode = valueNode;
   }
 
   _updateContent() {
+    this._updateName();
+    this._updateGenome();
+    this.updateInfo();
+  }
+
+  _updateName() {
     const genome = this._genome;
     const genomeHash = hashGenome(genome);
 
     this._cellName.setText(genomeHash);
-    this._genomeViewer.setFromGenome(genome);
+  }
+
+  _updateGenome() {
+    this._genomeViewer.setFromGenome(this._genome);
   }
 }

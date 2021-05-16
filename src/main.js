@@ -6,7 +6,7 @@ import UI from './ui/ui';
 
 new Engine()
   .setCanvasId('canvas')
-  .setBodyColor('#222222')
+  .setBodyColor('#111111')
   .setCanvasColor('#000000')
   .registerState('game', GameState)
   .setStartingState('game')

@@ -39,6 +39,7 @@ $highlightFocus: rgb(121, 49, 255);
 $red: rgb(255, 110, 110);
 $redFocus: rgb(255, 123, 123);
 $padding: 2rem;
+$navHeaderHeight: 5rem;
 
 @mixin scrollbar($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
   // Chrome
@@ -76,6 +77,16 @@ $padding: 2rem;
   }
 }
 
+.nav-header {
+  position: absolute;
+  width: 100%;
+  height: $navHeaderHeight;
+  background-color: elevationColor(3);
+  color: $text;
+  display: flex;
+  align-items: center;
+}
+
 .blue {
   &.button {
     background-color: $primary;
@@ -98,19 +109,22 @@ $padding: 2rem;
   }
 }
 
+$sidePanelMargin: 2rem;
+
 .side-panel {
   position: absolute;
-  top: 2rem;
+  top: #{$navHeaderHeight + $sidePanelMargin};
   right: 0;
   width: 300px;
   overflow-y: auto;
-  max-height: calc(100% - 4rem);
+  max-height: calc(100% - #{$navHeaderHeight + 4rem});
   border-radius: 2rem;
   @include elevationBg(3);
   color: $text;
   padding: $padding;
   @include scrollbar(10px, rgb(24, 160, 251), elevationColor(9));
   transition: transform 0.5s;
+  transform: translate(0, 0);
 
   &.hidden {
     transform: translate(100%, 0);

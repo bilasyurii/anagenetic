@@ -20,6 +20,10 @@ export default class UI extends UIElement {
   }
 
   _init() {
+    const navHeader = this.create
+      .template('nav-header')
+      .addTo(this);
+
     const sidePanel = this.create
       .custom('side-panel', SidePanel)
       .addTo(this);

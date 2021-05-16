@@ -20,6 +20,7 @@ export default class World {
 
     this._spacePartitioning = spacePartitioning;
 
+    this._isRunning = false;
     this._energyLoss = 0;
     this._rndTick = 0;
     this._timeToUpdate = 1;
@@ -32,6 +33,18 @@ export default class World {
 
   get rndTick() {
     return this._rndTick;
+  }
+
+  play() {
+    this._isRunning = true;
+
+    return this;
+  }
+
+  pause() {
+    this._isRunning = false;
+
+    return this;
   }
 
   addCell(cell) {
@@ -56,6 +69,10 @@ export default class World {
   }
 
   update() {
+    if (this._isRunning === false) {
+      return;
+    }
+
     if (--this._timeToUpdate === 0) {
       this._timeToUpdate = this.updateInterval;
 

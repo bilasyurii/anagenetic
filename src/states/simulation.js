@@ -19,17 +19,35 @@ import PickMutationStrategy from '../core/genome/mutation/pick-mutation-strategy
 import UIMediator from '../ui/ui-mediator.js';
 import Observable from '../anvas/events/observable.js';
 
-export default class GameState extends State {
+export default class SimulationState extends State {
   onInit() {
     this.onCellSelected = new Observable();
     this.onUpdate = new Observable();
+
+    this.world = null;
+  }
+
+  play() {
+    this.world.play();
+  }
+
+  pause() {
+    this.world.pause();
+  }
+
+  stop() {
+    this.world.pause();
+  }
+
+  changeSpeed(speed) {
+    this.world.updateInterval = 20 / speed;
   }
 
   onEnter() {
     const engine = this.engine;
 
     const spacePartitioning = engine.physics.spacePartitioning;
-    const world = new World(spacePartitioning, new Vec2(700, 400));
+    const world = this.world = new World(spacePartitioning, new Vec2(700, 400));
     const worldView = new WorldView(world);
 
     worldView.position.set(100, 100);

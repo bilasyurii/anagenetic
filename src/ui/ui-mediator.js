@@ -45,6 +45,13 @@ export default class UIMediator {
 
     simulation.onCellSelected.add(this._onCellSelected, this);
     simulation.onUpdate.add(this._onUpdate, this);
+
+    const ui = this._ui;
+
+    ui.onPlay.add(() => simulation.play());
+    ui.onPause.add(() => simulation.pause());
+    ui.onStop.add(() => simulation.stop());
+    ui.onSpeedChanged.add((speed) => simulation.changeSpeed(speed));
   }
 
   _onCellSelected(cell) {

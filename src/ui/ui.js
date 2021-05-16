@@ -7,12 +7,18 @@ import UIFactory from './core/ui-factory';
 import UIElement from './core/ui-element';
 import SimulationControls from './simulation/controls/simulation-controls';
 import SimulationUI from './simulation/simulation-ui';
+import Observable from '../anvas/events/observable';
 
 export default class UI extends UIElement {
   constructor() {
     TemplateMaster.init();
 
     super(new UIFactory(), $('#uiRoot')[0]);
+
+    this.onPlay = new Observable();
+    this.onPause = new Observable();
+    this.onStop = new Observable();
+    this.onSpeedChanged = new Observable();
 
     this._header = null;
     this._simulationControls = null;
@@ -32,6 +38,7 @@ export default class UI extends UIElement {
   _init() {
     this._initHeader();
     this._initSimulationUI();
+    this._setupEvents();
   }
 
   _initHeader() {
@@ -39,17 +46,21 @@ export default class UI extends UIElement {
       .template('nav-header')
       .addTo(this);
 
-    const controls = this._simulationControls = this.create
+    this._simulationControls = this.create
       .custom('simulation-controls', SimulationControls)
       .injectTo(navHeader);
-
-    controls.onPlay.add(() => console.log('play'));
-    controls.onPause.add(() => console.log('pause'));
-    controls.onStop.add(() => console.log('stop'));
-    controls.onSpeedChanged.add((speed) => console.log('speed ' + speed));
   }
 
   _initSimulationUI() {
     this._simulationUI = new SimulationUI(this.create, this)
+  }
+
+  _setupEvents() {
+    const controls = this._simulationControls;
+
+    controls.onPlay.add(() => this.onPlay.post());
+    controls.onPause.add(() => this.onPause.post());
+    controls.onStop.add(() => this.onStop.post());
+    controls.onSpeedChanged.add((speed) => this.onSpeedChanged.post(speed));
   }
 }

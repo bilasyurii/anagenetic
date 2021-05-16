@@ -1,5 +1,5 @@
 import Engine from './anvas/engine';
-import GameState from './states/game';
+import SimulationState from './states/simulation';
 import HashGrid from './anvas/physics/space-partitioning/hash-grid';
 import UI from './ui/ui';
 import UIMediator from './ui/ui-mediator';
@@ -9,8 +9,8 @@ const engine = new Engine()
   .setCanvasId('canvas')
   .setBodyColor('#111111')
   .setCanvasColor('#000000')
-  .registerState('game', GameState)
-  .setStartingState('game')
+  .registerState('simulation', SimulationState)
+  .setStartingState('simulation')
   .setSpacePartitioning(new HashGrid())
   .start();
 

@@ -159,6 +159,7 @@ export default class Engine {
 
     state = this.state = new State(this, name);
 
+    state.onInit();
     state.onEnter();
 
     return this;

@@ -16,8 +16,14 @@ import ElementRegistry from '../core/chemicals/element-registry.js';
 import MutationStrategy from '../core/genome/mutation/mutation-strategy.js';
 import ForceMutationStrategy from '../core/genome/mutation/force-mutation-strategy.js';
 import PickMutationStrategy from '../core/genome/mutation/pick-mutation-strategy.js';
+import UIMediator from '../ui/ui-mediator.js';
+import Observable from '../anvas/events/observable.js';
 
 export default class GameState extends State {
+  onInit() {
+    this.onCellSelected = new Observable();
+  }
+
   onEnter() {
     const engine = this.engine;
 
@@ -72,6 +78,12 @@ export default class GameState extends State {
 
     // world.create.chemical(element, 10)
     //   .setPositionXY(130, 100);
+
+    UIMediator.registerSimulation(this);
+
+    engine.time.events.once(500, () => {
+      this.onCellSelected.post(cell);
+    });
 
     return;
     const group = new Group();

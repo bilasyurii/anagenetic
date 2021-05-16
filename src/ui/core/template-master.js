@@ -1,4 +1,4 @@
-import Debug from '../anvas/debug/debug';
+import Debug from '../../anvas/debug/debug';
 import $ from 'jquery';
 
 export default class TemplateMaster {

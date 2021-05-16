@@ -2,8 +2,8 @@ import '../../node_modules/milligram/dist/milligram.min.css';
 import '../../css/font-awesome.css';
 import '../../css/main.scss';
 import $ from 'jquery';
-import TemplateMaster from './template-master';
-import UIFactory from './ui-factory';
+import TemplateMaster from './core/template-master';
+import UIFactory from './core/ui-factory';
 import UIElement from './core/ui-element';
 import SimulationControls from './simulation/controls/simulation-controls';
 import SimulationUI from './simulation/simulation-ui';
@@ -19,6 +19,10 @@ export default class UI extends UIElement {
     this._simulationUI = null;
 
     this._init();
+  }
+
+  onCellSelected(cell) {
+    this._simulationUI.onCellSelected(cell);
   }
 
   _init() {

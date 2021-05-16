@@ -1,5 +1,4 @@
 import Observable from '../../../anvas/events/observable';
-import Genome from '../../../core/genome/genome';
 import hashGenome from '../../../utils/hash-genome';
 import UIElement from '../../core/ui-element';
 import GenomeViewer from '../../genome/genome-viewer';
@@ -10,10 +9,21 @@ export default class CellPanelContent extends UIElement {
 
     this.onClose = new Observable();
 
-    this._genome = Genome.random();
+    this._genomeViewer = null;
+    this._cellName = null;
+    this._genome = null;
     this._cellInfos = {};
 
     this._init();
+  }
+
+  setCell(cell) {
+    this._cell = cell;
+    this._genome = cell.genome;
+
+    this._updateContent();
+
+    return this;
   }
 
   _init() {
@@ -24,10 +34,7 @@ export default class CellPanelContent extends UIElement {
   }
 
   _initHeader() {
-    const genome = this._genome;
-    const genomeHash = hashGenome(genome);
-
-    const cellName = this.create.text().setText(genomeHash);
+    const cellName = this._cellName = this.create.text();
 
     const header = this.create
       .template('side-panel-header')
@@ -57,10 +64,9 @@ export default class CellPanelContent extends UIElement {
   }
 
   _initGenomeViewer() {
-    this.create
+    this._genomeViewer = this.create
       .custom('genome-viewer', GenomeViewer)
-      .injectTo(this, 'genome')
-      .setFromGenome(this._genome);
+      .injectTo(this, 'genome');
   }
 
   _initButtons() {
@@ -87,5 +93,13 @@ export default class CellPanelContent extends UIElement {
       .addTo(this._cellInfoWrapper)
       .inject(this.create.text(key), 'key')
       .inject(this.create.text(value), 'value');
+  }
+
+  _updateContent() {
+    const genome = this._genome;
+    const genomeHash = hashGenome(genome);
+
+    this._cellName.setText(genomeHash);
+    this._genomeViewer.setFromGenome(genome);
   }
 }

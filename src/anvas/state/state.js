@@ -27,6 +27,8 @@ export default class State {
     this.root.add(gameObject);
   }
 
+  onInit() {}
+
   onEnter() {}
 
   onLeave() {}

@@ -1,4 +1,4 @@
-import UIFactory from '../ui-factory';
+import UIFactory from './ui-factory';
 import $ from 'jquery';
 
 export default class UIElement {

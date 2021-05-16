@@ -1,6 +1,6 @@
-import UIElement from './core/ui-element';
-import Button from './shared/button';
-import TextNode from './shared/text-node';
+import UIElement from './ui-element';
+import Button from '../shared/button';
+import TextNode from '../shared/text-node';
 import TemplateMaster from './template-master';
 
 export default class UIFactory {

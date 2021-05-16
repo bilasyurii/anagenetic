@@ -7,11 +7,19 @@ export default class SimulationUI {
     this.create = factory;
     this.parent = parent;
 
+    this._cell = null;
+
     this._zoomControls = null;
     this._sidePanel = null;
     this._cellPanelContent = null;
 
     this._init();
+  }
+
+  onCellSelected(cell) {
+    this._cell = cell;
+    this._cellPanelContent.setCell(cell);
+    this._sidePanel.show();
   }
 
   add(child) {
@@ -36,13 +44,9 @@ export default class SimulationUI {
   }
 
   _initSidePanel() {
-    const sidePanel = this._sidePanel = this.create
+    this._sidePanel = this.create
       .custom('side-panel', SidePanel)
       .addTo(this);
-
-    setTimeout(() => {
-      sidePanel.show()
-    }, 500);
   }
 
   _initCellPanel() {

@@ -226,7 +226,8 @@ $sidePanelMargin: 2rem;
 
 .side-panel {
   overflow-y: auto;
-  border-radius: 2rem;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
   @include elevationBg(3);
   color: $text;
   padding: $padding;

@@ -6,9 +6,9 @@ import UIFactory from './ui-factory';
 import UIElement from './core/ui-element';
 import $ from 'jquery';
 import SidePanel from './side-panel/side-panel';
-import GenomeTable from './genome/genome-table';
 import Genome from '../core/genome/genome';
 import GenomeViewer from './genome/genome-viewer';
+import hashGenome from '../utils/hash-genome';
 
 export default class UI extends UIElement {
   constructor() {
@@ -25,7 +25,10 @@ export default class UI extends UIElement {
       .setText('Test')
       .setClick(() => console.log('test'))
 
-    const cellName = this.create.text().setText('Hello');
+    const genome = Genome.random();
+    const genomeHash = hashGenome(genome);
+
+    const cellName = this.create.text().setText(genomeHash);
 
     const header = this.create
       .template('side-panel-header')
@@ -40,21 +43,13 @@ export default class UI extends UIElement {
 
     header.dom$.find('.close-button').click(() => sidePanel.close());
 
-    const genomeTable = this.create
-      .custom('genome-table', GenomeTable)
-      .setFromGenome(Genome.random());
-
-    const descriptor = this.create
-      .template('gene-descriptor');
-
     const genomeViewer = this.create
       .custom('genome-viewer', GenomeViewer)
       .injectTo(sidePanel, 'genome')
-      .setTable(genomeTable)
-      .setDescriptor(descriptor);
+      .setFromGenome(genome);
 
     setTimeout(() => {
-      sidePanel.show(descriptor)
+      sidePanel.show()
     }, 500);
   }
 }

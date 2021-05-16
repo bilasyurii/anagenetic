@@ -1,5 +1,6 @@
 import UIElement from '../core/ui-element';
 import GeneItem from './gene-item';
+import GenomeTable from './genome-table';
 
 export default class GenomeViewer extends UIElement {
   constructor(factory, dom) {
@@ -8,38 +9,28 @@ export default class GenomeViewer extends UIElement {
     this._descriptor = null;
     this._table = null;
     this._selected = null;
+    this._genome = null;
+
+    this._init();
   }
 
-  setTable(table) {
-    this._table = table;
-
-    this.inject(table, 'table');
-    this._setup();
+  setFromGenome(genome) {
+    this._genome = genome;
+    this._table.setFromGenome(genome);
 
     return this;
   }
 
-  setDescriptor(descriptor) {
-    this._descriptor = descriptor;
+  _init() {
+    const genomeTable = this._table = this.create
+      .custom('genome-table', GenomeTable)
+      .injectTo(this, 'table');
 
-    this.inject(descriptor, 'descriptor');
-    this._setup();
+    const descriptor = this._descriptor = this.create
+      .template('gene-descriptor')
+      .injectTo(this, 'descriptor');
 
-    return this;
-  }
-
-  _setup() {
-    if (this._descriptor === null) {
-      return;
-    }
-
-    const table = this._table;
-
-    if (table === null) {
-      return;
-    }
-
-    table.onGeneClicked.add(this._onGeneClicked, this);
+    genomeTable.onGeneClicked.add(this._onGeneClicked, this);
   }
 
   _onGeneClicked(geneItem) {

@@ -23,6 +23,8 @@
     @return grey(53);
   } @else if $value == 9 {
     @return grey(55);
+  } @else if $value == 10 {
+    @return grey(59);
   }
 }
 
@@ -40,6 +42,8 @@ $red: rgb(255, 110, 110);
 $redFocus: rgb(255, 123, 123);
 $padding: 2rem;
 $navHeaderHeight: 5rem;
+$navHeaderHeightMobile: 12rem;
+$mobileWidth: 500px;
 
 @mixin scrollbar($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
   // Chrome
@@ -77,6 +81,46 @@ $navHeaderHeight: 5rem;
   }
 }
 
+.hidden {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.slider {
+  -webkit-appearance: none;
+  height: 1rem;
+  background-color: elevationColor(10);
+  outline: none;
+  margin: 0;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 2rem;
+    background-color: $primary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primaryFocus;
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 1rem;
+    height: 1rem;
+    background-color: $primary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primaryFocus;
+    }
+  }
+}
+
 .nav-header {
   position: absolute;
   width: 100%;
@@ -86,9 +130,52 @@ $navHeaderHeight: 5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 2rem;
 
-  .header-controls {
-    display: flex;
+  @media screen and (max-device-width: $mobileWidth) {
+    flex-direction: column;
+    height: $navHeaderHeightMobile;
+    justify-content: unset;
+  }
+
+  .header-balancer {
+    width: 250px;
+  }
+}
+
+.control-button {
+  cursor: pointer;
+  font-size: 2.5rem;
+}
+
+.simulation-controls {
+  display: flex;
+  align-items: center;
+
+  .speed-text {
+    width: 4rem;
+    text-align: center;
+  }
+
+  .speed-slider {
+    margin: 0 1rem;
+  }
+
+  .play-button, .pause-button {
+    color: $primary;
+
+    &:hover {
+      color: $primaryFocus;
+    }
+  }
+
+  .stop-button {
+    color: $red;
+    margin-left: 1rem;
+
+    &:hover {
+      color: $redFocus;
+    }
   }
 }
 
@@ -117,21 +204,27 @@ $navHeaderHeight: 5rem;
 $sidePanelMargin: 2rem;
 
 .side-panel {
-  position: absolute;
-  top: #{$navHeaderHeight + $sidePanelMargin};
-  right: 0;
-  width: 300px;
   overflow-y: auto;
-  max-height: calc(100% - #{$navHeaderHeight + 4rem});
   border-radius: 2rem;
   @include elevationBg(3);
   color: $text;
   padding: $padding;
-  @include scrollbar(10px, rgb(24, 160, 251), elevationColor(9));
+  @include scrollbar(10px, $primary, elevationColor(9));
   transition: transform 0.5s;
   transform: translate(0, 0);
+  position: absolute;
+  right: 0;
+  width: 300px;
 
-  &.hidden {
+  top: #{$navHeaderHeight + $sidePanelMargin};
+  max-height: calc(100% - #{$navHeaderHeight + $sidePanelMargin * 2});
+
+  @media screen and (max-device-width: $mobileWidth) {
+    top: #{$navHeaderHeightMobile + $sidePanelMargin};
+    max-height: calc(100% - #{$navHeaderHeightMobile + $sidePanelMargin * 2});
+  }
+
+  &.panel-hidden {
     transform: translate(100%, 0);
   }
 }

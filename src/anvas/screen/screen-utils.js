@@ -71,8 +71,8 @@ class ScreenUtils {
     const width = this.width;
     const height = this.height;
 
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+    const windowWidth = document.documentElement.clientWidth;
+    const windowHeight = document.documentElement.clientHeight;
 
     const scale = this.scale = Math2.min(windowWidth / width, windowHeight / height);
 

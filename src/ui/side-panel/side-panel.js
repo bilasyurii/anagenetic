@@ -11,11 +11,11 @@ export default class SidePanel extends UIElement {
 
   close() {
     this.onClose.post(this);
-    this.dom$.addClass('hidden');
+    this.dom$.addClass('panel-hidden');
   }
 
   show() {
     this.onShow.post(this);
-    this.dom$.removeClass('hidden');
+    this.dom$.removeClass('panel-hidden');
   }
 }

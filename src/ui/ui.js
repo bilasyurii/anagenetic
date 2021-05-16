@@ -1,14 +1,15 @@
 import '../../node_modules/milligram/dist/milligram.min.css';
 import '../../css/font-awesome.css';
 import '../../css/main.scss';
+import $ from 'jquery';
 import TemplateMaster from './template-master';
 import UIFactory from './ui-factory';
 import UIElement from './core/ui-element';
-import $ from 'jquery';
 import SidePanel from './side-panel/side-panel';
 import Genome from '../core/genome/genome';
 import GenomeViewer from './genome/genome-viewer';
 import hashGenome from '../utils/hash-genome';
+import SimulationControls from './controls/simulation-controls';
 
 export default class UI extends UIElement {
   constructor() {
@@ -23,6 +24,15 @@ export default class UI extends UIElement {
     const navHeader = this.create
       .template('nav-header')
       .addTo(this);
+
+    const controls = this.create
+      .custom('simulation-controls', SimulationControls)
+      .injectTo(navHeader);
+
+    controls.onPlay.add(() => console.log('play'));
+    controls.onPause.add(() => console.log('pause'));
+    controls.onStop.add(() => console.log('stop'));
+    controls.onSpeedChanged.add((speed) => console.log('speed ' + speed));
 
     const sidePanel = this.create
       .custom('side-panel', SidePanel)

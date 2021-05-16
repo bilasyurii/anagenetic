@@ -21,8 +21,12 @@ export default class UI extends UIElement {
 
   _init() {
     const sidePanel = this.create
-      .custom('cell-side-panel', SidePanel)
+      .custom('side-panel', SidePanel)
       .addTo(this);
+
+    const cellPanelContent = this.create
+      .template('cell-side-panel-content')
+      .injectTo(sidePanel);
 
     const genome = Genome.random();
     const genomeHash = hashGenome(genome);
@@ -32,19 +36,19 @@ export default class UI extends UIElement {
     const header = this.create
       .template('side-panel-header')
       .inject(cellName)
-      .injectTo(sidePanel, 'header');
+      .injectTo(cellPanelContent, 'header');
 
     sidePanel.onClose.add(() => console.log('closed'));
     header.dom$.find('.close-button').click(() => sidePanel.close());
 
-    const genomeViewer = this.create
+    this.create
       .custom('genome-viewer', GenomeViewer)
-      .injectTo(sidePanel, 'genome')
+      .injectTo(cellPanelContent, 'genome')
       .setFromGenome(genome);
 
     const cellInfoWrapper = this.create
       .template('cell-info-wrapper')
-      .injectTo(sidePanel, 'cell-info');
+      .injectTo(cellPanelContent, 'cell-info');
 
     const cellInfos = {};
 
@@ -71,15 +75,15 @@ export default class UI extends UIElement {
 
     const buttons = this.create
       .template('cell-panel-buttons')
-      .injectTo(sidePanel, 'buttons');
+      .injectTo(cellPanelContent, 'buttons');
 
-    const saveToLibrary = this.create
+    this.create
       .button()
       .setText('Save to Library')
       .setClick(() => console.log('Save to Library'))
       .addTo(buttons);
 
-    const exportToFile = this.create
+    this.create
       .button()
       .setText('Export to File')
       .setClick(() => console.log('Export to File'))

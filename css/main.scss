@@ -85,6 +85,11 @@ $navHeaderHeight: 5rem;
   color: $text;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  .header-controls {
+    display: flex;
+  }
 }
 
 .blue {

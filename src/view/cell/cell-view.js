@@ -2,12 +2,14 @@ import Group from '../../anvas/game-objects/group';
 import Math2 from '../../anvas/utils/math2';
 import RigidBody from '../../anvas/physics/rigid-body';
 import CircleCollider from '../../anvas/physics/colliders/circle-collider';
+import Observable from '../../anvas/events/observable';
 
 export default class CellView extends Group {
   constructor(cell) {
     super();
 
     this.cell = cell;
+    this.onSelected = new Observable();
 
     this._view = null;
 
@@ -45,6 +47,7 @@ export default class CellView extends Group {
     const view = this._view = engine.create.sprite(bmd);
 
     view.alignPivot();
+    view.addInput();
 
     this.add(view);
   }
@@ -59,8 +62,12 @@ export default class CellView extends Group {
   }
 
   _setupEvents() {
-    this.cell.onRadiusChanged.add(this._onRadiusChanged, this);
-    this.cell.onDied.add(this._onDied, this);
+    const cell = this.cell;
+
+    cell.onRadiusChanged.add(this._onRadiusChanged, this);
+    cell.onDied.add(this._onDied, this);
+
+    this._view.input.onDown.add(this._onInputDown, this);
   }
 
   _onRadiusChanged(radius) {
@@ -81,6 +88,10 @@ export default class CellView extends Group {
       parent.remove(this);
       this.engine.physics.removeRigidBody(this.rigidBody);
     }
+  }
+
+  _onInputDown() {
+    this.onSelected.post(this.cell);
   }
 
   static _getBitmap(engine) {

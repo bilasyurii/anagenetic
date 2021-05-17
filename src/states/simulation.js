@@ -18,16 +18,22 @@ export default class SimulationState extends State {
     this.onCellSelected = new Observable();
     this.onUpdate = new Observable();
 
-    this.world = null;
+    this._world = null;
+    this._worldView = null;
+    this._chemicalViewFactory = null;
+  }
+
+  get world() {
+    return this._world;
   }
 
   play() {
-    this.world.play();
+    this._world.play();
     this.engine.physics.resume();
   }
 
   pause() {
-    this.world.pause();
+    this._world.pause();
     this.engine.physics.pause();
   }
 
@@ -43,8 +49,8 @@ export default class SimulationState extends State {
     const engine = this.engine;
 
     const spacePartitioning = engine.physics.spacePartitioning;
-    const world = this.world = new World(spacePartitioning, new Vec2(700, 400));
-    const worldView = this.worldView = new WorldView(world);
+    const world = this._world = new World(spacePartitioning, new Vec2(700, 400));
+    const worldView = this._worldView = new WorldView(world);
 
     engine.add(worldView);
 
@@ -58,23 +64,10 @@ export default class SimulationState extends State {
     MutationStrategy.setActive(new PickMutationStrategy());
     MutationStrategy.setActive(new ForceMutationStrategy());
 
-    const chemicalViewFactory = new ChemicalViewFactory(engine);
+    this._chemicalViewFactory = new ChemicalViewFactory(engine);
 
-    world.onCellAdded.add((cell) => {
-      const cellView = new CellView(cell);
-
-      worldView.add(cellView);
-
-      cell.view = cellView;
-    });
-
-    world.onChemicalAdded.add((chemical) => {
-      const chemicalView = chemicalViewFactory.create(chemical);
-
-      worldView.add(chemicalView);
-
-      chemical.view = chemicalView;
-    });
+    world.onCellAdded.add(this._onCellAdded, this);
+    world.onChemicalAdded.add(this._onChemicalAdded, this);
 
     const cell = world.create.cell();
 
@@ -96,10 +89,25 @@ export default class SimulationState extends State {
 
     engine.onUpdate.add(() => this.onUpdate.post());
 
-    engine.time.events.once(500, () => {
-      this.onCellSelected.post(cell);
-    });
-
     return;
+  }
+
+  _onCellAdded(cell) {
+    const cellView = new CellView(cell);
+
+    this._worldView.add(cellView);
+    cell.view = cellView;
+    cellView.onSelected.add(this._onCellSelected, this);
+  }
+
+  _onChemicalAdded(chemical) {
+    const chemicalView = this._chemicalViewFactory.create(chemical);
+
+    this._worldView.add(chemicalView);
+    chemical.view = chemicalView;
+  }
+
+  _onCellSelected(cell) {
+    this.onCellSelected.post(cell);
   }
 }

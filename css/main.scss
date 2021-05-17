@@ -81,6 +81,14 @@ $mobileWidth: 500px;
   }
 }
 
+.input-disabled {
+  pointer-events: none;
+}
+
+.input-enabled {
+  pointer-events: auto;
+}
+
 .hidden {
   display: none;
 }

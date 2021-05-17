@@ -11,10 +11,34 @@ export default class Physics {
     this._forceGenerators = [];
     this._rigidBodies = [];
     this._bodiesToRemove = [];
+    this._isRunning = true;
+    this._pausePending = false;
   }
 
   get spacePartitioning() {
     return this._spacePartitioning;
+  }
+
+  get isRunning() {
+    return this._isRunning;
+  }
+
+  resume() {
+    this._pausePending = false;
+
+    if (this._isRunning === false) {
+      this._isRunning = true;
+    }
+
+    return this;
+  }
+
+  pause() {
+    if (this._isRunning === true) {
+      this._pausePending = true;
+    }
+
+    return this;
   }
 
   addRigidBody(body) {
@@ -38,6 +62,10 @@ export default class Physics {
   }
 
   fixedUpdate() {
+    if (this._isRunning === false) {
+      return;
+    }
+
     // finding collisions
     const collisions = [];
 
@@ -105,6 +133,10 @@ export default class Physics {
   }
 
   preUpdate() {
+    if (this._isRunning === false) {
+      return;
+    }
+
     const bodies = this._rigidBodies;
     const count = bodies.length;
 
@@ -114,11 +146,19 @@ export default class Physics {
   }
 
   postUpdate() {
+    if (this._isRunning === false) {
+      return;
+    }
+
     const bodies = this._rigidBodies;
     const count = bodies.length;
 
     for (let i = 0; i < count; ++i) {
       bodies[i].postUpdate();
+    }
+
+    if (this._pausePending === true) {
+      this._isRunning = false;
     }
   }
 

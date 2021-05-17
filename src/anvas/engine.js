@@ -295,9 +295,7 @@ export default class Engine {
     const sec = this.sec = ms * 0.001;
 
     this.time.update();
-
     this.input.update();
-
     this.physics.preUpdate();
 
     let frameTime;
@@ -323,9 +321,7 @@ export default class Engine {
     this.physicsElapsedMS = this.physicsElapsed * 1000;
 
     this.physics.postUpdate();
-
     this.renderer.render();
-
     this.onUpdate.post();
 
     window.requestAnimationFrame(this._loop);

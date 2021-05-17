@@ -19,6 +19,7 @@ export default class UI extends UIElement {
     this.onPause = new Observable();
     this.onStop = new Observable();
     this.onSpeedChanged = new Observable();
+    this.onZoomChanged = new Observable();
 
     this._header = null;
     this._simulationControls = null;
@@ -52,7 +53,8 @@ export default class UI extends UIElement {
   }
 
   _initSimulationUI() {
-    this._simulationUI = new SimulationUI(this.create, this)
+    this._simulationUI = new SimulationUI(this.create, this);
+    this._simulationUI.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
   }
 
   _setupEvents() {

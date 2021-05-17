@@ -1,3 +1,4 @@
+import Vec2 from '../geom/vec2.js';
 import Math2 from '../utils/math2.js';
 
 class ScreenUtils {
@@ -9,6 +10,7 @@ class ScreenUtils {
 
     this.centerX = width * 0.5;
     this.centerY = height * 0.5;
+    this.center = new Vec2(this.centerX, this.centerY);
 
     this.aspect = width / height;
     this.aspectInv = 1 / this.aspect;

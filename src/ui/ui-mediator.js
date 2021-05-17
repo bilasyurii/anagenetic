@@ -1,7 +1,10 @@
+import NavigationController from "../utils/navigation-controller";
+
 export default class UIMediator {
   constructor() {
     this._ui = null;
     this._simulation = null;
+    this._navigationController = null;
   }
 
   setSimulation(simulation) {
@@ -25,6 +28,7 @@ export default class UIMediator {
       return;
     }
 
+    this._initNavigation();
     this._setupEvents();
   }
 
@@ -40,6 +44,15 @@ export default class UIMediator {
       .init();
   }
 
+  _initNavigation() {
+    const simulation = this._simulation;
+
+    this._navigationController = new NavigationController(
+      simulation.engine,
+      simulation.world
+    );
+  }
+
   _setupEvents() {
     const simulation = this._simulation;
 
@@ -47,11 +60,13 @@ export default class UIMediator {
     simulation.onUpdate.add(this._onUpdate, this);
 
     const ui = this._ui;
+    const navigation = this._navigationController;
 
     ui.onPlay.add(() => simulation.play());
     ui.onPause.add(() => simulation.pause());
     ui.onStop.add(() => simulation.stop());
     ui.onSpeedChanged.add((speed) => simulation.changeSpeed(speed));
+    ui.onZoomChanged.add((zoom) => navigation.setZoom(zoom));
   }
 
   _onCellSelected(cell) {

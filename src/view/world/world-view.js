@@ -9,6 +9,8 @@ export default class WorldView extends Group {
 
     this.world = world;
     this.walls = [];
+
+    world.view = this;
   }
 
   onAddedToScene() {

@@ -1,3 +1,4 @@
+import Observable from '../../anvas/events/observable';
 import SidePanel from '../side-panel/side-panel';
 import CellPanelContent from './cell-panel/cell-panel-content';
 import ZoomControls from './controls/zoom-controls';
@@ -7,8 +8,9 @@ export default class SimulationUI {
     this.create = factory;
     this.parent = parent;
 
-    this._cell = null;
+    this.onZoomChanged = new Observable();
 
+    this._cell = null;
     this._zoomControls = null;
     this._sidePanel = null;
     this._cellPanelContent = null;
@@ -50,7 +52,7 @@ export default class SimulationUI {
       .custom('zoom-controls', ZoomControls)
       .addTo(this);
 
-    zoom.onZoomChanged.add((zoomValue) => console.log(zoomValue));
+    zoom.onZoomChanged.add((zoomValue) => this.onZoomChanged.post(zoomValue));
   }
 
   _initSidePanel() {

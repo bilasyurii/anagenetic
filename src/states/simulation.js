@@ -12,7 +12,6 @@ import ForceMutationStrategy from '../core/genome/mutation/force-mutation-strate
 import PickMutationStrategy from '../core/genome/mutation/pick-mutation-strategy.js';
 import UIMediator from '../ui/ui-mediator.js';
 import Observable from '../anvas/events/observable.js';
-import NavigationController from '../utils/navigation-controller.js';
 
 export default class SimulationState extends State {
   onInit() {
@@ -45,13 +44,9 @@ export default class SimulationState extends State {
 
     const spacePartitioning = engine.physics.spacePartitioning;
     const world = this.world = new World(spacePartitioning, new Vec2(700, 400));
-    const worldView = new WorldView(world);
-
-    worldView.position.set(100, 100);
+    const worldView = this.worldView = new WorldView(world);
 
     engine.add(worldView);
-
-    new NavigationController(engine, worldView);
 
     ElementRegistry.register(new ChemicalElement('billanium', 4, 'rgb(0, 0, 255)'));
     ElementRegistry.register(new ChemicalElement('hillagen', 3, 'rgb(255, 0, 0)'));

@@ -16,6 +16,7 @@ export default class World {
     this.onCellAdded = new Observable();
     this.updateInterval = 20;
 
+    this.view = null;
     this.create = null;
 
     this._spacePartitioning = spacePartitioning;

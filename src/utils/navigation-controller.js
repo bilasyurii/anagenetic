@@ -7,11 +7,19 @@ export default class NavigationController {
     this.world = world;
     this.worldView = world.view;
 
+    this._inputEnabled = true;
     this._isDragging = false;
     this._zoom = 1;
 
     this._setupView();
     this._setupEvents();
+  }
+
+  setInputEnabled(value) {
+    this._inputEnabled = value;
+    this._isDragging = false;
+
+    return this;
   }
 
   setZoom(zoom) {
@@ -42,6 +50,10 @@ export default class NavigationController {
   }
 
   _onDown() {
+    if (this._inputEnabled === false) {
+      return;
+    }
+
     this._isDragging = true;
   }
 

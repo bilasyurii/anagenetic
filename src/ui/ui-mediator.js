@@ -67,10 +67,12 @@ export default class UIMediator {
     ui.onStop.add(() => simulation.stop());
     ui.onSpeedChanged.add((speed) => simulation.changeSpeed(speed));
     ui.onZoomChanged.add((zoom) => navigation.setZoom(zoom));
+    ui.onCellDeselected.add(() => navigation.setInputEnabled(true));
   }
 
   _onCellSelected(cell) {
     this._ui.onCellSelected(cell);
+    this._navigationController.setInputEnabled(false);
   }
 
   _onUpdate() {

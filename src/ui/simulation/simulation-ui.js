@@ -9,6 +9,7 @@ export default class SimulationUI {
     this.parent = parent;
 
     this.onZoomChanged = new Observable();
+    this.onCellDeselected = new Observable();
 
     this._cell = null;
     this._zoomControls = null;
@@ -70,7 +71,7 @@ export default class SimulationUI {
   _setupEvents() {
     const sidePanel = this._sidePanel;
 
-    sidePanel.onClose.add(() => console.log('closed'));
+    sidePanel.onClose.add(() => this.onCellDeselected.post());
     this._cellPanelContent.onClose.add(() => sidePanel.close());
   }
 }

@@ -12,6 +12,7 @@ export default class CellPanelContent extends UIElement {
     this._genomeViewer = null;
     this._cellName = null;
     this._genome = null;
+    this._cellInfoWrapper = null;
     this._cellInfos = {};
 
     this._init();
@@ -91,7 +92,7 @@ export default class CellPanelContent extends UIElement {
 
   _initButtons() {
     const buttons = this.create
-      .template('cell-panel-buttons')
+      .template('panel-buttons')
       .injectTo(this, 'buttons');
 
     this.create

@@ -4,6 +4,7 @@ import CellPanelContent from './panel/cell-panel-content';
 import OpenPanelButton from './panel/open-panel-button';
 import ZoomControls from './controls/zoom-controls';
 import MenuPanelContent from './panel/menu-panel-content';
+import AnalysisPanelContent from './panel/analysis-panel-content';
 
 export default class SimulationUI {
   constructor(factory, parent) {
@@ -18,6 +19,7 @@ export default class SimulationUI {
     this._sidePanel = null;
     this._cellPanelContent = null;
     this._menuPanelContent = null;
+    this._analysisPanelContent = null;
     this._openPanelButton = null;
 
     this._init();
@@ -57,6 +59,7 @@ export default class SimulationUI {
     this._initSidePanel();
     this._initCellPanel();
     this._initMenuPanel();
+    this._initAnalysisPanel();
     this._setupEvents();
   }
 
@@ -88,15 +91,22 @@ export default class SimulationUI {
       .custom('menu-side-panel-content', MenuPanelContent);
   }
 
+  _initAnalysisPanel() {
+    this._analysisPanelContent = this.create
+      .custom('analysis-side-panel-content', AnalysisPanelContent);
+  }
+
   _setupEvents() {
     const openPanelButton = this._openPanelButton;
     const sidePanel = this._sidePanel;
+    const menuPanelContent = this._menuPanelContent;
+    const analysisPanelContent = this._analysisPanelContent;
 
     this._zoomControls.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
 
     openPanelButton.onOpenPanel.add(() => {
       sidePanel
-        .inject(this._menuPanelContent)
+        .inject(menuPanelContent)
         .show();
     });
 
@@ -114,6 +124,13 @@ export default class SimulationUI {
       this.onCellDeselected.post();
     });
 
-    this._menuPanelContent.onClose.add(closePanel);
+    menuPanelContent.onClose.add(closePanel);
+    menuPanelContent.onAnalysisOpen.add(() => {
+      sidePanel
+        .inject(analysisPanelContent)
+        .show();
+    });
+
+    analysisPanelContent.onClose.add(closePanel);
   }
 }

@@ -380,7 +380,24 @@ $sidePanelMargin: 2rem;
   }
 }
 
-.cell-panel-buttons {
+.analytic-info-wrapper {
+  margin-bottom: 1rem;
+
+  .analytic-info-item {
+    display: flex;
+    align-items: center;
+
+    .analytic-info-key {
+      flex-basis: 50%;
+    }
+
+    .analytic-info-value {
+      flex-basis: 50%;
+    }
+  }
+}
+
+.panel-buttons {
   display: flex;
   flex-direction: column;
   margin-top: 1rem;

@@ -6,6 +6,7 @@ export default class MenuPanelContent extends UIElement {
     super(factory, dom);
 
     this.onClose = new Observable();
+    this.onAnalysisOpen = new Observable();
 
     this._init();
   }
@@ -28,13 +29,13 @@ export default class MenuPanelContent extends UIElement {
 
   _initButtons() {
     const buttons = this.create
-      .template('cell-panel-buttons')
+      .template('panel-buttons')
       .injectTo(this, 'buttons');
 
     this.create
       .button()
       .setText('Analysis')
-      .setClick(() => console.log('Analysis'))
+      .setClick(() => this.onAnalysisOpen.post())
       .addTo(buttons);
 
     this.create

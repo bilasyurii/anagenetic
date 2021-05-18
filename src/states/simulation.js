@@ -12,6 +12,7 @@ import ForceMutationStrategy from '../core/genome/mutation/force-mutation-strate
 import PickMutationStrategy from '../core/genome/mutation/pick-mutation-strategy.js';
 import UIMediator from '../ui/ui-mediator.js';
 import Observable from '../anvas/events/observable.js';
+import CellSelectorView from '../view/cell/cell-selector-view.js';
 
 export default class SimulationState extends State {
   onInit() {
@@ -21,6 +22,8 @@ export default class SimulationState extends State {
     this._world = null;
     this._worldView = null;
     this._chemicalViewFactory = null;
+    this._cellSelectorView = null;
+    this._selectedCell = null;
   }
 
   get world() {
@@ -45,6 +48,10 @@ export default class SimulationState extends State {
     this.engine.dt = speed / 60;
   }
 
+  deselectCell() {
+    this._cellSelectorView.visible = false;
+  }
+
   onEnter() {
     const engine = this.engine;
 
@@ -65,6 +72,7 @@ export default class SimulationState extends State {
     MutationStrategy.setActive(new ForceMutationStrategy());
 
     this._chemicalViewFactory = new ChemicalViewFactory(engine);
+    this._cellSelectorView = new CellSelectorView(engine);
 
     world.onCellAdded.add(this._onCellAdded, this);
     world.onChemicalAdded.add(this._onChemicalAdded, this);
@@ -97,7 +105,7 @@ export default class SimulationState extends State {
 
     this._worldView.add(cellView);
     cell.view = cellView;
-    cellView.onSelected.add(this._onCellSelected, this);
+    cellView.onSelected.add(this._onCellViewSelected, this);
   }
 
   _onChemicalAdded(chemical) {
@@ -107,7 +115,13 @@ export default class SimulationState extends State {
     chemical.view = chemicalView;
   }
 
-  _onCellSelected(cell) {
+  _onCellViewSelected(cellView) {
+    const selectorView = this._cellSelectorView;
+    const cell = cellView.cell;
+
+    cellView.select(selectorView);
+    selectorView.visible = true;
+    this._selectedCell = cell;
     this.onCellSelected.post(cell);
   }
 }

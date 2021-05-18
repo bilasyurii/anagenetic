@@ -12,12 +12,20 @@ export default class CellView extends Group {
     this.onSelected = new Observable();
 
     this._view = null;
+    this._selectorView = null;
 
     this.position.copyFrom(cell.position);
   }
 
   get dataObject() {
     return this.cell;
+  }
+
+  select(selectorView) {
+    this._selectorView = selectorView;
+    this.add(selectorView);
+
+    return this;
   }
 
   preUpdate() {
@@ -91,7 +99,7 @@ export default class CellView extends Group {
   }
 
   _onInputDown() {
-    this.onSelected.post(this.cell);
+    this.onSelected.post(this);
   }
 
   static _getBitmap(engine) {

@@ -17,6 +17,7 @@ export default class NavigationController {
   }
 
   lockOnCell(cell) {
+    cell.onDied.add(this._onCellDied, this);
     this._lockedCellBody = cell.view.rigidBody;
 
     return this;
@@ -95,5 +96,11 @@ export default class NavigationController {
       this.worldView.pivot
         .sub(input.movementX * zoom, input.movementY * zoom);
     }
+  }
+
+  _onCellDied(cell) {
+    cell.onDied.remove(this._onCellDied, this);
+    this.setInputEnabled(true);
+    this._lockedCellBody = null;
   }
 }

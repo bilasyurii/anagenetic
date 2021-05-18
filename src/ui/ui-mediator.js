@@ -72,16 +72,21 @@ export default class UIMediator {
 
   _onCellSelected(cell) {
     this._ui.onCellSelected(cell);
-    this._navigationController.setInputEnabled(false);
+    this._navigationController
+      .lockOnCell(cell)
+      .setInputEnabled(false);
   }
 
   _onCellDeselected() {
-    this._navigationController.setInputEnabled(true);
     this._simulation.deselectCell();
+    this._navigationController
+      .unlockCell()
+      .setInputEnabled(true);
   }
 
   _onUpdate() {
     this._ui.update();
+    this._navigationController.update();
   }
 }
 

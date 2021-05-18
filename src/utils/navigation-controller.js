@@ -1,4 +1,4 @@
-import SU from "../anvas/screen/screen-utils";
+import SU from '../anvas/screen/screen-utils';
 
 export default class NavigationController {
   constructor(engine, world) {
@@ -10,9 +10,22 @@ export default class NavigationController {
     this._inputEnabled = true;
     this._isDragging = false;
     this._zoom = 1;
+    this._lockedCellBody = null;
 
     this._setupView();
     this._setupEvents();
+  }
+
+  lockOnCell(cell) {
+    this._lockedCellBody = cell.view.rigidBody;
+
+    return this;
+  }
+
+  unlockCell() {
+    this._lockedCellBody = null;
+
+    return this;
   }
 
   setInputEnabled(value) {
@@ -27,6 +40,19 @@ export default class NavigationController {
     this.worldView.scale.set(1 / zoom);
 
     return this;
+  }
+
+  update() {
+    const lockedCellBody = this._lockedCellBody;
+
+    if (lockedCellBody === null) {
+      return;
+    }
+
+    const view = this.worldView;
+
+    view.pivot
+      .copyFrom(lockedCellBody.position);
   }
 
   _setupView() {

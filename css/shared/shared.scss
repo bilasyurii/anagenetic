@@ -1,0 +1,190 @@
+@use 'variables' as *;
+@use 'functions' as *;
+
+#uiWrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+
+  #uiRoot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+.input-disabled {
+  pointer-events: none;
+}
+
+.input-enabled {
+  pointer-events: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.slider {
+  -webkit-appearance: none;
+  height: 1rem;
+  background-color: elevationColor(10);
+  outline: none;
+  margin: 0;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 2rem;
+    background-color: $primary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primaryFocus;
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 1rem;
+    height: 1rem;
+    background-color: $primary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primaryFocus;
+    }
+  }
+}
+
+.blue {
+  &.button {
+    background-color: $primary;
+    border-color: $primary;
+
+    &:hover, &:focus {
+      background-color: $primaryFocus;
+      border-color: transparent;
+    }
+
+    &.button-outline, &.button-clear {
+      color: $primary;
+      background-color: transparent;
+
+      &:hover, &:focus {
+        color: $primaryFocus;
+        border-color: $primaryFocus;
+      }
+    }
+  }
+}
+
+.nav-header {
+  position: absolute;
+  width: 100%;
+  height: $navHeaderHeight;
+  background-color: elevationColor(3);
+  color: $text;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+
+  @media screen and (max-device-width: $mobileWidth) {
+    flex-direction: column;
+    height: $navHeaderHeightMobile;
+    justify-content: unset;
+  }
+
+  .header-balancer {
+    width: 250px;
+  }
+}
+
+.close-button {
+  color: $red;
+  font-size: 3rem;
+  cursor: pointer;
+
+  &:hover {
+    color: $redFocus;
+  }
+}
+
+.side-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.genome-table-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  .gene-item {
+    flex-grow: 1;
+    flex-basis: 10%;
+    background-color: elevationColor(8);
+    margin: 0.2rem;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+
+    &:before {
+      content: '';
+      float: left;
+      padding-top: 100%;
+    }
+
+    &:hover {
+      background-color: lighten(elevationColor(8), 10%);
+    }
+
+    &.gene-selected {
+      background-color: $primary;
+      color: white;
+
+      &:hover {
+        background-color: $primaryFocus;
+      }
+    }
+
+    &.gene-disabled {
+      background-color: elevationColor(0);
+      color: $textDisabled;
+
+      &:hover {
+        background-color: lighten(elevationColor(0), 10%);
+        color: white;
+      }
+    }
+
+    &.gene-highlighted-1 {
+      background-color: $highlight;
+
+      &:hover {
+        background-color: $highlightFocus;
+        color: white;
+      }
+    }
+
+    &.gene-highlighted-2 {
+      background-color: $red;
+
+      &:hover {
+        background-color: $redFocus;
+        color: white;
+      }
+    }
+  }
+}

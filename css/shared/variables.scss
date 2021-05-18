@@ -1,0 +1,16 @@
+@use 'functions' as *;
+
+$text: grey(220);
+$textDisabled: grey(170);
+$primary: rgb(24, 160, 251);
+$primaryFocus: rgb(75, 183, 255);
+$highlight: rgb(103, 24, 251);
+$highlightFocus: rgb(121, 49, 255);
+$red: rgb(255, 110, 110);
+$redFocus: rgb(255, 123, 123);
+$padding: 2rem;
+$navHeaderHeight: 5rem;
+$navHeaderHeightMobile: 12rem;
+$mobileWidth: 500px;
+$sidePanelMargin: 2rem;
+$mainScreenPadding: 1rem;

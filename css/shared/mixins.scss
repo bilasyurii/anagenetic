@@ -1,0 +1,27 @@
+@use 'functions' as *;
+
+@mixin elevationBg($value) {
+  background-color: elevationColor($value);
+}
+
+@mixin scrollbar($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+  // Chrome
+  &::-webkit-scrollbar {
+    width:  $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}

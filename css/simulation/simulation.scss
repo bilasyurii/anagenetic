@@ -1,0 +1,158 @@
+@use '../shared/variables' as *;
+@use '../shared/functions' as *;
+@use '../shared/mixins' as *;
+
+.control-button {
+  cursor: pointer;
+  font-size: 2.5rem;
+}
+
+.simulation-controls {
+  display: flex;
+  align-items: center;
+
+  .speed-text {
+    width: 4rem;
+    text-align: center;
+  }
+
+  .speed-slider {
+    margin: 0 1rem;
+  }
+
+  .play-button, .pause-button {
+    color: $primary;
+
+    &:hover {
+      color: $primaryFocus;
+    }
+  }
+
+  .stop-button {
+    color: $red;
+    margin-left: 1rem;
+
+    &:hover {
+      color: $redFocus;
+    }
+  }
+}
+
+.zoom-controls {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  overflow: hidden;
+
+  .zoom-button {
+    color: $text;
+    padding: 1rem;
+    cursor: pointer;
+    background-color: rgba(127, 127, 127, 0.2);
+
+    &:hover {
+      background-color: rgba(127, 127, 127, 0.3);
+    }
+  }
+}
+
+.open-panel-button {
+  position: absolute;
+  right: 0;
+  bottom: 2rem;
+  color: $text;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  transition: transform 0.5s;
+  transform: translate(0, 0);
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  background-color: rgba(127, 127, 127, 0.2);
+
+  &:hover {
+    background-color: rgba(127, 127, 127, 0.3);
+  }
+
+  &.open-panel-button-hidden {
+    transform: translate(100%, 0);
+  }
+}
+
+.side-panel {
+  overflow-y: auto;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  @include elevationBg(3);
+  color: $text;
+  padding: $padding;
+  @include scrollbar(10px, $primary, elevationColor(9));
+  transition: transform 0.5s;
+  transform: translate(0, 0);
+  position: absolute;
+  right: 0;
+  width: 300px;
+
+  top: #{$navHeaderHeight + $sidePanelMargin};
+  max-height: calc(100% - #{$navHeaderHeight + $sidePanelMargin * 2});
+
+  @media screen and (max-device-width: $mobileWidth) {
+    top: #{$navHeaderHeightMobile + $sidePanelMargin};
+    max-height: calc(100% - #{$navHeaderHeightMobile + $sidePanelMargin * 2});
+  }
+
+  &.panel-hidden {
+    transform: translate(100%, 0);
+  }
+}
+
+.cell-info-wrapper {
+  margin-bottom: 1rem;
+
+  .cell-info-item {
+    display: flex;
+    align-items: center;
+
+    .cell-info-key {
+      flex-basis: 50%;
+    }
+
+    .cell-info-value {
+      flex-basis: 50%;
+    }
+  }
+}
+
+.analytic-info-wrapper {
+  margin-bottom: 1rem;
+
+  .analytic-info-item {
+    display: flex;
+    align-items: center;
+
+    .analytic-info-key {
+      flex-basis: 50%;
+    }
+
+    .analytic-info-value {
+      flex-basis: 50%;
+    }
+  }
+}
+
+.panel-buttons {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+
+  button:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.simulation-ui {
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,29 @@
+@function grey($value) {
+  @return rgb($value, $value, $value);
+}
+
+@function elevationColor($value) {
+  @if $value == 0 {
+    @return grey(18);
+  } @else if $value == 1 {
+    @return grey(29);
+  } @else if $value == 2 {
+    @return grey(34);
+  } @else if $value == 3 {
+    @return grey(36);
+  } @else if $value == 4 {
+    @return grey(39);
+  } @else if $value == 5 {
+    @return grey(44);
+  } @else if $value == 6 {
+    @return grey(45);
+  } @else if $value == 7 {
+    @return grey(50);
+  } @else if $value == 8 {
+    @return grey(53);
+  } @else if $value == 9 {
+    @return grey(55);
+  } @else if $value == 10 {
+    @return grey(59);
+  }
+}

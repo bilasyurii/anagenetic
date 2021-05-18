@@ -45,7 +45,7 @@ export default class SimulationState extends State {
   }
 
   changeSpeed(speed) {
-    this.engine.dt = speed / 60;
+    this.engine.dt = 1 / (60 * speed);
   }
 
   deselectCell() {

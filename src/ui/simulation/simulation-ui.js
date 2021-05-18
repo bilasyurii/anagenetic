@@ -1,7 +1,7 @@
 import Observable from '../../anvas/events/observable';
 import SidePanel from '../side-panel/side-panel';
-import CellPanelContent from './cell-panel/cell-panel-content';
-import OpenPanelButton from './cell-panel/open-panel-button';
+import CellPanelContent from './panel/cell-panel-content';
+import OpenPanelButton from './panel/open-panel-button';
 import ZoomControls from './controls/zoom-controls';
 
 export default class SimulationUI {

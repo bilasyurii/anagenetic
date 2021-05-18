@@ -14,6 +14,7 @@ export default class UIElement {
 
     this._visibilityState = VisibilityState.Visible;
     this._visibilityClass = '';
+    this._replacedPlaceholders = {};
   }
 
   getVisibility() {
@@ -48,11 +49,23 @@ export default class UIElement {
   }
 
   inject(child, placeholderName) {
+    const replacedPlaceholders = this._replacedPlaceholders;
+    const replacedPlaceholder = replacedPlaceholders[placeholderName];
+    const dom = child.dom;
+
+    if (replacedPlaceholder !== undefined) {
+      replacedPlaceholder.replaceWith(dom);
+      replacedPlaceholders[placeholderName] = dom;
+      child.parent = this;
+
+      return this;
+    }
+
     const placeholders = this.dom$.find('placeholder');
     const count = placeholders.length;
 
     if (count === 0) {
-      return;
+      return this;
     }
 
     let replaced = false;
@@ -61,7 +74,7 @@ export default class UIElement {
       const placeholder = placeholders[i];
 
       if (placeholder.getAttribute('name') === placeholderName) {
-        placeholder.replaceWith(child.dom);
+        placeholder.replaceWith(dom);
 
         replaced = true;
 
@@ -70,8 +83,10 @@ export default class UIElement {
     }
 
     if (replaced === false) {
-      placeholders[0].replaceWith(child.dom);
+      placeholders[0].replaceWith(dom);
     }
+
+    replacedPlaceholders[placeholderName] = dom;
 
     child.parent = this;
 

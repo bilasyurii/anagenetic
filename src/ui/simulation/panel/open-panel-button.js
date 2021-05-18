@@ -8,7 +8,7 @@ export default class OpenPanelButton extends UIElement {
     this.isVisible = true;
     this.onOpenPanel = new Observable();
 
-    this.dom$.click(() => this.hide());
+    this.dom$.click(() => this.onOpenPanel.post());
   }
 
   show() {
@@ -27,6 +27,5 @@ export default class OpenPanelButton extends UIElement {
 
     this.isVisible = false;
     this.dom$.addClass('open-panel-button-hidden');
-    this.onOpenPanel.post();
   }
 }

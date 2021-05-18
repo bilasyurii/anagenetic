@@ -3,6 +3,7 @@ import SidePanel from '../side-panel/side-panel';
 import CellPanelContent from './panel/cell-panel-content';
 import OpenPanelButton from './panel/open-panel-button';
 import ZoomControls from './controls/zoom-controls';
+import MenuPanelContent from './panel/menu-panel-content';
 
 export default class SimulationUI {
   constructor(factory, parent) {
@@ -16,6 +17,7 @@ export default class SimulationUI {
     this._zoomControls = null;
     this._sidePanel = null;
     this._cellPanelContent = null;
+    this._menuPanelContent = null;
     this._openPanelButton = null;
 
     this._init();
@@ -33,8 +35,14 @@ export default class SimulationUI {
 
   onCellSelected(cell) {
     this._cell = cell;
-    this._cellPanelContent.setCell(cell);
-    this._sidePanel.show();
+
+    const sidePanel = this._sidePanel;
+
+    this._cellPanelContent
+      .setCell(cell)
+      .injectTo(sidePanel);
+
+    sidePanel.show();
   }
 
   add(child) {
@@ -48,6 +56,7 @@ export default class SimulationUI {
     this._initZoomControls();
     this._initSidePanel();
     this._initCellPanel();
+    this._initMenuPanel();
     this._setupEvents();
   }
 
@@ -71,20 +80,40 @@ export default class SimulationUI {
 
   _initCellPanel() {
     this._cellPanelContent = this.create
-      .custom('cell-side-panel-content', CellPanelContent)
-      .injectTo(this._sidePanel);
+      .custom('cell-side-panel-content', CellPanelContent);
+  }
+
+  _initMenuPanel() {
+    this._menuPanelContent = this.create
+      .custom('menu-side-panel-content', MenuPanelContent);
   }
 
   _setupEvents() {
     const openPanelButton = this._openPanelButton;
     const sidePanel = this._sidePanel;
 
-    sidePanel.onClose.add(() => this.onCellDeselected.post());
     this._zoomControls.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
-    openPanelButton.onOpenPanel.add(() => this._sidePanel.show())
-    this._cellPanelContent.onClose.add(() => {
-      sidePanel.close()
-      openPanelButton.show();
+
+    openPanelButton.onOpenPanel.add(() => {
+      sidePanel
+        .inject(this._menuPanelContent)
+        .show();
     });
+
+    sidePanel.onShow.add(() => {
+      openPanelButton.hide();
+    });
+
+    const closePanel = () => {
+      sidePanel.close();
+      openPanelButton.show();
+    };
+
+    this._cellPanelContent.onClose.add(() => {
+      closePanel();
+      this.onCellDeselected.post();
+    });
+
+    this._menuPanelContent.onClose.add(closePanel);
   }
 }

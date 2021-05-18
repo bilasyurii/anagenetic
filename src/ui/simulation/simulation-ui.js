@@ -5,11 +5,11 @@ import OpenPanelButton from './panel/open-panel-button';
 import ZoomControls from './controls/zoom-controls';
 import MenuPanelContent from './panel/menu-panel-content';
 import AnalysisPanelContent from './panel/analysis-panel-content';
+import UIElement from '../core/ui-element';
 
-export default class SimulationUI {
-  constructor(factory, parent) {
-    this.create = factory;
-    this.parent = parent;
+export default class SimulationUI extends UIElement {
+  constructor(factory, dom) {
+    super(factory, dom);
 
     this.onZoomChanged = new Observable();
     this.onCellDeselected = new Observable();
@@ -45,12 +45,6 @@ export default class SimulationUI {
       .injectTo(sidePanel);
 
     sidePanel.show();
-  }
-
-  add(child) {
-    this.parent.add(child);
-
-    return this;
   }
 
   _init() {

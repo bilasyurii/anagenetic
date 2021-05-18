@@ -8,6 +8,7 @@ import UIElement from './core/ui-element';
 import SimulationControls from './simulation/controls/simulation-controls';
 import SimulationUI from './simulation/simulation-ui';
 import Observable from '../anvas/events/observable';
+import MainScreenUI from './main-screen/main-screen-ui';
 
 export default class UI extends UIElement {
   constructor() {
@@ -25,6 +26,7 @@ export default class UI extends UIElement {
     this._header = null;
     this._simulationControls = null;
     this._simulationUI = null;
+    this._mainScreenUI = null;
 
     this._init();
   }
@@ -40,6 +42,7 @@ export default class UI extends UIElement {
   _init() {
     this._initHeader();
     this._initSimulationUI();
+    // this._initMainScreenUI();
     this._setupEvents();
   }
 
@@ -54,9 +57,15 @@ export default class UI extends UIElement {
   }
 
   _initSimulationUI() {
-    this._simulationUI = new SimulationUI(this.create, this);
-    this._simulationUI.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
-    this._simulationUI.onCellDeselected.add(() => this.onCellDeselected.post());
+    this._simulationUI = this.create
+      .custom('simulation-ui', SimulationUI)
+      .addTo(this);
+  }
+
+  _initMainScreenUI() {
+    this._mainScreenUI = this.create
+      .custom('main-screen', MainScreenUI)
+      .addTo(this);
   }
 
   _setupEvents() {
@@ -66,5 +75,10 @@ export default class UI extends UIElement {
     controls.onPause.add(() => this.onPause.post());
     controls.onStop.add(() => this.onStop.post());
     controls.onSpeedChanged.add((speed) => this.onSpeedChanged.post(speed));
+
+    const simulationUI = this._simulationUI;
+
+    simulationUI.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
+    simulationUI.onCellDeselected.add(() => this.onCellDeselected.post());
   }
 }

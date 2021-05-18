@@ -1,6 +1,7 @@
 import Observable from '../../anvas/events/observable';
 import SidePanel from '../side-panel/side-panel';
 import CellPanelContent from './cell-panel/cell-panel-content';
+import OpenPanelButton from './cell-panel/open-panel-button';
 import ZoomControls from './controls/zoom-controls';
 
 export default class SimulationUI {
@@ -15,6 +16,7 @@ export default class SimulationUI {
     this._zoomControls = null;
     this._sidePanel = null;
     this._cellPanelContent = null;
+    this._openPanelButton = null;
 
     this._init();
   }
@@ -42,18 +44,23 @@ export default class SimulationUI {
   }
 
   _init() {
+    this._initOpenPanelButton();
     this._initZoomControls();
     this._initSidePanel();
     this._initCellPanel();
     this._setupEvents();
   }
 
+  _initOpenPanelButton() {
+    this._openPanelButton = this.create
+      .custom('open-panel-button', OpenPanelButton)
+      .addTo(this);
+  }
+
   _initZoomControls() {
-    const zoom = this._zoomControls = this.create
+    this._zoomControls = this.create
       .custom('zoom-controls', ZoomControls)
       .addTo(this);
-
-    zoom.onZoomChanged.add((zoomValue) => this.onZoomChanged.post(zoomValue));
   }
 
   _initSidePanel() {
@@ -69,9 +76,15 @@ export default class SimulationUI {
   }
 
   _setupEvents() {
+    const openPanelButton = this._openPanelButton;
     const sidePanel = this._sidePanel;
 
     sidePanel.onClose.add(() => this.onCellDeselected.post());
-    this._cellPanelContent.onClose.add(() => sidePanel.close());
+    this._zoomControls.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
+    openPanelButton.onOpenPanel.add(() => this._sidePanel.show())
+    this._cellPanelContent.onClose.add(() => {
+      sidePanel.close()
+      openPanelButton.show();
+    });
   }
 }

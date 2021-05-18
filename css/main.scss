@@ -208,6 +208,28 @@ $mobileWidth: 500px;
   }
 }
 
+.open-panel-button {
+  position: absolute;
+  right: 0;
+  bottom: 2rem;
+  color: $text;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  transition: transform 0.5s;
+  transform: translate(0, 0);
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  background-color: rgba(127, 127, 127, 0.2);
+
+  &:hover {
+    background-color: rgba(127, 127, 127, 0.3);
+  }
+
+  &.open-panel-button-hidden {
+    transform: translate(100%, 0);
+  }
+}
+
 .blue {
   &.button {
     background-color: $primary;

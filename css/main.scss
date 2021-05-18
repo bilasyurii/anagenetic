@@ -412,8 +412,27 @@ $sidePanelMargin: 2rem;
   height: 100%;
 }
 
+$mainScreenPadding: 1rem;
+
 .main-screen {
   width: 100%;
   height: 100%;
   background-color: elevationColor(0);
+  padding: $mainScreenPadding;
+  padding-top: #{$navHeaderHeight + $mainScreenPadding};
+
+  @media screen and (max-device-width: $mobileWidth) {
+    padding-top: #{$navHeaderHeightMobile + $mainScreenPadding};
+  }
+}
+
+.buttons-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .button {
+    width: 17rem;
+    margin: 0.5rem;
+  }
 }

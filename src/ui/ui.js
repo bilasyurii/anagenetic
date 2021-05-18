@@ -42,7 +42,7 @@ export default class UI extends UIElement {
   _init() {
     this._initHeader();
     this._initSimulationUI();
-    // this._initMainScreenUI();
+    this._initMainScreenUI();
     this._setupEvents();
   }
 

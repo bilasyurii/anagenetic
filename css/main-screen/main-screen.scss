@@ -1,10 +1,11 @@
 @use '../shared/variables' as *;
 @use '../shared/functions' as *;
+@use '../shared/mixins' as *;
 
 .main-screen {
   width: 100%;
   height: 100%;
-  background-color: elevationColor(0);
+  @include elevationBg(0);
   padding: $mainScreenPadding;
   padding-top: #{$navHeaderHeight + $mainScreenPadding};
 
@@ -21,5 +22,52 @@
   .button {
     width: 17rem;
     margin: 0.5rem;
+  }
+}
+
+.genome-library-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .genome-library-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+  
+    .genomes-list-wrapper {
+      margin: 1rem;
+      flex-grow: 1;
+      @include elevationBg(2);
+    }
+    
+    .genome-panel {
+      margin: 1rem;
+      width: $sidePanelWidth;
+      @include elevationBg(2);
+    
+      .genome-panel-content {
+        width: $sidePanelWidth;
+      }
+    }
+  
+    @media screen and (max-device-width: $mobileWidth) {
+      flex-direction: column-reverse;
+  
+      .genomes-list-wrapper {
+        margin: 0;
+        margin-top: 1rem;
+        width: 100%;
+      }
+  
+      .genome-panel {
+        margin: 0;
+        margin-top: 1rem;
+        width: 100%;
+    
+        .genome-panel-content {
+          width: 100%;
+        }
+      }
+    }
   }
 }

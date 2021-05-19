@@ -1,7 +1,7 @@
-import Observable from '../../anvas/events/observable';
-import UIElement from '../core/ui-element';
+import Observable from '../../../anvas/events/observable';
+import UIElement from '../../core/ui-element';
 
-export default class SidePanel extends UIElement {
+export default class SimulationSidePanel extends UIElement {
   constructor(factory, dom) {
     super(factory, dom);
 

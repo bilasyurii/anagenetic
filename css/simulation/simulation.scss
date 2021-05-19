@@ -93,7 +93,7 @@
   transform: translate(0, 0);
   position: absolute;
   right: 0;
-  width: 300px;
+  width: $sidePanelWidth;
 
   top: #{$navHeaderHeight + $sidePanelMargin};
   max-height: calc(100% - #{$navHeaderHeight + $sidePanelMargin * 2});

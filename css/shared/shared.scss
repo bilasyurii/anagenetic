@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'functions' as *;
+@use 'mixins' as *;
 
 #uiWrapper {
   width: 100%;
@@ -34,7 +35,7 @@
 .slider {
   -webkit-appearance: none;
   height: 1rem;
-  background-color: elevationColor(10);
+  @include elevationBg(10);
   outline: none;
   margin: 0;
 
@@ -89,7 +90,7 @@
   position: absolute;
   width: 100%;
   height: $navHeaderHeight;
-  background-color: elevationColor(3);
+  @include elevationBg(3);
   color: $text;
   display: flex;
   align-items: center;
@@ -131,7 +132,7 @@
   .gene-item {
     flex-grow: 1;
     flex-basis: 10%;
-    background-color: elevationColor(8);
+    @include elevationBg(8);
     margin: 0.2rem;
     font-size: 1.1rem;
     display: flex;
@@ -160,7 +161,7 @@
     }
 
     &.gene-disabled {
-      background-color: elevationColor(0);
+      @include elevationBg(0);
       color: $textDisabled;
 
       &:hover {

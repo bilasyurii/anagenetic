@@ -11,6 +11,7 @@ export default class CellPanelContent extends UIElement {
 
     this._genomeViewer = null;
     this._cellName = null;
+    this._cell = null;
     this._genome = null;
     this._cellInfoWrapper = null;
     this._cellInfos = {};

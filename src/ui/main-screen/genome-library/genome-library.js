@@ -2,10 +2,13 @@ import UIElement from '../../core/ui-element';
 import ButtonsLine from './buttons-line';
 import GenomesList from './genomes-list';
 import GenomePanel from './genome-panel';
+import Observable from '../../../anvas/events/observable';
 
 export default class GenomeLibrary extends UIElement {
   constructor(factory, dom) {
     super(factory, dom);
+
+    this.onEditGenome = new Observable();
 
     this._buttonsLine = null;
     this._genomesList = null;
@@ -59,6 +62,8 @@ export default class GenomeLibrary extends UIElement {
       list.deleteSelected();
       panel.close();
     });
+
+    panel.onEdit.add(() => this.onEditGenome.post());
 
     buttons.onClearLibrary.add(() => {
       list.clear();

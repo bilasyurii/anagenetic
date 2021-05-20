@@ -1,5 +1,5 @@
 import UIElement from '../../../core/ui-element';
-import GenomeViewer from '../../../genome/genome-viewer';
+import GenomeEditor from '../../../genome/genome-editor';
 
 export default class EditGenomeForm extends UIElement {
   constructor(factory, dom) {
@@ -46,8 +46,8 @@ export default class EditGenomeForm extends UIElement {
 
   _initGenomeViewer() {
     this._genomeViewer = this.create
-      .custom('genome-viewer', GenomeViewer)
-      .injectTo(this, 'genome-viewer');
+      .custom('genome-editor', GenomeEditor)
+      .injectTo(this, 'genome-editor');
   }
 
   _initButtons() {

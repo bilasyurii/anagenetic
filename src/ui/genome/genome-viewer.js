@@ -22,15 +22,25 @@ export default class GenomeViewer extends UIElement {
   }
 
   _init() {
-    const genomeTable = this._table = this.create
+    this._initGenomeTable();
+    this._initDescriptor();
+    this._setupEvents();
+  }
+
+  _initGenomeTable() {
+    this._table = this.create
       .custom('genome-table', GenomeTable)
       .injectTo(this, 'table');
+  }
 
+  _initDescriptor() {
     this._descriptor = this.create
       .template('gene-descriptor')
       .injectTo(this, 'descriptor');
+  }
 
-    genomeTable.onGeneClicked.add(this._onGeneClicked, this);
+  _setupEvents() {
+    this._table.onGeneClicked.add(this._onGeneClicked, this);
   }
 
   _onGeneClicked(geneItem) {
@@ -41,11 +51,12 @@ export default class GenomeViewer extends UIElement {
     if (geneItem === this._selected) {
       this._selected = null;
       this._descriptor.html('');
+      return false;
     } else {
       this._selected = geneItem;
       geneItem.setState(GeneItem.State.Selected);
 
-      const gene = geneItem.gene;
+      const gene = geneItem.getGene();
       const command = gene.command;
 
       this._descriptor.html(command.description);
@@ -63,6 +74,8 @@ export default class GenomeViewer extends UIElement {
 
         item.setState(highlightedState);
       }
+
+      return true;
     }
   }
 }

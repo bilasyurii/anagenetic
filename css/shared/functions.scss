@@ -27,3 +27,13 @@
     @return grey(59);
   }
 }
+
+@function replaceStr($str, $subStr, $newStr: '') {
+  $index: str-index($str, $subStr);
+
+  @if $index {
+    @return str-slice($str, 1, $index - 1) + $newStr + replaceStr(str-slice($str, $index + str-length($subStr)), $subStr, $newStr);
+  }
+
+  @return $str;
+}

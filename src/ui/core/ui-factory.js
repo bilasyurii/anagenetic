@@ -4,6 +4,7 @@ import TextNode from '../shared/text-node';
 import TemplateMaster from './template-master';
 import TextInput from '../shared/text-input';
 import FormItem from '../shared/form-item';
+import SelectInput from '../shared/select-input';
 
 export default class UIFactory {
   constructor(di) {
@@ -24,6 +25,10 @@ export default class UIFactory {
 
   textInput() {
     return this._process(new TextInput(this, TemplateMaster.create('text-input')));
+  }
+
+  selectInput() {
+    return this._process(new SelectInput(this, TemplateMaster.create('select-input')));
   }
 
   formItem() {

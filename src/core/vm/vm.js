@@ -38,6 +38,7 @@ import DigestionHillagenCommand from './commands/reaction-commands/digestion-hil
 import FragmentationBillaniumCommand from './commands/reaction-commands/fragmentation-billanium-command';
 import FragmentationHillagenCommand from './commands/reaction-commands/fragmentation-hillagen-command';
 import PhotosynthesisCommand from './commands/reaction-commands/photosynthesis-command';
+import ArrayUtils from '../../anvas/utils/array-utils';
 
 export default class VM {
   constructor(cell) {
@@ -96,6 +97,15 @@ export default class VM {
 
   static describeCommandGene(gene) {
     gene.command = VM._commandsLookup[gene.value];
+  }
+
+  static getGenesOptions() {
+    return ArrayUtils.map(VM._commandsLookup, function(command, i) {
+      return {
+        value: i,
+        text: i + ' ' + command.mnemonic,
+      };
+    });
   }
 
   static _initCommandsLookup() {

@@ -104,4 +104,15 @@ export default class ArrayUtils {
 
     return array;
   }
+
+  static map(array, expression) {
+    const result = [];
+    const length = array.length;
+
+    for (let i = 0; i < length; ++i) {
+      result.push(expression(array[i], i));
+    }
+
+    return result;
+  }
 }

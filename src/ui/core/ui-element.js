@@ -13,7 +13,6 @@ export default class UIElement {
     this.parent = null;
 
     this._visibilityState = VisibilityState.Visible;
-    this._visibilityClass = '';
     this._replacedPlaceholders = {};
   }
 
@@ -118,12 +117,16 @@ export default class UIElement {
   }
 
   show() {
-    switch (this._visibilityState) {
+    const state = this._visibilityState;
+
+    switch (state) {
       case VisibilityState.Hidden:
       case VisibilityState.Invisible:
-        this.removeClass(this._visibilityClass);
+        this.removeClass(state);
         break;
     }
+
+    this._visibilityState = VisibilityState.visible;
 
     return this;
   }
@@ -139,7 +142,7 @@ export default class UIElement {
         break;
     }
 
-    this._visibilityClass = hidden;
+    this._visibilityState = hidden;
     this.addClass(hidden);
 
     return this;
@@ -156,7 +159,7 @@ export default class UIElement {
         break;
     }
 
-    this._visibilityClass = invisible;
+    this._visibilityState = invisible;
     this.addClass(invisible);
 
     return this;
@@ -169,13 +172,29 @@ export default class UIElement {
     switch (this._visibilityState) {
       case VisibilityState.Invisible:
       case hidden:
-        this.removeClass(this._visibilityClass);
+        this.removeClass(this._visibilityState);
         this._visibilityState = visible;
         break;
       case visible:
         this.addClass('hidden');
         this._visibilityState = hidden;
     }
+  }
+
+  get isDisabled() {
+    return this.dom$.prop('disabled');
+  }
+
+  disable() {
+    this.dom$.prop('disabled', true);
+
+    return this;
+  }
+
+  enable() {
+    this.dom$.prop('disabled', false);
+
+    return this;
   }
 }
 

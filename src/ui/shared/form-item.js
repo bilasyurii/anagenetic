@@ -31,6 +31,10 @@ export default class FormItem extends UIElement {
     return this._input.setValue(value);
   }
 
+  getInput() {
+    return this._input;
+  }
+
   get isDisabled() {
     return this._input.isDisabled;
   }

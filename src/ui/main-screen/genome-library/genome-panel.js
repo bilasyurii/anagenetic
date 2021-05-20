@@ -95,7 +95,7 @@ export default class GenomePanel extends UIElement {
     this.create
       .button()
       .setText('Edit')
-      .setClick(() => this.onEdit.post())
+      .setClick(() => this.onEdit.post(this._genome))
       .addTo(buttons);
 
     this.create

@@ -1,9 +1,13 @@
+import Observable from '../../../../anvas/events/observable';
 import UIElement from '../../../core/ui-element';
 import GenomeEditor from '../../../genome/genome-editor';
 
 export default class EditGenomeForm extends UIElement {
   constructor(factory, dom) {
     super(factory, dom);
+
+    this.onSave = new Observable();
+    this.onCancel = new Observable();
 
     this._genome = null;
     this._buttons = null;
@@ -58,13 +62,13 @@ export default class EditGenomeForm extends UIElement {
     this.create
       .button()
       .setText('Save')
-      .setClick(() => console.log('Save'))
+      .setClick(() => this.onSave.post())
       .addTo(buttons);
 
     this.create
       .button()
       .setText('Cancel')
-      .setClick(() => console.log('Cancel'))
+      .setClick(() => this.onCancel.post())
       .addTo(buttons);
   }
 }

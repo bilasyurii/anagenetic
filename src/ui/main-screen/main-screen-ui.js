@@ -49,8 +49,12 @@ export default class MainScreenUI extends UIElement {
         .injectTo(this);
     };
 
+    const hideForms = () => {
+      this.inject(library);
+    }
+
     library.onEditGenome.add((genome) => showForms(editGenomeForm.setGenome(genome)));
 
-    library.onEditGenome.post(Genome.random());
+    editGenomeForm.onCancel.add(hideForms);
   }
 }

@@ -63,7 +63,7 @@ export default class GenomeLibrary extends UIElement {
       panel.close();
     });
 
-    panel.onEdit.add(() => this.onEditGenome.post());
+    panel.onEdit.add((genome) => this.onEditGenome.post(genome));
 
     buttons.onClearLibrary.add(() => {
       list.clear();

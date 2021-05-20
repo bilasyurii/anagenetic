@@ -44,6 +44,13 @@ export default class GenomesList extends UIElement {
     return this;
   }
 
+  clear() {
+    this._selectedGenomeCard = null;
+    this._genomeLibrary.removeAll();
+
+    return this;
+  }
+
   onInjected() {
     // TODO init
   }

@@ -42,6 +42,7 @@ export default class GenomeLibrary extends UIElement {
   _setupEvents() {
     const list = this._genomesList;
     const panel = this._genomePanel;
+    const buttons = this._buttonsLine;
 
     list.onGenomeCardSelected.add((card) => {
       panel
@@ -57,6 +58,11 @@ export default class GenomeLibrary extends UIElement {
     panel.onDelete.add(() => {
       list.deleteSelected();
       panel.close();
-    })
+    });
+
+    buttons.onClearLibrary.add(() => {
+      list.clear();
+      panel.close();
+    });
   }
 }

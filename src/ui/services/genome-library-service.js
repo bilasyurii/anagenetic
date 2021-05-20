@@ -25,4 +25,11 @@ export default class GenomeLibraryService {
 
     return this;
   }
+
+  removeAll() {
+    this._genomes = [];
+    this.onChanges.post();
+
+    return this;
+  }
 }

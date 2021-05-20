@@ -48,7 +48,7 @@ export default class Genome {
     return new Genome(genesCopy);
   }
 
-  toString() {
+  genesToString() {
     let str = '';
 
     const genes = this._genes;
@@ -59,6 +59,24 @@ export default class Genome {
     }
 
     return str;
+  }
+
+  serialize() {
+    const obj = {};
+    const genesData = [];
+
+    obj.name = this.name;
+    obj.createdDate = this.createdDate;
+    obj.genes = genesData;
+
+    const genes = this._genes;
+    const count = genes.length;
+
+    for (let i = 0; i < count; ++i) {
+      genesData.push(genes[i].value);
+    }
+
+    return JSON.stringify(obj);
   }
 
   randomize() {

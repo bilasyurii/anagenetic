@@ -12,12 +12,21 @@ export default class GenomePanel extends UIElement {
     this.onDelete = new Observable();
     this.onEdit = new Observable();
 
+    this._importExport = null;
     this._genomeViewer = null;
     this._genomeCode = null;
     this._genome = null;
     this._isOpened = false;
 
     this._init();
+  }
+
+  get dependencies() {
+    return ['importExport'];
+  }
+
+  set importExport(service) {
+    this._importExport = service;
   }
 
   setGenome(genome) {
@@ -117,7 +126,11 @@ export default class GenomePanel extends UIElement {
     this.create
       .button()
       .setText('Export Genome')
-      .setClick(() => console.log('Export Genome'))
+      .setClick(() => this._export())
       .addTo(buttons);
+  }
+
+  _export() {
+    this._importExport.exportGenome(this._genome);
   }
 }

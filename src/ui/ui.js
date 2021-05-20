@@ -12,6 +12,7 @@ import MainScreenUI from './main-screen/main-screen-ui';
 import DependencyInjection from './core/dependency-injection';
 import GenomeLibraryService from './services/genome-library-service';
 import Genome from '../core/genome/genome';
+import ImportExportService from './services/import-export-service';
 
 export default class UI extends UIElement {
   constructor() {
@@ -52,7 +53,8 @@ export default class UI extends UIElement {
 
   _initServices() {
     this.DI
-      .register('genomeLibrary', new GenomeLibraryService().addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()));
+      .register('genomeLibrary', new GenomeLibraryService().addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()))
+      .register('importExport', new ImportExportService());
   }
 
   _initHeader() {

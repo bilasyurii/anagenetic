@@ -33,6 +33,7 @@
   .genome-library-content-wrapper {
     flex-grow: 1;
     display: flex;
+    overflow: hidden;
   
     .genomes-list-wrapper {
       padding: 1rem;
@@ -40,6 +41,81 @@
       flex-grow: 1;
       @include elevationBg(2);
       overflow: auto;
+      display: flex;
+      flex-wrap: wrap;
+      border-radius: 2rem;
+      align-content: flex-start;
+      @include scrollbar(10px, $primary, elevationColor(9));
+
+      .genome-card {
+        padding: 1rem;
+        color: $text;
+        flex-basis: 25%;
+        min-width: 150px;
+
+        @media screen and (max-width: $mediumScreenWidth) {
+          flex-basis: 33%;
+        }
+
+        @media screen and (max-width: $mobileWidth) {
+          min-width: unset;
+          flex-basis: 50%;
+        }
+
+        @media screen and (min-width: $bigScreenWidth) {
+          flex-basis: 20%;
+        }
+
+        &:before {
+          content: '';
+          float: left;
+          padding-top: 100%;
+        }
+
+        .genome-card-content {
+          @include elevationBg(5);
+          border-radius: 1rem;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          overflow: hidden;
+
+          &:hover {
+            @include elevationBg(7);
+          }
+
+          .genome-card-info-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-grow: 1;
+            padding: 1rem;
+
+            .genome-name {
+            }
+    
+            .genome-code {
+            }
+    
+            .created-date {
+            }
+          }
+    
+          .view-button-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+
+            .button {
+              margin-bottom: 0;
+              border-radius: 0;
+            }
+          }
+        }
+      }
     }
     
     .genome-panel {
@@ -47,6 +123,7 @@
       padding: 1rem;
       width: $sidePanelWidth;
       @include elevationBg(2);
+      border-radius: 2rem;
     
       .genome-panel-content {
         width: $sidePanelWidth;
@@ -55,6 +132,7 @@
   
     @media screen and (max-device-width: $mobileWidth) {
       flex-direction: column-reverse;
+      overflow: visible;
   
       .genomes-list-wrapper {
         margin: 0;

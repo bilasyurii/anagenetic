@@ -17,6 +17,12 @@ export default class UIElement {
     this._replacedPlaceholders = {};
   }
 
+  get DI() {
+    return this.create.DI;
+  }
+
+  onInjected() {}
+
   getVisibility() {
     return this._visibilityState;
   }

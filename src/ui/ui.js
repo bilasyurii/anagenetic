@@ -9,12 +9,15 @@ import SimulationControls from './simulation/controls/simulation-controls';
 import SimulationUI from './simulation/simulation-ui';
 import Observable from '../anvas/events/observable';
 import MainScreenUI from './main-screen/main-screen-ui';
+import DependencyInjection from './core/dependency-injection';
+import GenomeLibraryService from './services/genome-library-service';
+import Genome from '../core/genome/genome';
 
 export default class UI extends UIElement {
   constructor() {
     TemplateMaster.init();
 
-    super(new UIFactory(), $('#uiRoot')[0]);
+    super(new UIFactory(new DependencyInjection()), $('#uiRoot')[0]);
 
     this.onPlay = new Observable();
     this.onPause = new Observable();
@@ -40,10 +43,16 @@ export default class UI extends UIElement {
   }
 
   _init() {
+    this._initServices();
     this._initHeader();
     this._initSimulationUI();
     this._initMainScreenUI();
     this._setupEvents();
+  }
+
+  _initServices() {
+    this.DI
+      .register('genomeLibrary', new GenomeLibraryService().addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()));
   }
 
   _initHeader() {

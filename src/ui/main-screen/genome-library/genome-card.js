@@ -38,7 +38,29 @@ export default class GenomeCard extends UIElement {
   setGenome(genome) {
     this._genome = genome;
 
-    this._update();
+    this.update();
+
+    return this;
+  }
+
+  update() {
+    const genome = this._genome;
+    const genomeHash = hashGenome(genome);
+    const genomeName = genome.name || 'Unnamed';
+
+    let createdDate = genome.createdDate;
+
+    if (createdDate === null) {
+      createdDate = new Date(); 
+    } else {
+      createdDate = new Date(createdDate);
+    }
+
+    const genomeDate = createdDate.toLocaleDateString();
+
+    this._genomeCode.setText(genomeHash)
+    this._genomeName.setText(genomeName);
+    this._createdDate.setText(genomeDate);
 
     return this;
   }
@@ -68,25 +90,5 @@ export default class GenomeCard extends UIElement {
       .setText('View')
       .setClick(() => this.onView.post(this))
       .injectTo(this, 'button');
-  }
-
-  _update() {
-    const genome = this._genome;
-    const genomeHash = hashGenome(genome);
-    const genomeName = genome.name || 'Unnamed';
-
-    let createdDate = genome.createdDate;
-
-    if (createdDate === null) {
-      createdDate = new Date(); 
-    } else {
-      createdDate = new Date(createdDate);
-    }
-
-    const genomeDate = createdDate.toLocaleDateString();
-
-    this._genomeCode.setText(genomeHash)
-    this._genomeName.setText(genomeName);
-    this._createdDate.setText(genomeDate);
   }
 }

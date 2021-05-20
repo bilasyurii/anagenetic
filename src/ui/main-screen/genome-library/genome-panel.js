@@ -23,7 +23,17 @@ export default class GenomePanel extends UIElement {
   setGenome(genome) {
     this._genome = genome;
 
-    this._updateContent();
+    this.update();
+
+    return this;
+  }
+
+  update() {
+    const genome = this._genome;
+    const hash = hashGenome(genome);
+
+    this._genomeCode.setText(hash);
+    this._genomeViewer.setFromGenome(genome);
 
     return this;
   }
@@ -109,13 +119,5 @@ export default class GenomePanel extends UIElement {
       .setText('Export Genome')
       .setClick(() => console.log('Export Genome'))
       .addTo(buttons);
-  }
-
-  _updateContent() {
-    const genome = this._genome;
-    const hash = hashGenome(genome);
-
-    this._genomeCode.setText(hash);
-    this._genomeViewer.setFromGenome(genome);
   }
 }

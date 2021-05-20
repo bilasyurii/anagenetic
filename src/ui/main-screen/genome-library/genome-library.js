@@ -17,6 +17,13 @@ export default class GenomeLibrary extends UIElement {
     this._init();
   }
 
+  update() {
+    this._genomesList.updateSelected();
+    this._genomePanel.update();
+
+    return this;
+  }
+
   _init() {
     this._initButtonsLine();
     this._initGenomesList();

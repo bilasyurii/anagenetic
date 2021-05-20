@@ -51,6 +51,12 @@ export default class GenomesList extends UIElement {
     return this;
   }
 
+  updateSelected() {
+    this._selectedGenomeCard.update();
+
+    return this;
+  }
+
   onInjected() {
     // TODO init
   }

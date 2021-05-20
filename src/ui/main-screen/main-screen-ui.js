@@ -56,5 +56,9 @@ export default class MainScreenUI extends UIElement {
     library.onEditGenome.add((genome) => showForms(editGenomeForm.setGenome(genome)));
 
     editGenomeForm.onCancel.add(hideForms);
+    editGenomeForm.onSave.add(() => {
+      hideForms();
+      library.update();
+    });
   }
 }

@@ -132,10 +132,14 @@
     .genome-panel {
       color: $text;
       margin: 1rem;
-      width: $sidePanelWidth;
       @include elevationBg(2);
       border-radius: 2rem;
       transition: 0.5s;
+      max-width: $sidePanelWidth;
+      max-height: 100%;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      flex-shrink: 0;
 
       .genome-panel-content {
         padding: 2rem;
@@ -143,8 +147,15 @@
       }
 
       &.genome-panel-hidden {
-        width: 0;
         margin: 0;
+
+        @media not screen and (max-width: $mobileWidth) {
+          max-width: 0;
+        }
+
+        @media screen and (max-width: $mobileWidth) {
+          max-height: 0;
+        }
       }
     }
   
@@ -162,6 +173,7 @@
         margin: 0;
         margin-top: 1rem;
         width: 100%;
+        max-width: 100%;
     
         .genome-panel-content {
           width: 100%;

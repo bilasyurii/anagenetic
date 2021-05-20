@@ -4,7 +4,7 @@ import MutationStrategy from './mutation/mutation-strategy';
 
 export default class Genome {
   constructor(genes) {
-    this.name = null;
+    this.name = '';
     this.createdDate = null
 
     this._genes = genes;

@@ -62,7 +62,7 @@ export default class EditGenomeForm extends UIElement {
     this.create
       .button()
       .setText('Save')
-      .setClick(() => this.onSave.post())
+      .setClick(() => this._save())
       .addTo(buttons);
 
     this.create
@@ -70,5 +70,10 @@ export default class EditGenomeForm extends UIElement {
       .setText('Cancel')
       .setClick(() => this.onCancel.post())
       .addTo(buttons);
+  }
+
+  _save() {
+    this._genome.name = this._nameInput.getValue();
+    this.onSave.post();
   }
 }

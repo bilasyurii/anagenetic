@@ -26,7 +26,7 @@ export default class GenomeViewer extends UIElement {
       .custom('genome-table', GenomeTable)
       .injectTo(this, 'table');
 
-    const descriptor = this._descriptor = this.create
+    this._descriptor = this.create
       .template('gene-descriptor')
       .injectTo(this, 'descriptor');
 

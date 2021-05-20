@@ -108,13 +108,13 @@ export default class UIElement {
   addClass(name) {
     this.dom$.addClass(name);
 
-    return;
+    return this;
   }
 
   removeClass(name) {
     this.dom$.removeClass(name);
 
-    return;
+    return this;
   }
 
   show() {

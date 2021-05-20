@@ -5,6 +5,8 @@
 .main-screen {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   @include elevationBg(0);
   padding: $mainScreenPadding;
   padding-top: #{$navHeaderHeight + $mainScreenPadding};
@@ -184,5 +186,58 @@
 
   @media screen and (max-width: $mobileWidth) {
     overflow: auto;
+  }
+}
+
+.form-screen {
+  margin: 1rem;
+  padding: 2rem;
+  @include elevationBg(2);
+  border-radius: 2rem;
+  color: $text;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: auto;
+  @include scrollbar(10px, $primary, elevationColor(9));
+
+  .form-header {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.form-buttons-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  * {
+    margin: 0 1rem;
+  }
+}
+
+.edit-genome-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .genome-viewer-wrapper {
+      align-self: center;
+      width: 300px;
+    }
+
+    .genome-name {
+      min-width: 250px;
+      max-width: 500px;
+      width: 100%;
+    }
   }
 }

@@ -1,4 +1,6 @@
+import Genome from '../../core/genome/genome';
 import UIElement from '../core/ui-element';
+import EditGenomeForm from './form-screen/edit-genome/edit-genome-form';
 import FormScreen from './form-screen/form-screen';
 import GenomeLibrary from './genome-library/genome-library';
 
@@ -8,6 +10,7 @@ export default class MainScreenUI extends UIElement {
 
     this._genomeLibrary = null;
     this._formScreen = null;
+    this._editGenomeForm = null;
 
     this._init();
   }
@@ -15,6 +18,7 @@ export default class MainScreenUI extends UIElement {
   _init() {
     this._initGenomeLibrary();
     this._initFormScreen();
+    this._initEditGenomeForm();
     this._setupEvents();
   }
 
@@ -29,17 +33,24 @@ export default class MainScreenUI extends UIElement {
       .custom('form-screen', FormScreen);
   }
 
+  _initEditGenomeForm() {
+    this._editGenomeForm = this.create
+      .custom('edit-genome-form', EditGenomeForm);
+  }
+
   _setupEvents() {
     const library = this._genomeLibrary;
     const forms = this._formScreen;
+    const editGenomeForm = this._editGenomeForm;
 
-    const showForms = () => {
-      forms.injectTo(this);
+    const showForms = (form) => {
+      forms
+        .setContent(form)
+        .injectTo(this);
     };
 
-    library.onEditGenome.add((genome) => {
-      showForms();
-      forms.editGenome(genome);
-    });
+    library.onEditGenome.add((genome) => showForms(editGenomeForm.setGenome(genome)));
+
+    library.onEditGenome.post(Genome.random());
   }
 }

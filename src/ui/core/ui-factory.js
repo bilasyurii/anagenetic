@@ -2,6 +2,8 @@ import UIElement from './ui-element';
 import Button from '../shared/button';
 import TextNode from '../shared/text-node';
 import TemplateMaster from './template-master';
+import TextInput from '../shared/text-input';
+import FormItem from '../shared/form-item';
 
 export default class UIFactory {
   constructor(di) {
@@ -20,6 +22,14 @@ export default class UIFactory {
     return this._process(new Button(this, TemplateMaster.create('button')));
   }
 
+  textInput() {
+    return this._process(new TextInput(this, TemplateMaster.create('text-input')));
+  }
+
+  formItem() {
+    return this._process(new FormItem(this, TemplateMaster.create('form-item')));
+  }
+
   tag(tag) {
     return this._process(new UIElement(this, TemplateMaster.createTag(tag)));
   }
@@ -36,6 +46,11 @@ export default class UIFactory {
     return this._process(new elementClass(this, TemplateMaster.create(name)));
   }
 
+  /**
+   * @param {T} element 
+   * @returns {T}
+   * @template T
+   */
   _process(element) {
     this._di.process(element);
 

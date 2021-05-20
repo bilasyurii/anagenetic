@@ -28,6 +28,12 @@ export default class Gene {
     return this;
   }
 
+  randomize() {
+    this.value = Random.int() % Gene.VARIETY;
+
+    return this;
+  }
+
   addStability() {
     const current = this.mutationChance;
 

@@ -61,6 +61,17 @@ export default class Genome {
     return str;
   }
 
+  randomize() {
+    const genes = this._genes;
+    const count = genes.length;
+
+    for (let i = 0; i < count; ++i) {
+      genes[i].randomize();
+    }
+
+    return this;
+  }
+
   static random() {
     const genes = [];
     const count = Genome.GENES_COUNT;

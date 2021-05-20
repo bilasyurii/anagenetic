@@ -10,6 +10,11 @@ export default class GenomeEditor extends GenomeViewer {
     this._initEditor();
   }
 
+  randomize() {
+    this._genome.randomize();
+    this._table.updateGenes();
+  }
+
   _initEditor() {
     const selectInput = this.create
       .selectInput()

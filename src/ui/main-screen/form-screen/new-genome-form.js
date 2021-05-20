@@ -13,7 +13,7 @@ export default class NewGenomeForm extends UIElement {
     this._genome = null;
     this._buttons = null;
     this._nameInput = null;
-    this._genomeViewer = null;
+    this._genomeEditor = null;
 
     this._init();
   }
@@ -26,7 +26,7 @@ export default class NewGenomeForm extends UIElement {
     const genome = Genome.zero();
 
     this._genome = genome;
-    this._genomeViewer.setFromGenome(genome);
+    this._genomeEditor.setFromGenome(genome);
 
     return this;
   }
@@ -37,7 +37,6 @@ export default class NewGenomeForm extends UIElement {
 
   _init() {
     this._initNameInput();
-    this._initGeneSelect();
     this._initGenomeViewer();
     this._initButtons();
   }
@@ -50,10 +49,8 @@ export default class NewGenomeForm extends UIElement {
       .injectTo(this, 'genome-name');
   }
 
-  _initGeneSelect() {}
-
   _initGenomeViewer() {
-    this._genomeViewer = this.create
+    this._genomeEditor = this.create
       .custom('genome-editor', GenomeEditor)
       .injectTo(this, 'genome-editor');
   }
@@ -74,11 +71,21 @@ export default class NewGenomeForm extends UIElement {
       .setText('Cancel')
       .setClick(() => this.onCancel.post())
       .addTo(buttons);
+
+    this.create
+      .button()
+      .setText('Randomize')
+      .setClick(() => this._randomize())
+      .addTo(buttons);
   }
 
   _save() {
     this._genome.name = this._nameInput.getValue();
     this._genome.createdDate = Date.now();
     this.onSave.post();
+  }
+
+  _randomize() {
+    this._genomeEditor.randomize();
   }
 }

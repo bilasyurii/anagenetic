@@ -12,7 +12,7 @@ export default class EditGenomeForm extends UIElement {
     this._genome = null;
     this._buttons = null;
     this._nameInput = null;
-    this._genomeViewer = null;
+    this._genomeEditor = null;
 
     this._init();
   }
@@ -25,7 +25,7 @@ export default class EditGenomeForm extends UIElement {
     const name = genome.name || 'Unnamed';
 
     this._genome = genome;
-    this._genomeViewer.setFromGenome(genome);
+    this._genomeEditor.setFromGenome(genome);
     this._nameInput.setValue(name);
 
     return this;
@@ -33,7 +33,6 @@ export default class EditGenomeForm extends UIElement {
 
   _init() {
     this._initNameInput();
-    this._initGeneSelect();
     this._initGenomeViewer();
     this._initButtons();
   }
@@ -46,10 +45,8 @@ export default class EditGenomeForm extends UIElement {
       .injectTo(this, 'genome-name');
   }
 
-  _initGeneSelect() {}
-
   _initGenomeViewer() {
-    this._genomeViewer = this.create
+    this._genomeEditor = this.create
       .custom('genome-editor', GenomeEditor)
       .injectTo(this, 'genome-editor');
   }

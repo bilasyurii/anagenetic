@@ -17,6 +17,20 @@ export default class GenomeCard extends UIElement {
     this._init();
   }
 
+  select() {
+    this.dom$.addClass('selected');
+    this._viewButton.disable();
+
+    return this;
+  }
+
+  deselect() {
+    this.dom$.removeClass('selected');
+    this._viewButton.enable();
+
+    return this;
+  }
+
   getGenome() {
     return this._genome;
   }

@@ -97,7 +97,7 @@
   justify-content: space-between;
   padding: 0 2rem;
 
-  @media screen and (max-device-width: $mobileWidth) {
+  @media screen and (max-width: $mobileWidth) {
     flex-direction: column;
     height: $navHeaderHeightMobile;
     justify-content: unset;

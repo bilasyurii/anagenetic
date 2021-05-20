@@ -1,3 +1,4 @@
+import Observable from '../../../anvas/events/observable';
 import UIElement from '../../core/ui-element';
 import GenomeCard from './genome-card';
 
@@ -5,6 +6,9 @@ export default class GenomesList extends UIElement {
   constructor(factory, dom) {
     super(factory, dom);
 
+    this.onGenomeCardSelected = new Observable();
+
+    this._selectedGenomeCard = null;
     this._genomeLibrary = null;
   }
 
@@ -16,6 +20,17 @@ export default class GenomesList extends UIElement {
     this._genomeLibrary = genomeLibrary;
     genomeLibrary.onChanges.add(this._onGenomeLibraryChanged, this);
     this._onGenomeLibraryChanged();
+  }
+
+  deselect() {
+    const selectedCard = this._selectedGenomeCard;
+
+    if (selectedCard !== null) {
+      selectedCard.deselect();
+      this._selectedGenomeCard = null;
+    }
+
+    return this;
   }
 
   onInjected() {
@@ -30,10 +45,27 @@ export default class GenomesList extends UIElement {
     this.dom$.children().remove();
 
     for (let i = 0; i < count; ++i) {
-      create
+      const genomeCard = create
         .custom('genome-card', GenomeCard)
         .setGenome(genomes[i])
         .addTo(this);
+
+      genomeCard.onView.add(this._viewGenomeCard, this);
     }
+  }
+
+  _viewGenomeCard(genomeCard) {
+    const selectedCard = this._selectedGenomeCard;
+
+    if (selectedCard === genomeCard) {
+      return;
+    } else if (selectedCard !== null) {
+      selectedCard.deselect();
+    }
+
+    this._selectedGenomeCard = genomeCard;
+
+    genomeCard.select();
+    this.onGenomeCardSelected.post(genomeCard);
   }
 }

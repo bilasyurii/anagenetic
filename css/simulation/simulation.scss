@@ -98,7 +98,7 @@
   top: #{$navHeaderHeight + $sidePanelMargin};
   max-height: calc(100% - #{$navHeaderHeight + $sidePanelMargin * 2});
 
-  @media screen and (max-device-width: $mobileWidth) {
+  @media screen and (max-width: $mobileWidth) {
     top: #{$navHeaderHeightMobile + $sidePanelMargin};
     max-height: calc(100% - #{$navHeaderHeightMobile + $sidePanelMargin * 2});
   }

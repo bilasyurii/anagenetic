@@ -12,4 +12,20 @@ export default class Button extends UIElement {
 
     return this;
   }
+
+  get isDisabled() {
+    return this.dom$.prop('disabled');
+  }
+
+  disable() {
+    this.dom$.prop('disabled', true);
+
+    return this;
+  }
+
+  enable() {
+    this.dom$.prop('disabled', false);
+
+    return this;
+  }
 }

@@ -9,8 +9,6 @@ export default class SimulationSidePanel extends UIElement {
     this.onShow = new Observable();
 
     this._isOpened = false;
-
-    this.close(true);
   }
 
   isOpened() {

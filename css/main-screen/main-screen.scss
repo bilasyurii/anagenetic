@@ -9,7 +9,7 @@
   padding: $mainScreenPadding;
   padding-top: #{$navHeaderHeight + $mainScreenPadding};
 
-  @media screen and (max-device-width: $mobileWidth) {
+  @media screen and (max-width: $mobileWidth) {
     padding-top: #{$navHeaderHeightMobile + $mainScreenPadding};
   }
 }
@@ -115,22 +115,40 @@
             }
           }
         }
+
+        &.selected {
+          .genome-card-content {
+            background-color: $primary;
+            color: #fff;
+
+            &:hover {
+              background-color: $primaryFocus;
+            }
+          }
+        }
       }
     }
     
     .genome-panel {
+      color: $text;
       margin: 1rem;
-      padding: 1rem;
       width: $sidePanelWidth;
       @include elevationBg(2);
       border-radius: 2rem;
-    
+      transition: 0.5s;
+
       .genome-panel-content {
+        padding: 2rem;
         width: $sidePanelWidth;
+      }
+
+      &.genome-panel-hidden {
+        width: 0;
+        margin: 0;
       }
     }
   
-    @media screen and (max-device-width: $mobileWidth) {
+    @media screen and (max-width: $mobileWidth) {
       flex-direction: column-reverse;
       overflow: visible;
   
@@ -152,7 +170,7 @@
     }
   }
 
-  @media screen and (max-device-width: $mobileWidth) {
+  @media screen and (max-width: $mobileWidth) {
     overflow: auto;
   }
 }

@@ -57,6 +57,12 @@ export default class GenomesList extends UIElement {
     return this;
   }
 
+  addGenome(genome) {
+    this._genomeLibrary.addGenome(genome);
+
+    return this;
+  }
+
   onInjected() {
     // TODO init
   }

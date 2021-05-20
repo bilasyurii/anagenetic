@@ -72,6 +72,17 @@ export default class Genome {
 
     return new Genome(genes);
   }
+
+  static zero() {
+    const genes = [];
+    const count = Genome.GENES_COUNT;
+
+    for (let i = 0; i < count; ++i) {
+      genes.push(new Gene(0));
+    }
+
+    return new Genome(genes);
+  }
 }
 
 Genome.GENES_COUNT = 64;

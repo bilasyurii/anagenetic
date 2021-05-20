@@ -8,6 +8,7 @@ export default class GenomeLibrary extends UIElement {
   constructor(factory, dom) {
     super(factory, dom);
 
+    this.onNewGenome = new Observable();
     this.onEditGenome = new Observable();
 
     this._buttonsLine = null;
@@ -15,6 +16,12 @@ export default class GenomeLibrary extends UIElement {
     this._genomePanel = null;
 
     this._init();
+  }
+
+  addGenome(genome) {
+    this._genomesList.addGenome(genome);
+
+    return this;
   }
 
   update() {
@@ -76,5 +83,7 @@ export default class GenomeLibrary extends UIElement {
       list.clear();
       panel.close();
     });
+
+    buttons.onNewGenome.add(() => this.onNewGenome.post());
   }
 }

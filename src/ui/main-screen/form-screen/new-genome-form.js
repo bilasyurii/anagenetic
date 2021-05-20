@@ -1,8 +1,9 @@
-import Observable from '../../../../anvas/events/observable';
-import UIElement from '../../../core/ui-element';
-import GenomeEditor from '../../../genome/genome-editor';
+import Observable from '../../../anvas/events/observable';
+import Genome from '../../../core/genome/genome';
+import UIElement from '../../core/ui-element';
+import GenomeEditor from '../../genome/genome-editor';
 
-export default class EditGenomeForm extends UIElement {
+export default class NewGenomeForm extends UIElement {
   constructor(factory, dom) {
     super(factory, dom);
 
@@ -18,17 +19,20 @@ export default class EditGenomeForm extends UIElement {
   }
 
   getHeaderText() {
-    return 'Edit genome';
+    return 'New genome';
   }
 
-  setGenome(genome) {
-    const name = genome.name || 'Unnamed';
+  reset() {
+    const genome = Genome.zero();
 
     this._genome = genome;
     this._genomeViewer.setFromGenome(genome);
-    this._nameInput.setValue(name);
 
     return this;
+  }
+
+  getGenome() {
+    return this._genome;
   }
 
   _init() {
@@ -74,6 +78,7 @@ export default class EditGenomeForm extends UIElement {
 
   _save() {
     this._genome.name = this._nameInput.getValue();
+    this._genome.createdDate = Date.now();
     this.onSave.post();
   }
 }

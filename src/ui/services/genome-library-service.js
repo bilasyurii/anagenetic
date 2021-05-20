@@ -1,4 +1,5 @@
 import Observable from '../../anvas/events/observable';
+import ArrayUtils from '../../anvas/utils/array-utils';
 
 export default class GenomeLibraryService {
   constructor() {
@@ -13,6 +14,13 @@ export default class GenomeLibraryService {
 
   addGenome(genome) {
     this._genomes.push(genome);
+    this.onChanges.post();
+
+    return this;
+  }
+
+  removeGenome(genome) {
+    ArrayUtils.removeByValue(this._genomes, genome);
     this.onChanges.post();
 
     return this;

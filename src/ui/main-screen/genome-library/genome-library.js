@@ -53,5 +53,10 @@ export default class GenomeLibrary extends UIElement {
       list.deselect();
       panel.close();
     });
+
+    panel.onDelete.add(() => {
+      list.deleteSelected();
+      panel.close();
+    })
   }
 }

@@ -9,6 +9,8 @@ export default class GenomePanel extends UIElement {
 
     this.onClose = new Observable();
     this.onShow = new Observable();
+    this.onDelete = new Observable();
+    this.onEdit = new Observable();
 
     this._genomeViewer = null;
     this._genomeCode = null;
@@ -93,13 +95,13 @@ export default class GenomePanel extends UIElement {
     this.create
       .button()
       .setText('Edit')
-      .setClick(() => console.log('Edit'))
+      .setClick(() => this.onEdit.post())
       .addTo(buttons);
 
     this.create
       .button()
       .setText('Delete')
-      .setClick(() => console.log('Delete'))
+      .setClick(() => this.onDelete.post())
       .addTo(buttons);
 
     this.create

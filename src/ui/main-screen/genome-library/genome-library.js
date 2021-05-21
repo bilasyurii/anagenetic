@@ -14,8 +14,18 @@ export default class GenomeLibrary extends UIElement {
     this._buttonsLine = null;
     this._genomesList = null;
     this._genomePanel = null;
+    this._importExport = null;
+    this._importGenomeCallback = null;
 
     this._init();
+  }
+
+  get dependencies() {
+    return ['importExport'];
+  }
+
+  set importExport(importExport) {
+    this._importExport = importExport;
   }
 
   addGenome(genome) {
@@ -35,6 +45,7 @@ export default class GenomeLibrary extends UIElement {
     this._initButtonsLine();
     this._initGenomesList();
     this._initGenomePanel();
+    this._initCallbacks();
     this._setupEvents();
   }
 
@@ -54,6 +65,10 @@ export default class GenomeLibrary extends UIElement {
     this._genomePanel = this.create
       .custom('genome-panel', GenomePanel)
       .injectTo(this, 'genome-panel');
+  }
+
+  _initCallbacks() {
+    this._importGenomeCallback = (genome) => this.addGenome(genome);
   }
 
   _setupEvents() {
@@ -85,5 +100,10 @@ export default class GenomeLibrary extends UIElement {
     });
 
     buttons.onNewGenome.add(() => this.onNewGenome.post());
+    buttons.onImportGenome.add(() => this._importGenome());
+  }
+
+  _importGenome() {
+    this._importExport.importGenome(this._importGenomeCallback);
   }
 }

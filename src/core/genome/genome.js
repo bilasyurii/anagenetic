@@ -1,3 +1,4 @@
+import ArrayUtils from '../../anvas/utils/array-utils';
 import Gene from './gene';
 import GenomeIterator from './genome-iterator';
 import MutationStrategy from './mutation/mutation-strategy';
@@ -77,6 +78,19 @@ export default class Genome {
     }
 
     return JSON.stringify(obj);
+  }
+
+  static deserialize(data) {
+    const obj = JSON.parse(data);
+    const genes = ArrayUtils.map(obj.genes, function(value) {
+      return new Gene(value);
+    });
+    const genome = new Genome(genes);
+
+    genome.name = obj.name;
+    genome.createdDate = obj.createdDate;
+
+    return genome;
   }
 
   randomize() {

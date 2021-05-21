@@ -214,7 +214,7 @@
   justify-content: center;
 
   * {
-    margin: 0 1rem;
+    margin: 0.5rem 1rem;
   }
 }
 
@@ -241,4 +241,24 @@
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
+
+  .form-content {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 600px;
+    min-width: 300px;
+
+    .form-item {
+      flex-basis: 40%;
+      margin: 5%;
+
+      .form-item-input {
+        min-width: 90px;
+      }
+
+      @media screen and (max-width: $mobileWidth) {
+        flex-basis: 90%;
+      }
+    }
+  }
 }

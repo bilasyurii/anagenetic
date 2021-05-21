@@ -96,6 +96,10 @@ export default class GenomesList extends UIElement {
     return this;
   }
 
+  isEmpty() {
+    return this._genomeLibrary.genomes.length === 0;
+  }
+
   _init() {
     this._initMessage();
   }

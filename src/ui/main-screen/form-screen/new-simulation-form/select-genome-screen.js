@@ -13,6 +13,10 @@ export default class SelectGenomeScreen extends UIElement {
     this._init();
   }
 
+  areGenesAvailable() {
+    return this._genomesList.isEmpty() === false;
+  }
+
   _init() {
     this._initGenomesList();
     this._setupEvents();

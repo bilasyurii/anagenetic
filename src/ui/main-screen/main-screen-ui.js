@@ -100,6 +100,10 @@ export default class MainScreenUI extends UIElement {
       newSimulationForm.onGenomeSelected(genome);
     });
 
-    newSimulationForm.onSelectGenome.add(() => selectGenomeScreen.injectTo(this));
+    newSimulationForm.onSelectGenome.add(() => {
+      if (selectGenomeScreen.areGenesAvailable() === true) {
+        selectGenomeScreen.injectTo(this);
+      }
+    });
   }
 }

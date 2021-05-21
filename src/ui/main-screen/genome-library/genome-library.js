@@ -10,6 +10,7 @@ export default class GenomeLibrary extends UIElement {
 
     this.onNewGenome = new Observable();
     this.onEditGenome = new Observable();
+    this.onNewSimulation = new Observable();
 
     this._buttonsLine = null;
     this._genomesList = null;
@@ -105,6 +106,7 @@ export default class GenomeLibrary extends UIElement {
     buttons.onImportGenome.add(() => this._importGenome());
     buttons.onExportLibrary.add(() => list.exportLibrary());
     buttons.onImportLibrary.add(() => this._importLibrary());
+    buttons.onNewSimulation.add(() => this.onNewSimulation.post());
   }
 
   _importGenome() {

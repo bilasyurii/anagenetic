@@ -27,6 +27,10 @@ export default class UIFactory {
     return this._process(new TextInput(this, TemplateMaster.create('text-input')));
   }
 
+  numberInput() {
+    return this._process(new TextInput(this, TemplateMaster.create('number-input')));
+  }
+
   selectInput() {
     return this._process(new SelectInput(this, TemplateMaster.create('select-input')));
   }

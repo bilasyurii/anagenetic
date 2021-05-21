@@ -2,6 +2,7 @@ import UIElement from '../core/ui-element';
 import EditGenomeForm from './form-screen/edit-genome-form';
 import FormScreen from './form-screen/form-screen';
 import NewGenomeForm from './form-screen/new-genome-form';
+import NewSimulationForm from './form-screen/new-simulation-form';
 import GenomeLibrary from './genome-library/genome-library';
 
 export default class MainScreenUI extends UIElement {
@@ -12,6 +13,7 @@ export default class MainScreenUI extends UIElement {
     this._formScreen = null;
     this._editGenomeForm = null;
     this._newGenomeForm = null;
+    this._newSimulationForm = null;
 
     this._init();
   }
@@ -21,6 +23,7 @@ export default class MainScreenUI extends UIElement {
     this._initFormScreen();
     this._initEditGenomeForm();
     this._initNewGenomeForm();
+    this._initNewSimulationForm();
     this._setupEvents();
   }
 
@@ -45,11 +48,17 @@ export default class MainScreenUI extends UIElement {
       .custom('edit-genome-form', NewGenomeForm);
   }
 
+  _initNewSimulationForm() {
+    this._newSimulationForm = this.create
+      .custom('new-simulation-form', NewSimulationForm);
+  }
+
   _setupEvents() {
     const library = this._genomeLibrary;
     const forms = this._formScreen;
     const editGenomeForm = this._editGenomeForm;
     const newGenomeForm = this._newGenomeForm;
+    const newSimulationForm = this._newSimulationForm;
 
     const showForms = (form) => {
       forms
@@ -63,6 +72,7 @@ export default class MainScreenUI extends UIElement {
 
     library.onEditGenome.add((genome) => showForms(editGenomeForm.setGenome(genome)));
     library.onNewGenome.add(() => showForms(newGenomeForm.reset()));
+    library.onNewSimulation.add(() => showForms(newSimulationForm.reset()));
 
     editGenomeForm.onCancel.add(hideForms);
     editGenomeForm.onSave.add(() => {

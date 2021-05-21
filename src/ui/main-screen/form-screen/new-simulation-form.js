@@ -1,6 +1,8 @@
 import Observable from '../../../anvas/events/observable';
 import UIElement from '../../core/ui-element';
 import $ from 'jquery';
+import SimulationGenomePicker from './simulation-genome-picker';
+import Genome from '../../../core/genome/genome';
 
 export default class NewSimulationForm extends UIElement {
   constructor(factory, dom) {
@@ -10,7 +12,6 @@ export default class NewSimulationForm extends UIElement {
     this.onCancel = new Observable();
     this.onImport = new Observable();
 
-    this._buttons = null;
     this._inputContainer$ = null;
     this._worldWidthInput = null;
     this._worldHeightInput = null;
@@ -19,6 +20,8 @@ export default class NewSimulationForm extends UIElement {
     this._cellStartingEnergyInput = null;
     this._divisionEnergyInput = null;
     this._spawnAdditionalCellsInput = null;
+    this._simulationGenomePicker = null;
+    this._buttons = null;
 
     this._init();
   }
@@ -48,11 +51,13 @@ export default class NewSimulationForm extends UIElement {
     this._initCellsStartingEnergyInput();
     this._initDivisionEnergyInput();
     this._initSpawnAdditionalCellsInput();
+    this._initSimulationGenomePicker();
     this._initButtons();
+    this._setupEvents();
   }
 
   _setupInputContainer() {
-    this._inputContainer$ = $(this.dom$.find('.form-content')[0]);
+    this._inputContainer$ = $(this.dom$.find('.inputs')[0]);
   }
 
   _initWorldWidthInput() {
@@ -129,6 +134,12 @@ export default class NewSimulationForm extends UIElement {
     );
   }
 
+  _initSimulationGenomePicker() {
+    this._simulationGenomePicker = this.create
+      .custom('simulation-genome-picker', SimulationGenomePicker)
+      .injectTo(this, 'genomes');
+  }
+
   _initButtons() {
     const buttons = this._buttons = this.create
       .template('form-buttons')
@@ -151,6 +162,12 @@ export default class NewSimulationForm extends UIElement {
       .setText('Import simulation')
       .setClick(() => this._importSimulation())
       .addTo(buttons);
+  }
+
+  _setupEvents() {
+    const picker = this._simulationGenomePicker;
+
+    picker.onAdd.add(() => picker.addGenome(Genome.random()));
   }
 
   _initFormInput(name, input) {

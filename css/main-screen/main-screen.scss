@@ -95,15 +95,6 @@
             align-items: center;
             flex-grow: 1;
             padding: 1rem;
-
-            .genome-name {
-            }
-    
-            .genome-code {
-            }
-    
-            .created-date {
-            }
           }
     
           .view-button-wrapper {
@@ -243,23 +234,95 @@
   flex-grow: 1;
 
   .form-content {
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 600px;
-    min-width: 300px;
-    align-content: flex-start;
+    .inputs {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-width: 600px;
+      min-width: 300px;
+      align-content: flex-start;
+  
+      .form-item {
+        flex-basis: 40%;
+        margin: 0.5rem 5%;
+  
+        .form-item-input {
+          min-width: 90px;
+        }
+  
+        @media screen and (max-width: $mobileWidth) {
+          flex-basis: 100%;
+          margin: 0;
+        }
+      }
+    }
 
-    .form-item {
-      flex-basis: 40%;
-      margin: 0.5rem 5%;
+    h3 {
+      text-align: center;
+    }
+  }
+}
 
-      .form-item-input {
-        min-width: 90px;
+.simulation-genome-picker {
+  display: flex;
+  align-items: center;
+
+  .genomes-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 200px;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    @include elevationBg(0);
+    @include scrollbar(10px, $primary, elevationColor(9));
+
+    .genome-picker-item {
+      padding: 1rem;
+      cursor: pointer;
+      @include elevationBg(1);
+
+      &:hover {
+        @include elevationBg(2);
       }
 
-      @media screen and (max-width: $mobileWidth) {
-        flex-basis: 100%;
-        margin: 0;
+      &.selected {
+        color: white;
+        background-color: $primary;
+
+        &:hover {
+          background-color: $primaryFocus;
+        }
+      }
+    }
+  }
+
+  .genome-picker-buttons {
+    display: flex;
+    flex-direction: column;
+
+    .genome-picker-button {
+      padding: 1rem;
+      color: white;
+      cursor: pointer;
+      border-radius: 1rem;
+      margin: 1rem;
+
+      &.add-genome {
+        background-color: $primary;
+
+        &:hover {
+          background-color: $primaryFocus;
+        }
+      }
+
+      &.remove-genome {
+        background-color: $red;
+
+        &:hover {
+          background-color: $redFocus;
+        }
       }
     }
   }

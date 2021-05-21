@@ -51,6 +51,13 @@ export default class UIFactory {
     return this._process(new UIElement(this, TemplateMaster.create(name)));
   }
 
+  /**
+   * 
+   * @param {string} name 
+   * @param {T} elementClass 
+   * @template T
+   * @returns {T}
+   */
   custom(name, elementClass) {
     return this._process(new elementClass(this, TemplateMaster.create(name)));
   }

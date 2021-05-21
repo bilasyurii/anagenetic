@@ -3,6 +3,7 @@ import EditGenomeForm from './form-screen/edit-genome-form';
 import FormScreen from './form-screen/form-screen';
 import NewGenomeForm from './form-screen/new-genome-form';
 import NewSimulationForm from './form-screen/new-simulation-form/new-simulation-form';
+import SelectGenomeScreen from './form-screen/new-simulation-form/select-genome-screen';
 import GenomeLibrary from './genome-library/genome-library';
 
 export default class MainScreenUI extends UIElement {
@@ -14,6 +15,7 @@ export default class MainScreenUI extends UIElement {
     this._editGenomeForm = null;
     this._newGenomeForm = null;
     this._newSimulationForm = null;
+    this._selectGenomeScreen = null;
 
     this._init();
   }
@@ -24,6 +26,7 @@ export default class MainScreenUI extends UIElement {
     this._initEditGenomeForm();
     this._initNewGenomeForm();
     this._initNewSimulationForm();
+    this._initSelectGenomeScreen();
     this._setupEvents();
   }
 
@@ -53,12 +56,18 @@ export default class MainScreenUI extends UIElement {
       .custom('new-simulation-form', NewSimulationForm);
   }
 
+  _initSelectGenomeScreen() {
+    this._selectGenomeScreen = this.create
+      .custom('select-genome-screen', SelectGenomeScreen);
+  }
+
   _setupEvents() {
     const library = this._genomeLibrary;
     const forms = this._formScreen;
     const editGenomeForm = this._editGenomeForm;
     const newGenomeForm = this._newGenomeForm;
     const newSimulationForm = this._newSimulationForm;
+    const selectGenomeScreen = this._selectGenomeScreen;
 
     const showForms = (form) => {
       forms
@@ -85,5 +94,12 @@ export default class MainScreenUI extends UIElement {
       hideForms();
       library.addGenome(newGenomeForm.getGenome());
     });
+
+    selectGenomeScreen.onSelected.add((genome) => {
+      showForms(newSimulationForm);
+      newSimulationForm.onGenomeSelected(genome);
+    });
+
+    newSimulationForm.onSelectGenome.add(() => selectGenomeScreen.injectTo(this));
   }
 }

@@ -54,7 +54,7 @@ export default class UIFactory {
   /**
    * 
    * @param {string} name 
-   * @param {T} elementClass 
+   * @param {new() => T} elementClass 
    * @template T
    * @returns {T}
    */

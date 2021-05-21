@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import SimulationGenomePicker from './simulation-genome-picker';
-import Genome from '../../../../core/genome/genome';
 import UIElement from '../../../core/ui-element';
 import Observable from '../../../../anvas/events/observable';
 
@@ -11,6 +10,7 @@ export default class NewSimulationForm extends UIElement {
     this.onLaunch = new Observable();
     this.onCancel = new Observable();
     this.onImport = new Observable();
+    this.onSelectGenome = new Observable();
 
     this._inputContainer$ = null;
     this._worldWidthInput = null;
@@ -24,6 +24,12 @@ export default class NewSimulationForm extends UIElement {
     this._buttons = null;
 
     this._init();
+  }
+
+  onGenomeSelected(genome) {
+    this._simulationGenomePicker.addGenome(genome);
+
+    return this;
   }
 
   getHeaderText() {
@@ -167,7 +173,7 @@ export default class NewSimulationForm extends UIElement {
   _setupEvents() {
     const picker = this._simulationGenomePicker;
 
-    picker.onAdd.add(() => picker.addGenome(Genome.random()));
+    picker.onAdd.add(() => this.onSelectGenome.post());
   }
 
   _initFormInput(name, input) {

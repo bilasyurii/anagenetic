@@ -1,4 +1,5 @@
 import Observable from '../../../../anvas/events/observable';
+import hashGenome from '../../../../utils/hash-genome';
 import UIElement from '../../../core/ui-element';
 
 export default class GenomePickerItem extends UIElement {
@@ -46,9 +47,10 @@ export default class GenomePickerItem extends UIElement {
 
   setGenome(genome) {
     const name = genome.name || 'Unnamed';
+    const hash = hashGenome(genome);
 
     this._genome = genome;
-    this._name.setText(name);
+    this._name.setText(hash + ' ' + name);
 
     return this;
   }

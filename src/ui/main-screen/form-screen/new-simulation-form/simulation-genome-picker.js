@@ -20,12 +20,20 @@ export default class SimulationGenomePicker extends UIElement {
   }
 
   addGenome(genome) {
+    const items = this._items;
+
+    if (ArrayUtils.find(items, function(item) {
+      return item.getGenome() === genome;
+    })) {
+      return this;
+    }
+
     const item = this.create
       .custom('genome-picker-item', GenomePickerItem)
       .setGenome(genome);
 
     item.onClick.add(this._onItemClicked, this);
-    this._items.push(item);
+    items.push(item);
     this._genomesContainer$.append(item.dom);
 
     return this;

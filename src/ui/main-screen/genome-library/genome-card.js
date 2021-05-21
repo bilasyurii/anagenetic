@@ -12,27 +12,33 @@ export default class GenomeCard extends UIElement {
     this._genomeName = null;
     this._genomeCode = null;
     this._createdDate = null;
-    this._viewButton = null;
+    this._button = null;
 
     this._init();
   }
 
   select() {
     this.dom$.addClass('selected');
-    this._viewButton.disable();
+    this._button.disable();
 
     return this;
   }
 
   deselect() {
     this.dom$.removeClass('selected');
-    this._viewButton.enable();
+    this._button.enable();
 
     return this;
   }
 
   getGenome() {
     return this._genome;
+  }
+
+  setButtonText(text) {
+    this._button.setText(text);
+
+    return this;
   }
 
   setGenome(genome) {
@@ -85,7 +91,7 @@ export default class GenomeCard extends UIElement {
   }
 
   _initButton() {
-    this._viewButton = this.create
+    this._button = this.create
       .button()
       .setText('View')
       .setClick(() => this.onView.post(this))

@@ -1,4 +1,5 @@
 import Observable from '../../../anvas/events/observable';
+import ArrayUtils from '../../../anvas/utils/array-utils';
 import UIElement from '../../core/ui-element';
 import GenomeCard from './genome-card';
 
@@ -8,6 +9,8 @@ export default class GenomesList extends UIElement {
 
     this.onGenomeCardSelected = new Observable();
 
+    this._cards = [];
+    this._buttonText = 'View';
     this._selectedGenomeCard = null;
     this._genomeLibrary = null;
     this._importExport = null;
@@ -25,6 +28,16 @@ export default class GenomesList extends UIElement {
 
   set importExport(importExport) {
     this._importExport = importExport;
+  }
+
+  setButtonText(text) {
+    this._buttonText = text;
+
+    ArrayUtils.forEach(this._cards, function(card) {
+      card.setButtonText(text);
+    });
+
+    return this;
   }
 
   exportLibrary() {
@@ -80,23 +93,23 @@ export default class GenomesList extends UIElement {
     return this;
   }
 
-  onInjected() {
-    // TODO init
-  }
-
   _onGenomeLibraryChanged() {
     const create = this.create;
     const genomes = this._genomeLibrary.genomes;
     const count = genomes.length;
+    const cards = this._cards = [];
+    const buttonText = this._buttonText;
 
     this.dom$.children().remove();
 
     for (let i = 0; i < count; ++i) {
       const genomeCard = create
         .custom('genome-card', GenomeCard)
+        .setButtonText(buttonText)
         .setGenome(genomes[i])
         .addTo(this);
 
+      cards.push(genomeCard);
       genomeCard.onView.add(this._viewGenomeCard, this);
     }
   }

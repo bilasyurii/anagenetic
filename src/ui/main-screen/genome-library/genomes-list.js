@@ -14,6 +14,9 @@ export default class GenomesList extends UIElement {
     this._selectedGenomeCard = null;
     this._genomeLibrary = null;
     this._importExport = null;
+    this._message = null;
+
+    this._init();
   }
 
   get dependencies() {
@@ -93,14 +96,34 @@ export default class GenomesList extends UIElement {
     return this;
   }
 
+  _init() {
+    this._initMessage();
+  }
+
+  _initMessage() {
+    this._message = this.create
+      .template('no-genomes-message')
+      .addTo(this);
+  }
+
   _onGenomeLibraryChanged() {
-    const create = this.create;
     const genomes = this._genomeLibrary.genomes;
     const count = genomes.length;
+
+    this.dom$.children().remove();
+
+    if (count === 0) {
+      this._message.addTo(this);
+
+      return;
+    } else {
+      this._message.remove();
+    }
+
+    const create = this.create;
     const cards = this._cards = [];
     const buttonText = this._buttonText;
 
-    this.dom$.children().remove();
 
     for (let i = 0; i < count; ++i) {
       const genomeCard = create

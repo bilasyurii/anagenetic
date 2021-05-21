@@ -1,5 +1,6 @@
 import { saveAs } from 'file-saver';
 import Genome from '../../core/genome/genome';
+import ArrayUtils from '../../anvas/utils/array-utils';
 
 export default class ImportExportService {
   constructor() {
@@ -23,13 +24,32 @@ export default class ImportExportService {
   }
 
   importGenome(callback) {
-    this.import((data) => callback(Genome.deserialize(data)));
+    this.import((data) => callback(Genome.parse(data)));
+  }
+
+  importLibrary(callback) {
+    this.import((data) => {
+      const json = JSON.parse(data);
+      const library = ArrayUtils.map(json, Genome.fromJSON);
+
+      callback(library);
+    });
   }
 
   exportGenome(genome) {
     const name = genome.name || 'unnamed';
 
-    this.export(genome.serialize(), name + '.genome');
+    this.export(genome.stringify(), name + '.genome');
+
+    return this;
+  }
+
+  exportLibrary(library) {
+    const json = ArrayUtils.map(library, function(genome) {
+      return genome.json();
+    });
+
+    this.export(JSON.stringify(json), 'unnamed.library');
 
     return this;
   }

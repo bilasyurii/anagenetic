@@ -62,7 +62,7 @@ export default class Genome {
     return str;
   }
 
-  serialize() {
+  json() {
     const obj = {};
     const genesData = [];
 
@@ -77,20 +77,27 @@ export default class Genome {
       genesData.push(genes[i].value);
     }
 
-    return JSON.stringify(obj);
+    return obj;
   }
 
-  static deserialize(data) {
-    const obj = JSON.parse(data);
-    const genes = ArrayUtils.map(obj.genes, function(value) {
+  stringify() {
+    return JSON.stringify(this.json());
+  }
+
+  static fromJSON(json) {
+    const genes = ArrayUtils.map(json.genes, function(value) {
       return new Gene(value);
     });
     const genome = new Genome(genes);
 
-    genome.name = obj.name;
-    genome.createdDate = obj.createdDate;
+    genome.name = json.name;
+    genome.createdDate = json.createdDate;
 
     return genome;
+  }
+
+  static parse(data) {
+    return Genome.fromJSON(JSON.parse(data));
   }
 
   randomize() {

@@ -53,7 +53,7 @@ export default class UI extends UIElement {
 
   _initServices() {
     this.DI
-      .register('genomeLibrary', new GenomeLibraryService().addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()).addGenome(Genome.random()))
+      .register('genomeLibrary', new GenomeLibraryService())
       .register('importExport', new ImportExportService());
   }
 

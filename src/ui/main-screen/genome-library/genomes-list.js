@@ -10,16 +10,27 @@ export default class GenomesList extends UIElement {
 
     this._selectedGenomeCard = null;
     this._genomeLibrary = null;
+    this._importExport = null;
   }
 
   get dependencies() {
-    return ['genomeLibrary'];
+    return ['genomeLibrary', 'importExport'];
   }
 
   set genomeLibrary(genomeLibrary) {
     this._genomeLibrary = genomeLibrary;
     genomeLibrary.onChanges.add(this._onGenomeLibraryChanged, this);
     this._onGenomeLibraryChanged();
+  }
+
+  set importExport(importExport) {
+    this._importExport = importExport;
+  }
+
+  exportLibrary() {
+    this._importExport.exportLibrary(this._genomeLibrary.genomes);
+
+    return this;
   }
 
   deselect() {
@@ -59,6 +70,12 @@ export default class GenomesList extends UIElement {
 
   addGenome(genome) {
     this._genomeLibrary.addGenome(genome);
+
+    return this;
+  }
+
+  addGenomes(genomes) {
+    this._genomeLibrary.addGenomes(genomes);
 
     return this;
   }

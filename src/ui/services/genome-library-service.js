@@ -19,6 +19,19 @@ export default class GenomeLibraryService {
     return this;
   }
 
+  addGenomes(genomes) {
+    const destination = this._genomes;
+    const count = genomes.length;
+
+    for (let i = 0; i < count; ++i) {
+      destination.push(genomes[i]);
+    }
+
+    this.onChanges.post();
+
+    return this;
+  }
+
   removeGenome(genome) {
     ArrayUtils.removeByValue(this._genomes, genome);
     this.onChanges.post();

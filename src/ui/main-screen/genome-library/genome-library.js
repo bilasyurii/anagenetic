@@ -16,6 +16,7 @@ export default class GenomeLibrary extends UIElement {
     this._genomePanel = null;
     this._importExport = null;
     this._importGenomeCallback = null;
+    this._importLibraryCallback = null;
 
     this._init();
   }
@@ -69,6 +70,7 @@ export default class GenomeLibrary extends UIElement {
 
   _initCallbacks() {
     this._importGenomeCallback = (genome) => this.addGenome(genome);
+    this._importLibraryCallback = (library) => this._genomesList.addGenomes(library);
   }
 
   _setupEvents() {
@@ -101,9 +103,15 @@ export default class GenomeLibrary extends UIElement {
 
     buttons.onNewGenome.add(() => this.onNewGenome.post());
     buttons.onImportGenome.add(() => this._importGenome());
+    buttons.onExportLibrary.add(() => list.exportLibrary());
+    buttons.onImportLibrary.add(() => this._importLibrary());
   }
 
   _importGenome() {
     this._importExport.importGenome(this._importGenomeCallback);
+  }
+
+  _importLibrary() {
+    this._importExport.importLibrary(this._importLibraryCallback);
   }
 }

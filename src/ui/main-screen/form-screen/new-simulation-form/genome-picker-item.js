@@ -1,5 +1,5 @@
-import Observable from '../../../anvas/events/observable';
-import UIElement from '../../core/ui-element';
+import Observable from '../../../../anvas/events/observable';
+import UIElement from '../../../core/ui-element';
 
 export default class GenomePickerItem extends UIElement {
   constructor(factory, dom) {

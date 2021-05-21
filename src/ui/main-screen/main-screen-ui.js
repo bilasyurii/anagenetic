@@ -2,7 +2,7 @@ import UIElement from '../core/ui-element';
 import EditGenomeForm from './form-screen/edit-genome-form';
 import FormScreen from './form-screen/form-screen';
 import NewGenomeForm from './form-screen/new-genome-form';
-import NewSimulationForm from './form-screen/new-simulation-form';
+import NewSimulationForm from './form-screen/new-simulation-form/new-simulation-form';
 import GenomeLibrary from './genome-library/genome-library';
 
 export default class MainScreenUI extends UIElement {

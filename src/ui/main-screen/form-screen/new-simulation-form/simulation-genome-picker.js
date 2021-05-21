@@ -1,8 +1,8 @@
-import UIElement from '../../core/ui-element';
 import $ from 'jquery';
-import Observable from '../../../anvas/events/observable';
 import GenomePickerItem from './genome-picker-item';
-import ArrayUtils from '../../../anvas/utils/array-utils';
+import ArrayUtils from '../../../../anvas/utils/array-utils';
+import Observable from '../../../../anvas/events/observable';
+import UIElement from '../../../core/ui-element';
 
 export default class SimulationGenomePicker extends UIElement {
   constructor(factory, dom) {
@@ -68,7 +68,6 @@ export default class SimulationGenomePicker extends UIElement {
   }
 
   _onItemClicked(item) {
-    // console.log(item);
     const selected = this._selectedItem;
 
     if (selected !== null) {

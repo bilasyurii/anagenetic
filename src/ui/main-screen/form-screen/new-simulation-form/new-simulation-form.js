@@ -1,8 +1,8 @@
-import Observable from '../../../anvas/events/observable';
-import UIElement from '../../core/ui-element';
 import $ from 'jquery';
 import SimulationGenomePicker from './simulation-genome-picker';
-import Genome from '../../../core/genome/genome';
+import Genome from '../../../../core/genome/genome';
+import UIElement from '../../../core/ui-element';
+import Observable from '../../../../anvas/events/observable';
 
 export default class NewSimulationForm extends UIElement {
   constructor(factory, dom) {

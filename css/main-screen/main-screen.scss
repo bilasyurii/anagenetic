@@ -247,17 +247,19 @@
     flex-wrap: wrap;
     max-width: 600px;
     min-width: 300px;
+    align-content: flex-start;
 
     .form-item {
       flex-basis: 40%;
-      margin: 5%;
+      margin: 0.5rem 5%;
 
       .form-item-input {
         min-width: 90px;
       }
 
       @media screen and (max-width: $mobileWidth) {
-        flex-basis: 90%;
+        flex-basis: 100%;
+        margin: 0;
       }
     }
   }

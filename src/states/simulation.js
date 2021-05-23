@@ -93,6 +93,7 @@ export default class SimulationState extends State {
     );
     const worldView = this._worldView = new WorldView(world);
 
+    this.pause();
     engine.add(worldView);
 
     world.onCellAdded.add(this._onCellAdded, this);

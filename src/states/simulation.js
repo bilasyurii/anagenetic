@@ -165,15 +165,23 @@ export default class SimulationState extends State {
     const energy = config.cellsStartingEnergy;
     const chemicals = config.cellChemicals;
     const count = config.startingCellsAmount;
+    const world = this._world;
+    const size = world.size;
+    const offset = 100;
+    const fromX = offset;
+    const toX = size.x - offset;
+    const fromY = offset;
+    const toY = size.y - offset;
+    const between = Random.between;
 
     for (let i = 0; i < count; ++i) {
-      const cell = this.world.create.cell();
+      const cell = world.create.cell();
 
       cell.genome = Genome.random();
       cell.chemicals.addMany(chemicals);
       cell
         .addEnergy(energy)
-        .setPositionXY(300, 300);
+        .setPositionXY(between(fromX, toX), between(fromY, toY));
     }
   }
 }

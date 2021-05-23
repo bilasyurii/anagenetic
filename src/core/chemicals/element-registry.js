@@ -41,7 +41,7 @@ export default class ElementRegistry {
   }
 
   static _comparator(a, b) {
-    return b.damagePriority - b.damagePriority;
+    return b.damagePriority - a.damagePriority;
   }
 }
 

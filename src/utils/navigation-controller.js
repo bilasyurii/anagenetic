@@ -1,24 +1,34 @@
 import SU from '../anvas/screen/screen-utils';
 
 export default class NavigationController {
-  constructor(engine, world) {
+  constructor(engine) {
     this.engine = engine;
     this.input = engine.input;
-    this.world = world;
-    this.worldView = world.view;
+
+    this.world = null;
+    this.worldView = null;
 
     this._inputEnabled = true;
     this._isDragging = false;
     this._zoom = 1;
     this._lockedCellBody = null;
 
-    this._setupView();
     this._setupEvents();
+  }
+
+  setup(world) {
+    this.world = world;
+    this.worldView = world.view;
+
+    this._setupView();
+
+    return this;
   }
 
   lockOnCell(cell) {
     cell.onDied.add(this._onCellDied, this);
     this._lockedCellBody = cell.view.rigidBody;
+    this.update();
 
     return this;
   }
@@ -50,22 +60,19 @@ export default class NavigationController {
       return;
     }
 
-    const view = this.worldView;
-
-    view.pivot
+    this.worldView.pivot
       .copyFrom(lockedCellBody.position);
   }
 
   _setupView() {
-    const world = this.world;
     const view = this.worldView;
 
     view.pivot
-      .copyFrom(world.size)
+      .copyFrom(this.world.size)
       .mul(0.5);
     
     view.position
-      .copyFrom(SU.center)
+      .copyFrom(SU.center);
   }
 
   _setupEvents() {

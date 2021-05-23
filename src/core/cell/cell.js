@@ -41,6 +41,10 @@ export default class Cell {
     this._init();
   }
 
+  get isAlive() {
+    return this._isAlive;
+  }
+
   get radius() {
     return this._radius;
   }

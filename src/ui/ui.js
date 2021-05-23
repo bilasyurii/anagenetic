@@ -11,7 +11,6 @@ import Observable from '../anvas/events/observable';
 import MainScreenUI from './main-screen/main-screen-ui';
 import DependencyInjection from './core/dependency-injection';
 import GenomeLibraryService from './services/genome-library-service';
-import Genome from '../core/genome/genome';
 import ImportExportService from './services/import-export-service';
 
 export default class UI extends UIElement {
@@ -26,6 +25,7 @@ export default class UI extends UIElement {
     this.onSpeedChanged = new Observable();
     this.onZoomChanged = new Observable();
     this.onCellDeselected = new Observable();
+    this.onSimulationStart = new Observable();
 
     this._header = null;
     this._simulationControls = null;
@@ -64,7 +64,8 @@ export default class UI extends UIElement {
 
     this._simulationControls = this.create
       .custom('simulation-controls', SimulationControls)
-      .injectTo(navHeader);
+      .injectTo(navHeader)
+      .makeInvisible();
   }
 
   _initSimulationUI() {
@@ -93,9 +94,11 @@ export default class UI extends UIElement {
     simulationUI.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
     simulationUI.onCellDeselected.add(() => this.onCellDeselected.post());
 
-    mainScreenUI.onSimulationStart.add(() => {
+    mainScreenUI.onSimulationStart.add((config) => {
       mainScreenUI.hide();
       simulationUI.show();
+      controls.show();
+      this.onSimulationStart.post(config);
     })
   }
 }

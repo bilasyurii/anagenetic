@@ -200,7 +200,19 @@ export default class NewSimulationForm extends UIElement {
   _launch() {
     // this._genome.name = this._nameInput.getValue();
     // this._genome.createdDate = Date.now();
-    this.onLaunch.post();
+    const config = {
+      worldWidth: parseInt(this._worldWidthInput.getValue()),
+      worldHeight: parseInt(this._worldHeightInput.getValue()),
+      mutationStrategy: this._mutationStrategyInput.getValue(),
+      startingCellsAmount: parseInt(this._cellsAmountInput.getValue()),
+      cellsStartingEnergy: parseInt(this._cellStartingEnergyInput.getValue()),
+      energyToDivide: parseInt(this._divisionEnergyInput.getValue()),
+      spawnAdditionalCells: this._spawnAdditionalCellsInput.getValue() === 'true',
+      randomSeed: parseInt(this._randomSeedInput.getValue()),
+      genomes: this._simulationGenomePicker.getGenomes(),
+    };
+
+    this.onLaunch.post(config);
   }
 
   _importSimulation() {

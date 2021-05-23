@@ -172,14 +172,22 @@ export default class World {
 
   _updateCells() {
     const cells = this._cells;
-    const count = cells.length;
+
+    let count = cells.length;
 
     for (let i = 0; i < count; ++i) {
       cells[i].preUpdate();
     }
 
     for (let i = 0; i < count; ++i) {
-      cells[i].update();
+      const cell = cells[i];
+
+      cell.update();
+
+      if (cell.isAlive === false) {
+        --i;
+        --count;
+      }
     }
   }
 

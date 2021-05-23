@@ -106,8 +106,6 @@ export default class MainScreenUI extends UIElement {
         selectGenomeScreen.injectTo(this);
       }
     });
-    newSimulationForm.onLaunch.add(() => {
-      this.onSimulationStart.post();
-    });
+    newSimulationForm.onLaunch.add((config) => this.onSimulationStart.post(config));
   }
 }

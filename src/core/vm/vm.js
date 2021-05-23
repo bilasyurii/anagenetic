@@ -51,8 +51,6 @@ export default class VM {
     this._context = null;
 
     this._initCommandContext();
-
-    VM._initCommandsLookup();
   }
 
   set genome(value) {
@@ -108,7 +106,7 @@ export default class VM {
     });
   }
 
-  static _initCommandsLookup() {
+  static initCommandsLookup() {
     let lookup = VM._commandsLookup;
 
     if (lookup !== null) {

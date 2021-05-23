@@ -1,10 +1,16 @@
-import NavigationController from "../utils/navigation-controller";
+import NavigationController from '../utils/navigation-controller';
 
 export default class UIMediator {
   constructor() {
     this._ui = null;
     this._simulation = null;
     this._navigationController = null;
+  }
+
+  setup() {
+    this._navigationController.setup(this._simulation.world);
+
+    return this;
   }
 
   setSimulation(simulation) {
@@ -44,13 +50,14 @@ export default class UIMediator {
       .init();
   }
 
+  static setup() {
+    UIMediator._instance.setup();
+  }
+
   _initNavigation() {
     const simulation = this._simulation;
 
-    this._navigationController = new NavigationController(
-      simulation.engine,
-      simulation.world
-    );
+    this._navigationController = new NavigationController(simulation.engine);
   }
 
   _setupEvents() {
@@ -68,6 +75,7 @@ export default class UIMediator {
     ui.onSpeedChanged.add((speed) => simulation.changeSpeed(speed));
     ui.onZoomChanged.add((zoom) => navigation.setZoom(zoom));
     ui.onCellDeselected.add(this._onCellDeselected, this);
+    ui.onSimulationStart.add((config) => simulation.start(config));
   }
 
   _onCellSelected(cell) {

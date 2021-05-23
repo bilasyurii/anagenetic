@@ -20,6 +20,7 @@ export default class NewSimulationForm extends UIElement {
     this._cellStartingEnergyInput = null;
     this._divisionEnergyInput = null;
     this._spawnAdditionalCellsInput = null;
+    this._randomSeedInput = null;
     this._simulationGenomePicker = null;
     this._buttons = null;
 
@@ -44,6 +45,7 @@ export default class NewSimulationForm extends UIElement {
     this._cellStartingEnergyInput.setValue(20);
     this._divisionEnergyInput.setValue(10);
     this._spawnAdditionalCellsInput.setValue('false');
+    this._randomSeedInput.setValue(~~(Math.random() * 2147483648));
 
     return this;
   }
@@ -57,6 +59,7 @@ export default class NewSimulationForm extends UIElement {
     this._initCellsStartingEnergyInput();
     this._initDivisionEnergyInput();
     this._initSpawnAdditionalCellsInput();
+    this._initRandomSeedCellsInput();
     this._initSimulationGenomePicker();
     this._initButtons();
     this._setupEvents();
@@ -137,6 +140,13 @@ export default class NewSimulationForm extends UIElement {
           text: 'false',
         },
       ])
+    );
+  }
+
+  _initRandomSeedCellsInput() {
+    this._randomSeedInput = this._initFormInput(
+      'Random seed:',
+      this.create.numberInput()
     );
   }
 

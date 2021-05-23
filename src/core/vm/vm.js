@@ -39,6 +39,7 @@ import FragmentationBillaniumCommand from './commands/reaction-commands/fragment
 import FragmentationHillagenCommand from './commands/reaction-commands/fragmentation-hillagen-command';
 import PhotosynthesisCommand from './commands/reaction-commands/photosynthesis-command';
 import ArrayUtils from '../../anvas/utils/array-utils';
+import Compare9RCommand from './commands/genome-commands/compare-9-r-command';
 
 export default class VM {
   constructor(cell) {
@@ -143,17 +144,18 @@ export default class VM {
       /* 24 */ new DistinguishRCommand(),
       /* 25 */ new CompareRCommand(),
       /* 26 */ new Compare3RCommand(),
-      /* 27 */ new CompareLessRCommand(),
-      /* 28 */ new GetChemicalCommand(),
-      /* 29 */ new ChubiumGenerationCommand(),
-      /* 30 */ new DefragmentationBillaniumCommand(),
-      /* 31 */ new DefragmentationChubiumCommand(),
-      /* 32 */ new DigestionBillaniumCommand(),
-      /* 33 */ new DigestionChubiumCommand(),
-      /* 34 */ new DigestionHillagenCommand(),
-      /* 35 */ new FragmentationBillaniumCommand(),
-      /* 36 */ new FragmentationHillagenCommand(),
-      /* 37 */ new PhotosynthesisCommand(),
+      /* 27 */ new Compare9RCommand(),
+      /* 28 */ new CompareLessRCommand(),
+      /* 29 */ new GetChemicalCommand(),
+      /* 30 */ new ChubiumGenerationCommand(),
+      /* 31 */ new DefragmentationBillaniumCommand(),
+      /* 32 */ new DefragmentationChubiumCommand(),
+      /* 33 */ new DigestionBillaniumCommand(),
+      /* 34 */ new DigestionChubiumCommand(),
+      /* 35 */ new DigestionHillagenCommand(),
+      /* 36 */ new FragmentationBillaniumCommand(),
+      /* 37 */ new FragmentationHillagenCommand(),
+      /* 38 */ new PhotosynthesisCommand(),
     ];
     const knownCount = commands.length;
     const bufferSize = ((count - 1) % knownCount) + 1;

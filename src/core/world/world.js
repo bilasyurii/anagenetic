@@ -209,6 +209,8 @@ export default class World {
   }
 
   _onCellDied(cell) {
+    cell.destroy();
+
     const cells = this._cells;
     const count = cells.length;
 

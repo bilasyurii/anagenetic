@@ -1,4 +1,3 @@
-import Transform from '../geom/transform.js';
 import ArrayUtils from '../utils/array-utils.js';
 import GameObject from './game-object.js';
 
@@ -10,6 +9,12 @@ export default class Group extends GameObject {
   }
 
   add(child) {
+    const parent = child.parent;
+
+    if (parent !== null) {
+      parent.remove(child);
+    }
+
     this.children.push(child);
 
     const engine = this.engine;
@@ -92,11 +97,16 @@ export default class Group extends GameObject {
   }
 
   destroy() {
+    super.destroy();
+
     const children = this.children;
     const count = children.length;
 
     for (let i = 0; i < count; ++i) {
-      children[i].destroy();
+      const child = children[i];
+
+      child.parent = null;
+      child.destroy();
     }
 
     this.children = null;

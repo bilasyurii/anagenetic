@@ -24,4 +24,8 @@ export default class SpacePartitioning {
   broadPhase() {
     Debug.abstractMethod();
   }
+
+  reset() {
+    Debug.abstractMethod();
+  }
 }

@@ -324,6 +324,10 @@ export default class Cell {
     this.onDied.post(this);
   }
 
+  destroy() {
+    this.view.destroy();
+  }
+
   _init() {
     this._initMemory();
     this._initRegistries();

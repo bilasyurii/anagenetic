@@ -85,6 +85,10 @@ export default class SimulationState extends State {
   _setup() {
     const config = this._config;
     const engine = this.engine;
+
+    this._isReset = false;
+    engine.physics.reset();
+
     const spacePartitioning = engine.physics.spacePartitioning;
     const world = this._world = new World(
       spacePartitioning,
@@ -92,7 +96,6 @@ export default class SimulationState extends State {
     );
     const worldView = this._worldView = new WorldView(world);
 
-    this._isReset = false;
     this.pause();
     engine.add(worldView);
 
@@ -141,11 +144,11 @@ export default class SimulationState extends State {
     const worldView = this._worldView;
     const cellSelectorView = this._cellSelectorView;
 
-    worldView.parent.remove(worldView);
-
     if (cellSelectorView.parent !== null) {
       cellSelectorView.parent.remove(cellSelectorView);
     }
+
+    worldView.destroy();
 
     this._world = null;
     this._worldView = null;

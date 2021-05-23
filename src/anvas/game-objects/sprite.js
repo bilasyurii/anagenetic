@@ -205,5 +205,7 @@ export default class Sprite extends Renderable {
     this._texture = null;
     this._frame = null;
     this._frameName = null;
+
+    super.destroy();
   }
 }

@@ -37,6 +37,7 @@ export default class WorldView extends Group {
 
       view.width = width;
       view.height = height;
+      view.dataObject = wall;
 
       view.position.set(wall.minX, wall.minY);
 

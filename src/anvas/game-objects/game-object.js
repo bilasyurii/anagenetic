@@ -157,13 +157,17 @@ export default class GameObject {
   }
 
   destroy() {
+    if (this.parent !== null) {
+      this.parent.remove(this);
+      this.parent = null;
+    }
+
     this._local = null;
     this._world = null;
     this._localBounds = null;
     this._worldBounds = null;
-    this._position.destroy();
-    this._scale.destroy();
-    this._pivot.destroy();
+
+    this.removeInput();
   }
 
   get parent() {

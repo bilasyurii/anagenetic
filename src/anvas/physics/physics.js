@@ -162,6 +162,15 @@ export default class Physics {
     }
   }
 
+  reset() {
+    this._spacePartitioning.reset();
+    this._forceGenerators = [];
+    this._rigidBodies = [];
+    this._bodiesToRemove = [];
+
+    return this;
+  }
+
   _removePending() {
     this._spacePartitioning.removePending();
 

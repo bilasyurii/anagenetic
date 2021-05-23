@@ -107,4 +107,12 @@ export default class NoPartitioning extends SpacePartitioning {
   broadPhase() {
     return this._pairs;
   }
+
+  reset() {
+    this._bodies = [];
+    this._pairs = [];
+    this._bodiesToRemove = [];
+
+    return this;
+  }
 }

@@ -91,6 +91,13 @@ export default class CellView extends Group {
 
   _onDied() {
     const parent = this.parent;
+    const selector = this._selectorView;
+
+    if (selector !== null) {
+      this.remove(selector);
+      selector.visible = false;
+      this._selectorView = null;
+    }
 
     if (parent !== null) {
       parent.remove(this);

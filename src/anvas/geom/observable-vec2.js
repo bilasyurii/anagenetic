@@ -512,9 +512,4 @@ export default class ObservableVec2 {
 
     return ~~(x * y + x + y);
   }
-
-  destroy() {
-    this.callback = null;
-    this.context = null;
-  }
 }

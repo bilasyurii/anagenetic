@@ -268,6 +268,15 @@ export default class HashGrid extends SpacePartitioning {
     }
   }
 
+  reset() {
+    this._bodies = [];
+    this._bodiesToRemove = [];
+    this._grid = null;
+    this._createGrid();
+
+    return this;
+  }
+
   _createGrid() {
     const grid = this._grid = [];
     const width = this._width;

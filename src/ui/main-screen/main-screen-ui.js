@@ -1,3 +1,4 @@
+import Observable from '../../anvas/events/observable';
 import UIElement from '../core/ui-element';
 import EditGenomeForm from './form-screen/edit-genome-form';
 import FormScreen from './form-screen/form-screen';
@@ -9,6 +10,8 @@ import GenomeLibrary from './genome-library/genome-library';
 export default class MainScreenUI extends UIElement {
   constructor(factory, dom) {
     super(factory, dom);
+
+    this.onSimulationStart = new Observable();
 
     this._genomeLibrary = null;
     this._formScreen = null;
@@ -95,16 +98,16 @@ export default class MainScreenUI extends UIElement {
       library.addGenome(newGenomeForm.getGenome());
     });
 
-    selectGenomeScreen.onSelected.add((genome) => {
-      showForms(newSimulationForm);
-      newSimulationForm.onGenomeSelected(genome);
-    });
+    selectGenomeScreen.onSelected.add((genome) => showForms(newSimulationForm.onGenomeSelected(genome)));
 
     newSimulationForm.onCancel.add(hideForms);
     newSimulationForm.onSelectGenome.add(() => {
       if (selectGenomeScreen.areGenesAvailable() === true) {
         selectGenomeScreen.injectTo(this);
       }
+    });
+    newSimulationForm.onLaunch.add(() => {
+      this.onSimulationStart.post();
     });
   }
 }

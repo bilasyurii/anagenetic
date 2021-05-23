@@ -70,6 +70,7 @@ export default class UI extends UIElement {
   _initSimulationUI() {
     this._simulationUI = this.create
       .custom('simulation-ui', SimulationUI)
+      .hide()
       .addTo(this);
   }
 
@@ -81,15 +82,20 @@ export default class UI extends UIElement {
 
   _setupEvents() {
     const controls = this._simulationControls;
+    const simulationUI = this._simulationUI;
+    const mainScreenUI = this._mainScreenUI;
 
     controls.onPlay.add(() => this.onPlay.post());
     controls.onPause.add(() => this.onPause.post());
     controls.onStop.add(() => this.onStop.post());
     controls.onSpeedChanged.add((speed) => this.onSpeedChanged.post(speed));
 
-    const simulationUI = this._simulationUI;
-
     simulationUI.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
     simulationUI.onCellDeselected.add(() => this.onCellDeselected.post());
+
+    mainScreenUI.onSimulationStart.add(() => {
+      mainScreenUI.hide();
+      simulationUI.show();
+    })
   }
 }

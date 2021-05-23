@@ -55,10 +55,10 @@ export default class SimulationState extends State {
   start(config) {
     this._config = config;
 
+    console.log(config);
     this._cleanup();
     this._setup();
     UIMediator.setup();
-    console.log(config);
   }
 
   play() {
@@ -101,13 +101,7 @@ export default class SimulationState extends State {
     MutationStrategy.setActive(this._mutationStrategies[config.mutationStrategy]);
     Random.setSeed(config.randomSeed);
 
-    const cell = world.create.cell();
-
-    cell.genome = Genome.random();
-    cell.chemicals.addSingle('hillagen', 20);
-    cell
-      .addEnergy(20)
-      .setPositionXY(100, 100);
+    this._spawnCells();
 
     // const cell2 = world.create.cell();
 
@@ -163,5 +157,22 @@ export default class SimulationState extends State {
     this._worldView = null;
 
     this._isReset = true;
+  }
+
+  _spawnCells() {
+    const config = this._config;
+    const energy = config.cellsStartingEnergy;
+    const chemicals = config.cellChemicals;
+    const count = config.startingCellsAmount;
+
+    for (let i = 0; i < count; ++i) {
+      const cell = this.world.create.cell();
+
+      cell.genome = Genome.random();
+      cell.chemicals.addMany(chemicals);
+      cell
+        .addEnergy(energy)
+        .setPositionXY(300, 300);
+    }
   }
 }

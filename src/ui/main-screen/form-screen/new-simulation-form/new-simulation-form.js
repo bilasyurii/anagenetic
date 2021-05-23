@@ -2,6 +2,8 @@ import $ from 'jquery';
 import SimulationGenomePicker from './simulation-genome-picker';
 import UIElement from '../../../core/ui-element';
 import Observable from '../../../../anvas/events/observable';
+import ElementRegistry from '../../../../core/chemicals/element-registry';
+import StringUtils from '../../../../utils/string-utils';
 
 export default class NewSimulationForm extends UIElement {
   constructor(factory, dom) {
@@ -21,6 +23,8 @@ export default class NewSimulationForm extends UIElement {
     this._divisionEnergyInput = null;
     this._spawnAdditionalCellsInput = null;
     this._randomSeedInput = null;
+    this._cellContentsInputs = null;
+    this._worldChemicalsInputs = null;
     this._simulationGenomePicker = null;
     this._buttons = null;
 
@@ -46,6 +50,7 @@ export default class NewSimulationForm extends UIElement {
     this._divisionEnergyInput.setValue(10);
     this._spawnAdditionalCellsInput.setValue('false');
     this._randomSeedInput.setValue(~~(Math.random() * 2147483648));
+    this._resetChemicalsInputs();
 
     return this;
   }
@@ -60,6 +65,8 @@ export default class NewSimulationForm extends UIElement {
     this._initDivisionEnergyInput();
     this._initSpawnAdditionalCellsInput();
     this._initRandomSeedCellsInput();
+    this._initCellContentsInputs();
+    this._initWorldChemicalsInputs();
     this._initSimulationGenomePicker();
     this._initButtons();
     this._setupEvents();
@@ -156,6 +163,16 @@ export default class NewSimulationForm extends UIElement {
       .injectTo(this, 'genomes');
   }
 
+  _initCellContentsInputs() {
+    this._initFormItemsHeader('Cells starting contents')
+    this._cellContentsInputs = this._initChemicalsInputs();
+  }
+
+  _initWorldChemicalsInputs() {
+    this._initFormItemsHeader('World\'s starting chemicals')
+    this._worldChemicalsInputs = this._initChemicalsInputs();
+  }
+
   _initButtons() {
     const buttons = this._buttons = this.create
       .template('form-buttons')
@@ -197,9 +214,30 @@ export default class NewSimulationForm extends UIElement {
     return formItem;
   }
 
+  _initFormItemsHeader(text) {
+    this.create
+      .template('form-items-header')
+      .inject(this.create.text(text))
+      .dom$.appendTo(this._inputContainer$);
+  }
+
+  _initChemicalsInputs() {
+    const create = this.create;
+    const inputs = {};
+
+    ElementRegistry.forEach((element) => {
+      const name = element.name;
+
+      inputs[name] = this._initFormInput(
+        StringUtils.capitalize(name),
+        create.numberInput()
+      );
+    });
+
+    return inputs;
+  }
+
   _launch() {
-    // this._genome.name = this._nameInput.getValue();
-    // this._genome.createdDate = Date.now();
     const config = {
       worldWidth: parseInt(this._worldWidthInput.getValue()),
       worldHeight: parseInt(this._worldHeightInput.getValue()),
@@ -210,6 +248,8 @@ export default class NewSimulationForm extends UIElement {
       spawnAdditionalCells: this._spawnAdditionalCellsInput.getValue() === 'true',
       randomSeed: parseInt(this._randomSeedInput.getValue()),
       genomes: this._simulationGenomePicker.getGenomes(),
+      cellChemicals: this._getChemicals(this._cellContentsInputs),
+      worldChemicals: this._getChemicals(this._worldChemicalsInputs),
     };
 
     this.onLaunch.post(config);
@@ -217,5 +257,35 @@ export default class NewSimulationForm extends UIElement {
 
   _importSimulation() {
     // TODO
+  }
+
+  _resetChemicalsInputs() {
+    const cells = this._cellContentsInputs;
+    const world = this._worldChemicalsInputs;
+
+    cells['billanium'].setValue(0);
+    cells['hillagen'].setValue(20);
+    cells['chubium'].setValue(0);
+    cells['dion'].setValue(0);
+
+    world['billanium'].setValue(200);
+    world['hillagen'].setValue(200);
+    world['chubium'].setValue(0);
+    world['dion'].setValue(0);
+  }
+
+  _getChemicals(inputs) {
+    const result = [];
+
+    ElementRegistry.forEach(function(element) {
+      const name = element.name;
+
+      result.push({
+        name,
+        amount: parseInt(inputs[name].getValue()),
+      });
+    });
+
+    return result;
   }
 }

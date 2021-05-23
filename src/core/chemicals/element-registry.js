@@ -1,4 +1,5 @@
 import Debug from '../../anvas/debug/debug';
+import ArrayUtils from '../../anvas/utils/array-utils';
 import Gene from '../genome/gene';
 
 export default class ElementRegistry {
@@ -8,6 +9,10 @@ export default class ElementRegistry {
 
   static register(element) {
     ElementRegistry._elements.push(element);
+  }
+
+  static forEach(callback) {
+    ArrayUtils.forEach(ElementRegistry._elements, callback);
   }
 
   static get(index) {

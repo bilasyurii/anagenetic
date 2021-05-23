@@ -182,6 +182,10 @@ export default class World {
     for (let i = 0; i < count; ++i) {
       const cell = cells[i];
 
+      if (cell === undefined) {
+        continue;
+      }
+
       cell.update();
 
       if (cell.isAlive === false) {

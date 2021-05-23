@@ -9,6 +9,7 @@ export default class ElementRegistry {
 
   static register(element) {
     ElementRegistry._elements.push(element);
+    ElementRegistry._dictionary[element.name] = element;
   }
 
   static forEach(callback) {
@@ -17,6 +18,10 @@ export default class ElementRegistry {
 
   static get(index) {
     return ElementRegistry._lookup[index];
+  }
+
+  static getByName(name) {
+    return ElementRegistry._dictionary[name];
   }
 
   static getDamageQueue() {
@@ -50,6 +55,7 @@ export default class ElementRegistry {
   }
 }
 
+ElementRegistry._dictionary = {};
 ElementRegistry._elements = [];
 ElementRegistry._damageQueue = null;
 ElementRegistry._lookup = null;

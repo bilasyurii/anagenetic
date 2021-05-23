@@ -103,14 +103,7 @@ export default class SimulationState extends State {
     Random.setSeed(config.randomSeed);
 
     this._spawnCells();
-
-    // const cell2 = world.create.cell();
-
-    // cell2.genome = cell.genome.clone();
-    // cell2.setPositionXY(130, 100);
-
-    // world.create.chemical(element, 10)
-    //   .setPositionXY(130, 100);
+    this._spawnChemicals();
 
     engine.onUpdate.add(() => this.onUpdate.post());
   }
@@ -161,10 +154,61 @@ export default class SimulationState extends State {
   }
 
   _spawnCells() {
+    const count = this._config.startingCellsAmount;
+    const randomGenome = Genome.random;
+
+    for (let i = 0; i < count; ++i) {
+      this._spawnCell(randomGenome());
+    }
+  }
+
+  _spawnCell(genome) {
     const config = this._config;
     const energy = config.cellsStartingEnergy;
     const chemicals = config.cellChemicals;
-    const count = config.startingCellsAmount;
+    const world = this._world;
+    const size = world.size;
+    const offset = 100;
+    const fromX = offset;
+    const toX = size.x - offset;
+    const fromY = offset;
+    const toY = size.y - offset;
+    const between = Random.between;
+    const cell = world.create.cell();
+
+    cell.genome = genome;
+    cell.chemicals.addMany(chemicals);
+    cell
+      .addEnergy(energy)
+      .setPositionXY(between(fromX, toX), between(fromY, toY));
+  }
+
+  _spawnChemicals() {
+    const chemicals = this._config.worldChemicals;
+    const elementsCount = chemicals.length;
+
+    for (let i = 0; i < elementsCount; ++i) {
+      const elementConfig = chemicals[i];
+      const element = ElementRegistry.getByName(elementConfig.name);
+
+      let count = elementConfig.amount;
+
+      while (count > 0) {
+        let bunch;
+
+        if (count < 10) {
+          bunch = count;
+        } else {
+          bunch = 10;
+        }
+
+        count -= bunch;
+        this._spawnChemical(element, bunch);
+      }
+    }
+  }
+
+  _spawnChemical(element, amount) {
     const world = this._world;
     const size = world.size;
     const offset = 100;
@@ -174,14 +218,7 @@ export default class SimulationState extends State {
     const toY = size.y - offset;
     const between = Random.between;
 
-    for (let i = 0; i < count; ++i) {
-      const cell = world.create.cell();
-
-      cell.genome = Genome.random();
-      cell.chemicals.addMany(chemicals);
-      cell
-        .addEnergy(energy)
-        .setPositionXY(between(fromX, toX), between(fromY, toY));
-    }
+    world.create.chemical(element, amount)
+      .setPositionXY(between(fromX, toX), between(fromY, toY));
   }
 }

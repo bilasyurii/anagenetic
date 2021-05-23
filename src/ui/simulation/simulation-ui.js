@@ -25,6 +25,13 @@ export default class SimulationUI extends UIElement {
     this._init();
   }
 
+  reset() {
+    this._sidePanel.close();
+    this._openPanelButton.show();
+
+    return this;
+  }
+
   update() {
     if (this._cell === null) {
       return;

@@ -55,7 +55,6 @@ export default class SimulationState extends State {
   start(config) {
     this._config = config;
 
-    console.log(config);
     this._cleanup();
     this._setup();
     UIMediator.setup();
@@ -93,6 +92,7 @@ export default class SimulationState extends State {
     );
     const worldView = this._worldView = new WorldView(world);
 
+    this._isReset = false;
     this.pause();
     engine.add(worldView);
 

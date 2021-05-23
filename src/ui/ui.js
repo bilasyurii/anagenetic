@@ -88,7 +88,14 @@ export default class UI extends UIElement {
 
     controls.onPlay.add(() => this.onPlay.post());
     controls.onPause.add(() => this.onPause.post());
-    controls.onStop.add(() => this.onStop.post());
+    controls.onStop.add(() => {
+      this.onStop.post();
+      simulationUI.hide();
+      controls.makeInvisible();
+      mainScreenUI
+        .reset()
+        .show();
+    });
     controls.onSpeedChanged.add((speed) => this.onSpeedChanged.post(speed));
 
     simulationUI.onZoomChanged.add((zoom) => this.onZoomChanged.post(zoom));
@@ -96,8 +103,12 @@ export default class UI extends UIElement {
 
     mainScreenUI.onSimulationStart.add((config) => {
       mainScreenUI.hide();
-      simulationUI.show();
-      controls.show();
+      simulationUI
+        .reset()
+        .show();
+      controls
+        .pause(true)
+        .show();
       this.onSimulationStart.post(config);
     })
   }

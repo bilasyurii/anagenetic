@@ -23,6 +23,12 @@ export default class MainScreenUI extends UIElement {
     this._init();
   }
 
+  reset() {
+    this._genomeLibrary.injectTo(this);
+
+    return this;
+  }
+
   _init() {
     this._initGenomeLibrary();
     this._initFormScreen();

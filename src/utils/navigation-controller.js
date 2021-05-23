@@ -19,6 +19,8 @@ export default class NavigationController {
   setup(world) {
     this.world = world;
     this.worldView = world.view;
+    this.unlockCell();
+    this.setInputEnabled(true);
 
     this._setupView();
 

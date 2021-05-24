@@ -148,6 +148,9 @@
       .genome-panel-content {
         padding: 2rem;
         width: $sidePanelWidth;
+        max-height: 100%;
+        overflow: auto;
+        @include scrollbar(10px, $primary, elevationColor(9));
       }
 
       &.genome-panel-hidden {

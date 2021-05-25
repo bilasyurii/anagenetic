@@ -369,8 +369,8 @@ export default class ObservableVec2 {
   rotate(angle) {
     const sin = Math.sin(angle);
     const cos = Math.cos(angle);
-    const x = _x;
-    const y = _y;
+    const x = this._x;
+    const y = this._y;
 
     this._x = x * cos + y * sin;
     this._y = y * cos - x * sin;
@@ -383,8 +383,8 @@ export default class ObservableVec2 {
   rotated(angle) {
     const sin = Math.sin(angle);
     const cos = Math.cos(angle);
-    const x = _x;
-    const y = _y;
+    const x = this._x;
+    const y = this._y;
 
     return new Vec2(
       x * cos + y * sin,

@@ -209,7 +209,11 @@ export default class Rect {
   }
 
   hash() {
-    return ~~(x * y + w * y + x + y + w + h);
+    const x = this.x;
+    const y = this.y;
+    const w = this.w;
+
+    return ~~(x * y + w * y + x + y + w + this.h);
   }
 
   static bigger(a, b) {

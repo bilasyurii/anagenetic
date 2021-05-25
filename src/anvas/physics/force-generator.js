@@ -9,7 +9,7 @@ export default class ForceGenerator {
     this._rigidBodies = rigidBodies;
   }
 
-  fixedUpdate(dt) {
+  fixedUpdate() {
     Debug.abstractMethod();
   }
 }

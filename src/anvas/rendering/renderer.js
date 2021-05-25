@@ -21,7 +21,9 @@ export default class Renderer {
   }
 
   _renderRecursive(object, dirty) {
-    if (dirty |= object.dirty) {
+    dirty = dirty || object.dirty;
+
+    if (dirty === true) {
       object.forceUpdateTransform();
     }
 

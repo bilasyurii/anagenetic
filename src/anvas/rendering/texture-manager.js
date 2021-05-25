@@ -56,7 +56,7 @@ export default class TextureManager {
     const texture = textures[oldKey];
 
     if (texture === undefined) {
-      Debug.fail(`Missing texture with name ` + key);
+      Debug.fail(`Missing texture with name ` + oldKey);
     } else {
 
       if (textures[newKey] !== undefined) {
@@ -120,6 +120,7 @@ export default class TextureManager {
     const textures = this._textures;
     let freeIndex = this._lastFreeIndex + 1;
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const name = defaultTextureNamePrefix + freeIndex;
       const texture = textures[name];

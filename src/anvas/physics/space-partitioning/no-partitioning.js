@@ -68,7 +68,7 @@ export default class NoPartitioning extends SpacePartitioning {
           bodies.splice(i, 1);
           pending.splice(j, 1);
 
-          if (--pendingToDeleteCount === 0) {
+          if (--pendingCount === 0) {
             this._bodiesToRemove = [];
 
             return this;
@@ -84,7 +84,7 @@ export default class NoPartitioning extends SpacePartitioning {
     return this;
   }
 
-  getInBounds(bounds) {
+  getInBounds() {
     return this._bodies;
   }
 

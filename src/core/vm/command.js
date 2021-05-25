@@ -9,7 +9,7 @@ export default class Command {
     this.energy = (energy === undefined ? 0.05 : energy);
   }
 
-  execute(context) {
+  execute() {
     Debug.abstractMethod();
   }
 }

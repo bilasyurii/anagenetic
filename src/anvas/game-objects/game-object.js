@@ -62,7 +62,7 @@ export default class GameObject {
     return this;
   }
 
-  getBounds(matrix) {
+  getBounds() {
     Debug.abstractMethod();
   }
 

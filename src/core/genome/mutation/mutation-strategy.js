@@ -1,7 +1,7 @@
 import Debug from '../../../anvas/debug/debug';
 
 export default class MutationStrategy {
-  mutate(genes) {
+  mutate() {
     Debug.abstractMethod();
   }
 

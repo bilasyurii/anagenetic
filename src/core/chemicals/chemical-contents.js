@@ -114,6 +114,7 @@ export default class ChemicalContents {
       food[i].amount = 0;
     }
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       flag = false;
 

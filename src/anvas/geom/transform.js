@@ -344,11 +344,11 @@ export default class Transform {
   }
 
   isInvertible() {
-    return (a * d - b * c) !== 0;
+    return (this.a * this.d - this.b * this.c) !== 0;
   }
 
   determinant() {
-    return a * d - b * c;
+    return this.a * this.d - this.b * this.c;
   }
 
   interpolate(to, time) {

@@ -1,11 +1,11 @@
 import Debug from '../../debug/debug';
 
 export default class SpacePartitioning {
-  addBody(body) {
+  addBody() {
     Debug.abstractMethod();
   }
 
-  removeBody(body) {
+  removeBody() {
     Debug.abstractMethod();
   }
 
@@ -13,11 +13,11 @@ export default class SpacePartitioning {
     Debug.abstractMethod();
   }
 
-  getInBounds(bounds) {
+  getInBounds() {
     Debug.abstractMethod();
   }
 
-  getInCircle(circle) {
+  getInCircle() {
     Debug.abstractMethod();
   }
 

@@ -55,8 +55,6 @@ export default class Cell {
 
   set rotation(value) {
     this._rotation = value;
-
-    return this;
   }
 
   get energy() {

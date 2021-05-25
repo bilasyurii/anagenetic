@@ -25,7 +25,7 @@ export default class Renderable extends GameObject {
     this._alpha = value;
   }
 
-  render(ctx) {
+  render() {
     Debug.abstractMethod();
   }
 }

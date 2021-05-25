@@ -14,8 +14,8 @@ export default class Timer {
   start(delay = 0) {
     if (this._running === false) {
       this._running = true;
-      this._startTime = delay + this.engine.elapsedMS;
 
+      const startTime = this._startTime = delay + this.engine.elapsedMS;
       const events = this._events;
       const count = events.length;
 
@@ -44,7 +44,7 @@ export default class Timer {
     return this._create(cb, context, arguments, delay, true, 0);
   }
 
-  repeat(delay, cb, context) {
+  repeat(delay, repeats, cb, context) {
     return this._create(cb, context, arguments, delay, false, repeats);
   }
 

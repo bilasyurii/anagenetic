@@ -14,6 +14,7 @@ export default class World {
 
     this.onChemicalAdded = new Observable();
     this.onCellAdded = new Observable();
+    this.onCellDied = new Observable();
     this.updateInterval = 20;
 
     this.view = null;
@@ -34,6 +35,10 @@ export default class World {
 
   get rndTick() {
     return this._rndTick;
+  }
+
+  get cellsCount() {
+    return this._cells.length;
   }
 
   play() {
@@ -218,8 +223,10 @@ export default class World {
       if (cells[i] === cell) {
         cells.splice(i, 1);
 
-        return;
+        break;
       }
     }
+
+    this.onCellDied.post(cell);
   }
 }

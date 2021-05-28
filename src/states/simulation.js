@@ -3,7 +3,6 @@ import Vec2 from '../anvas/geom/vec2.js';
 import CellView from '../view/cell/cell-view.js';
 import World from '../core/world/world.js';
 import WorldView from '../view/world/world-view.js';
-import Genome from '../core/genome/genome.js';
 import ChemicalElement from '../core/chemicals/chemical-element.js';
 import ChemicalViewFactory from '../view/chemical/chemical-view-factory.js';
 import ElementRegistry from '../core/chemicals/element-registry.js';
@@ -15,6 +14,8 @@ import Observable from '../anvas/events/observable.js';
 import CellSelectorView from '../view/cell/cell-selector-view.js';
 import VM from '../core/vm/vm.js';
 import Random from '../core/utils/random.js';
+import PermanentBestSpawnStrategy from '../core/genome/spawn/permanent-best-strategy.js';
+import SpawnStrategy from '../core/genome/spawn/spawn-strategy.js';
 
 export default class SimulationState extends State {
   onInit() {
@@ -34,6 +35,10 @@ export default class SimulationState extends State {
       'force': new ForceMutationStrategy(),
     };
 
+    this._spawnStrategies = {
+      'permanentBest': new PermanentBestSpawnStrategy(),
+    };
+
     this._chemicalViewFactory = new ChemicalViewFactory(this.engine);
     this._cellSelectorView = new CellSelectorView(this.engine);
 
@@ -44,6 +49,7 @@ export default class SimulationState extends State {
     ElementRegistry.initLookup();
     ElementRegistry.initDamageQueue();
 
+    SpawnStrategy.onSpawn.add(this._spawnCell, this);
     VM.initCommandsLookup();
     UIMediator.registerSimulation(this);
   }
@@ -100,12 +106,14 @@ export default class SimulationState extends State {
     engine.add(worldView);
 
     world.onCellAdded.add(this._onCellAdded, this);
+    world.onCellDied.add(this._onCellDied, this);
     world.onChemicalAdded.add(this._onChemicalAdded, this);
 
-    MutationStrategy.setActive(this._mutationStrategies[config.mutationStrategy]);
     Random.setSeed(config.randomSeed);
+    MutationStrategy.setActive(this._mutationStrategies[config.mutationStrategy]);
+    SpawnStrategy.setActive(this._spawnStrategies['permanentBest']);
+    SpawnStrategy.reset(config);
 
-    this._spawnCells();
     this._spawnChemicals();
 
     engine.onUpdate.add(() => this.onUpdate.post());
@@ -117,6 +125,16 @@ export default class SimulationState extends State {
     this._worldView.add(cellView);
     cell.view = cellView;
     cellView.onSelected.add(this._onCellViewSelected, this);
+    SpawnStrategy.onCellAdded(cell);
+  }
+
+  _onCellDied(cell) {
+    const cellView = new CellView(cell);
+
+    this._worldView.add(cellView);
+    cell.view = cellView;
+    cellView.onSelected.add(this._onCellViewSelected, this);
+    SpawnStrategy.onCellDied(cell);
   }
 
   _onChemicalAdded(chemical) {
@@ -154,15 +172,6 @@ export default class SimulationState extends State {
     this._worldView = null;
 
     this._isReset = true;
-  }
-
-  _spawnCells() {
-    const count = this._config.startingCellsAmount;
-    const randomGenome = Genome.random;
-
-    for (let i = 0; i < count; ++i) {
-      this._spawnCell(randomGenome());
-    }
   }
 
   _spawnCell(genome) {

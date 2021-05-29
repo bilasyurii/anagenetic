@@ -46,7 +46,7 @@ export default class CellView extends Group {
     this._initView();
     this._initBody();
     this._setupEvents();
-    this._onRadiusChanged(this.cell.radius);
+    this._onSizeChanged(this.cell.radius);
   }
 
   _initView() {
@@ -72,21 +72,22 @@ export default class CellView extends Group {
   _setupEvents() {
     const cell = this.cell;
 
-    cell.onRadiusChanged.add(this._onRadiusChanged, this);
+    cell.onSizeChanged.add(this._onSizeChanged, this);
     cell.onDied.add(this._onDied, this);
 
     this._view.input.onDown.add(this._onInputDown, this);
   }
 
-  _onRadiusChanged(radius) {
+  _onSizeChanged(mass, radius) {
     const view = this._view;
-
+    const rigidBody = this.rigidBody;
     const size = radius * 2;
 
     view.width = size;
     view.height = size;
 
-    this.rigidBody.collider.radius = radius;
+    rigidBody.mass = mass;
+    rigidBody.collider.radius = radius;
   }
 
   _onDied() {

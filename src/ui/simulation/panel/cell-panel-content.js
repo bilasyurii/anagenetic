@@ -37,6 +37,7 @@ export default class CellPanelContent extends UIElement {
     cellInfos['Energy'].valueNode.setText(cell.energy.toFixed(2));
     cellInfos['Energy capacity'].valueNode.setText(cell.energyCapacity);
     cellInfos['TTL'].valueNode.setText(cell.ttl);
+    cellInfos['Mass'].valueNode.setText(cell.mass);
     cellInfos['Radius'].valueNode.setText(cell.radius);
     cellInfos['Armor'].valueNode.setText(cell.armor);
     cellInfos['Damage'].valueNode.setText(cell.damage);
@@ -75,6 +76,7 @@ export default class CellPanelContent extends UIElement {
     this._initCellInfo('Energy');
     this._initCellInfo('Energy capacity');
     this._initCellInfo('TTL');
+    this._initCellInfo('Mass');
     this._initCellInfo('Radius');
     this._initCellInfo('Armor');
     this._initCellInfo('Damage');

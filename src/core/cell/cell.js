@@ -16,11 +16,12 @@ export default class Cell {
     this.position = new Vec2();
     this.velocity = new Vec2();
     this.force = new Vec2();
-    this.onRadiusChanged = new Observable();
+    this.onSizeChanged = new Observable();
     this.onDied = new Observable();
     this.isCell = true;
     this.generation = 0;
 
+    this._mass = 0;
     this._radius = 0;
     this._damage = 0;
     this._armor = 0;
@@ -47,6 +48,10 @@ export default class Cell {
 
   get isAlive() {
     return this._isAlive;
+  }
+
+  get mass() {
+    return this._mass;
   }
 
   get radius() {
@@ -367,7 +372,6 @@ export default class Cell {
     this._initRegistries();
     this._initChemicals();
     this._initVM();
-    this._updateRadius(true);
   }
 
   _initMemory() {
@@ -391,9 +395,11 @@ export default class Cell {
   _onChemicalsChanged() {
     this._updateEnergyCapacity();
     this._updateSpeed();
+    this._updateMass();
     this._updateRadius();
     this._updateDamage();
     this._updateArmor();
+    this.onSizeChanged.post(this._mass, this._radius);
     // this._updateChemicalsRegistries();
   }
 
@@ -405,13 +411,12 @@ export default class Cell {
     this._speed = Math2.min(100, 50 + this._chemicals.getAmount('billanium'));
   }
 
-  _updateRadius(silent = false) {
-    // TODO
-    this._radius = 10;
+  _updateMass() {
+    this._mass = Math.min(2, 0.5 + this._chemicals.getAmount('chubium') * 0.1);
+  }
 
-    if (silent !== true) {
-      this.onRadiusChanged.post(this._radius);
-    }
+  _updateRadius() {
+    this._radius = Math.min(20, this._mass * 20);
   }
 
   _updateDamage() {

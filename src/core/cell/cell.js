@@ -374,6 +374,10 @@ export default class Cell {
   }
 
   die() {
+    if (this._alive === false) {
+      return;
+    }
+
     this._isAlive = false;
     this.world.registerEnergyLoss(this._energy);
     this._energy = 0;

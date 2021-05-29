@@ -119,6 +119,10 @@ export default class Cell {
     return this._descendants;
   }
 
+  get speed() {
+    return this._speed;
+  }
+
   get score() {
     const descendants = this._descendants;
     const descendantsScore = (descendants < 2 ? descendants * 50 : descendants * 100);

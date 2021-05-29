@@ -266,10 +266,11 @@ export default class Cell {
       return false;
     }
 
-    this.world.registerEnergyLoss(hillagenCount);
-
+    const world = this.world;
     const currentEnergy = this._energy;
     const energyToDivide = SimulationConfig.energyToDivide;
+
+    world.registerEnergyLoss(hillagenCount);
 
     if (currentEnergy < energyToDivide + 10) {
       return false;
@@ -281,11 +282,12 @@ export default class Cell {
       .mutate();
 
     this._energy = energy;
-    this.world.registerEnergyLoss(energyToDivide);
+    world.registerEnergyLoss(energyToDivide);
+    world.biggestFamily = ++this._descendants;
 
-    const cell = this.world.create.cell(newGenome);
+    const cell = world.create.cell(newGenome);
 
-    cell.generation = this.generation + 1;
+    world.oldestGeneration = cell.generation = this.generation + 1;
     chemicals.divideTo(cell.chemicals);
     this.memory.copyTo(cell.memory);
 
@@ -297,8 +299,6 @@ export default class Cell {
       .addEnergy(energy)
       .setPosition(this.position)
       .addForce(force);
-
-    ++this._descendants;
 
     return true;
   }

@@ -29,6 +29,8 @@ export default class AnalysisPanelContent extends UIElement {
     analyticInfos['Cells alive'].valueNode.setText(world.cellsCount);
     analyticInfos['Energy loss'].valueNode.setText(world.energyLoss.toFixed(2));
     analyticInfos['Chemicals'].valueNode.setText(world.chemicalsCount);
+    analyticInfos['Oldest generation'].valueNode.setText(world.oldestGeneration);
+    analyticInfos['Biggest family'].valueNode.setText(world.biggestFamily);
     analyticInfos['Billanium'].valueNode.setText(world.getElementAmount('billanium'));
     analyticInfos['Chubium'].valueNode.setText(world.getElementAmount('chubium'));
     analyticInfos['Dion'].valueNode.setText(world.getElementAmount('dion'));
@@ -60,6 +62,8 @@ export default class AnalysisPanelContent extends UIElement {
     this._initAnalyticInfo('Cells alive');
     this._initAnalyticInfo('Energy loss');
     this._initAnalyticInfo('Chemicals');
+    this._initAnalyticInfo('Oldest generation');
+    this._initAnalyticInfo('Biggest family');
     this._initAnalyticInfo('Billanium');
     this._initAnalyticInfo('Chubium');
     this._initAnalyticInfo('Dion');

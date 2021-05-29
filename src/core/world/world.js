@@ -32,6 +32,8 @@ export default class World {
     this._cells = [];
     this._chemicals = [];
     this._elementAmounts = {};
+    this._oldestGeneration = 0;
+    this._biggestFamily = 0;
 
     this._init();
   }
@@ -54,6 +56,26 @@ export default class World {
 
   get energyLoss() {
     return this._energyLoss;
+  }
+
+  get oldestGeneration() {
+    return this._oldestGeneration;
+  }
+
+  set oldestGeneration(value) {
+    if (value > this._oldestGeneration) {
+      this._oldestGeneration = value;
+    }
+  }
+
+  get biggestFamily() {
+    return this._biggestFamily;
+  }
+
+  set biggestFamily(value) {
+    if (value > this._biggestFamily) {
+      this._biggestFamily = value;
+    }
   }
 
   getElementAmount(name) {

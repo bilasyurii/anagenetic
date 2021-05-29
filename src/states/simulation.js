@@ -46,10 +46,10 @@ export default class SimulationState extends State {
     this._chemicalViewFactory = new ChemicalViewFactory(this.engine);
     this._cellSelectorView = new CellSelectorView(this.engine);
 
-    ElementRegistry.register(new ChemicalElement('billanium', 4, 'rgb(0, 0, 255)', 2));
-    ElementRegistry.register(new ChemicalElement('hillagen', 3, 'rgb(255, 0, 0)', 1));
-    ElementRegistry.register(new ChemicalElement('chubium', 1, 'rgb(0, 255, 0)', 3));
-    ElementRegistry.register(new ChemicalElement('dion', 2, 'rgb(255, 0, 255)', 4));
+    ElementRegistry.register(new ChemicalElement('billanium', 4, 'rgb(0, 0, 255)', 2, 40));
+    ElementRegistry.register(new ChemicalElement('hillagen', 3, 'rgb(255, 0, 0)', 1, 0));
+    ElementRegistry.register(new ChemicalElement('chubium', 1, 'rgb(0, 255, 0)', 3, 70));
+    ElementRegistry.register(new ChemicalElement('dion', 2, 'rgb(255, 0, 255)', 4, 100));
     ElementRegistry.initLookup();
     ElementRegistry.initDamageQueue();
 

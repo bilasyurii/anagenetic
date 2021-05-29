@@ -1,5 +1,4 @@
 import Observable from '../../anvas/events/observable';
-import Gene from '../genome/gene';
 import Random from '../utils/random';
 
 export default class Chemical {
@@ -14,7 +13,7 @@ export default class Chemical {
     this._alive = true;
     this._element = element;
     this._count = count;
-    this._ttl = Gene.MAX_VAL;
+    this._ttl = element.ttl + 150;
   }
 
   get isAlive() {
@@ -92,10 +91,7 @@ export default class Chemical {
   }
 
   randomizeTTL() {
-    const variety = Gene.VARIETY;
-    const amplitude = variety >> 1;
-
-    this._ttl = (variety - amplitude) + Random.int() % amplitude;
+    this._ttl -= Random.int() % 30;
   }
 
   update() {

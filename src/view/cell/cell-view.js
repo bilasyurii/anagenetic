@@ -40,6 +40,16 @@ export default class CellView extends Group {
     this.rigidBody.addForce(this.cell.force);
   }
 
+  destroy() {
+    const cell = this.cell;
+
+    cell.onSizeChanged.remove(this._onSizeChanged, this);
+    cell.onDied.remove(this._onDied, this);
+    this._view.input.onDown.remove(this._onInputDown, this);
+
+    super.destroy();
+  }
+
   onAddedToScene() {
     super.onAddedToScene();
 

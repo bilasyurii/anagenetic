@@ -2,6 +2,7 @@ import Observable from '../../anvas/events/observable';
 import Bounds from '../../anvas/geom/bounds';
 import Circle from '../../anvas/geom/circle';
 import Vec2 from '../../anvas/geom/vec2';
+import ArrayUtils from '../../anvas/utils/array-utils';
 import Math2 from '../../anvas/utils/math2';
 import Cell from '../cell/cell';
 import Gene from '../genome/gene';
@@ -181,11 +182,16 @@ export default class World {
     const size = this.size;
     const walls = this._walls;
     const padding = 50;
+    const fakeFunction = function() {};
 
     walls.push(new Bounds(-padding, -padding, 0, size.y + padding));
     walls.push(new Bounds(-padding, -padding, size.x + padding, 0));
     walls.push(new Bounds(size.x, -padding, size.x + padding, size.y + padding));
     walls.push(new Bounds(-padding, size.y, size.x + padding, size.y + padding));
+
+    ArrayUtils.forEach(walls, function(wall) {
+      wall.takeDamage = fakeFunction;
+    });
   }
 
   _updateCells() {

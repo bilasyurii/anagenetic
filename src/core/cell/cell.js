@@ -229,15 +229,7 @@ export default class Cell {
     const target = this.world.getClosestTarget(this, angle);
 
     if (target !== null) {
-      let foodReceived;
-
-      try {
-        foodReceived = target.takeDamage(this._damage);
-      } catch (e) {
-        console.error(target);
-        console.error(target.takeDamage);
-        throw e;
-      }
+      const foodReceived = target.takeDamage(this._damage);
 
       this._chemicals.addMany(foodReceived);
     }
@@ -268,11 +260,13 @@ export default class Cell {
 
   divide() {
     const chemicals = this._chemicals;
+    const hillagenCount = 10;
 
-    // 10 hillagen is needed to make new cell's body
-    if (chemicals.spend('hillagen', 10, true) === false) {
+    if (chemicals.spend('hillagen', hillagenCount, true) === false) {
       return false;
     }
+
+    this.world.registerEnergyLoss(hillagenCount);
 
     const currentEnergy = this._energy;
     const energyToDivide = SimulationConfig.energyToDivide;

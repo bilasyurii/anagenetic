@@ -226,7 +226,6 @@ export default class SimulationState extends State {
       .setPositionXY(between(fromX, toX), between(fromY, toY));
 
     if (compensateEnergyLoss === true) {
-      console.log('yes');
       this._world.compensateEnergyLoss(this._cellSpawnCost);
     }
   }

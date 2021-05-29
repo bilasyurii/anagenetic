@@ -17,7 +17,9 @@ export default class ChemicalContents {
     const count = list.length;
 
     for (let i = 0; i < count; ++i) {
-      callback(list[i].value, i);
+      const item = list[i];
+
+      callback(item.value, item.name, i);
     }
   }
 

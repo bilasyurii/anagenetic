@@ -78,6 +78,10 @@ export default class World {
     this._energyLoss += loss;
   }
 
+  compensateEnergyLoss(compensation) {
+    this._energyLoss -= compensation;
+  }
+
   update() {
     if (this._isRunning === false) {
       return;

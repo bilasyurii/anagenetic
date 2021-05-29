@@ -1,19 +1,19 @@
 import SpawnStrategy from './spawn-strategy';
 
 export default class PermanentBestSpawnStrategy extends SpawnStrategy {
-  // onCellDied(cell) {
-  //   if (this._cells.length - 1 < this._startingAmount) {
-  //     const genome = this._getBestGenome()
-  //       .clone()
-  //       .mutate();
+  _spawnRequestedOnce() {
+    if (this._cells.length >= this._startingAmount) {
+      return;
+    }
 
-  //     this.onSpawn.post(genome);
-  //   }
+    const genome = this._getBestGenome()
+      .clone()
+      .mutate();
 
-  //   super.onCellDied(cell);
-  // }
+    this.onSpawn.post(genome, true);
+  }
 
-  _getBestCell() {
+  _getBestGenome() {
     const bestCells = this._bestCells;
     const count = bestCells.length;
 

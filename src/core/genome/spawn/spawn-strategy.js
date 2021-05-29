@@ -39,6 +39,15 @@ export default class SpawnStrategy {
     this._bestCells = bestCells.slice(-this._bestCellsCapacity);
   }
 
+  requestSpawn(count) {
+    for (let i = 0; i < count; ++i) {
+      this._spawnRequestedOnce();
+    }
+  }
+
+  _spawnRequestedOnce() {
+  }
+
   reset(config) {
     this._config = config;
     this._cellIndex = 0;
@@ -97,6 +106,10 @@ export default class SpawnStrategy {
 
   _comparator(a, b) {
     return a.score - b.score;
+  }
+
+  static requestSpawn(count) {
+    SpawnStrategy._active.requestSpawn(count);
   }
 
   static onCellAdded(cell) {

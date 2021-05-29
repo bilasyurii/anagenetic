@@ -157,6 +157,7 @@ export default class Cell {
     if (newEnergy > 0 || this._vmUpdated === false) {
       this._energy = newEnergy;
     } else {
+      this._energy = 0;
       this.die();
     }
 
@@ -228,7 +229,15 @@ export default class Cell {
     const target = this.world.getClosestTarget(this, angle);
 
     if (target !== null) {
-      const foodReceived = target.takeDamage(this._damage);
+      let foodReceived;
+
+      try {
+        foodReceived = target.takeDamage(this._damage);
+      } catch (e) {
+        console.error(target);
+        console.error(target.takeDamage);
+        throw e;
+      }
 
       this._chemicals.addMany(foodReceived);
     }
@@ -358,6 +367,7 @@ export default class Cell {
 
     if (left !== 0) {
       this.reduceEnergy(left);
+      this.world.registerEnergyLoss(Math2.min(this._energy, left));
     }
 
     return food;

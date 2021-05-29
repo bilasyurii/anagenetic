@@ -68,14 +68,17 @@ export default class VM {
     const lookup = VM._commandsLookup;
     const context = this._context;
     const cell = this._cell;
+    const world = context.world;
 
     while (iterator.hasCurrent === true) {
       const gene = iterator.current;
       const value = gene.value;
       const command = lookup[value];
+      const energy = command.energy;
 
       command.execute(context);
-      cell.reduceEnergy(command.energy);
+      cell.reduceEnergy(energy);
+      world.registerEnergyLoss(energy);
     }
   }
 

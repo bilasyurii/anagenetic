@@ -31,6 +31,7 @@ export default class SimulationState extends State {
     this._cellSelectorView = null;
     this._selectedCell = null;
     this._config = null;
+    this._cellSpawnCost = 0;
 
     this._mutationStrategies = {
       'pick': new PickMutationStrategy(),
@@ -45,16 +46,18 @@ export default class SimulationState extends State {
     this._chemicalViewFactory = new ChemicalViewFactory(this.engine);
     this._cellSelectorView = new CellSelectorView(this.engine);
 
-    ElementRegistry.register(new ChemicalElement('billanium', 4, 'rgb(0, 0, 255)'));
-    ElementRegistry.register(new ChemicalElement('hillagen', 3, 'rgb(255, 0, 0)'));
-    ElementRegistry.register(new ChemicalElement('chubium', 1, 'rgb(0, 255, 0)'));
-    ElementRegistry.register(new ChemicalElement('dion', 2, 'rgb(255, 0, 255)'));
+    ElementRegistry.register(new ChemicalElement('billanium', 4, 'rgb(0, 0, 255)', 2));
+    ElementRegistry.register(new ChemicalElement('hillagen', 3, 'rgb(255, 0, 0)', 1));
+    ElementRegistry.register(new ChemicalElement('chubium', 1, 'rgb(0, 255, 0)', 3));
+    ElementRegistry.register(new ChemicalElement('dion', 2, 'rgb(255, 0, 255)', 4));
     ElementRegistry.initLookup();
     ElementRegistry.initDamageQueue();
 
     SpawnStrategy.onSpawn.add(this._spawnCell, this);
     VM.initCommandsLookup();
     UIMediator.registerSimulation(this);
+
+    this.engine.onUpdate.add(this._update, this);
   }
 
   get world() {
@@ -112,14 +115,45 @@ export default class SimulationState extends State {
     world.onCellDied.add(this._onCellDied, this);
     world.onChemicalAdded.add(this._onChemicalAdded, this);
 
+    this._calculateCellSpawnCost();
+
     Random.setSeed(config.randomSeed);
     MutationStrategy.setActive(this._mutationStrategies[config.mutationStrategy]);
     SpawnStrategy.setActive(this._spawnStrategies['permanentBestRandom']);
     SpawnStrategy.reset(config);
 
     this._spawnChemicals();
+  }
 
-    engine.onUpdate.add(() => this.onUpdate.post());
+  _calculateCellSpawnCost() {
+    const config = this._config;
+    const contents = config.cellChemicals;
+    const count = contents.length;
+    let cost = config.cellsStartingEnergy;
+
+    for (let i = 0; i < count; ++i) {
+      const elementContent = contents[i];
+      const element = ElementRegistry.getByName(elementContent.name);
+
+      cost += element.energyEquivalent * elementContent.amount;
+    }
+
+    this._cellSpawnCost = cost;
+  }
+
+  _update() {
+    const world = this._world;
+
+    if (world === null) {
+      return;
+    }
+
+    const spawnCost = this._cellSpawnCost;
+    const energyLoss = world.energyLoss;
+
+    SpawnStrategy.requestSpawn(~~(energyLoss / spawnCost));
+
+    this.onUpdate.post();
   }
 
   _onCellAdded(cell) {
@@ -172,7 +206,7 @@ export default class SimulationState extends State {
     this._isReset = true;
   }
 
-  _spawnCell(genome) {
+  _spawnCell(genome, compensateEnergyLoss) {
     const config = this._config;
     const energy = config.cellsStartingEnergy;
     const chemicals = config.cellChemicals;
@@ -190,6 +224,11 @@ export default class SimulationState extends State {
     cell
       .addEnergy(energy)
       .setPositionXY(between(fromX, toX), between(fromY, toY));
+
+    if (compensateEnergyLoss === true) {
+      console.log('yes');
+      this._world.compensateEnergyLoss(this._cellSpawnCost);
+    }
   }
 
   _spawnChemicals() {

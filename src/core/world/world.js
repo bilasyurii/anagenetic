@@ -41,6 +41,10 @@ export default class World {
     return this._cells.length;
   }
 
+  get energyLoss() {
+    return this._energyLoss;
+  }
+
   play() {
     this._isRunning = true;
 

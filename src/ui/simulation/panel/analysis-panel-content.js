@@ -9,8 +9,25 @@ export default class AnalysisPanelContent extends UIElement {
 
     this._analyticInfoWrapper = null;
     this._analyticInfos = {};
+    this._world = null;
 
     this._init();
+  }
+
+  setWorld(world) {
+    this._world = world;
+
+    this.updateInfo();
+
+    return this;
+  }
+
+  updateInfo() {
+    const world = this._world;
+    const analyticInfos = this._analyticInfos;
+
+    analyticInfos['Cells alive'].valueNode.setText(world.cellsCount);
+    analyticInfos['Energy loss'].valueNode.setText(world.energyLoss.toFixed(2));
   }
 
   _init() {
@@ -35,13 +52,8 @@ export default class AnalysisPanelContent extends UIElement {
       .template('analytic-info-wrapper')
       .injectTo(this, 'analytic-info');
 
-    this._initAnalyticInfo('Analytic info 1');
-    this._initAnalyticInfo('Analytic info 2');
-    this._initAnalyticInfo('Analytic info 3');
-    this._initAnalyticInfo('Analytic info 4');
-    this._initAnalyticInfo('Analytic info 5');
-    this._initAnalyticInfo('Analytic info 6');
-    this._initAnalyticInfo('Analytic info 7');
+    this._initAnalyticInfo('Cells alive');
+    this._initAnalyticInfo('Energy loss');
   }
 
   _initButtons() {

@@ -8,7 +8,10 @@ export default class UIMediator {
   }
 
   setup() {
-    this._navigationController.setup(this._simulation.world);
+    const world = this._simulation.world;
+
+    this._navigationController.setup(world);
+    this._ui.setWorld(world);
 
     return this;
   }

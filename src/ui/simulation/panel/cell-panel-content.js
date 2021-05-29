@@ -30,7 +30,6 @@ export default class CellPanelContent extends UIElement {
 
   updateInfo() {
     const cell = this._cell;
-
     const chemicals = cell.chemicals;
     const cellInfos = this._cellInfos;
 

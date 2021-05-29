@@ -35,6 +35,10 @@ export default class UI extends UIElement {
     this._init();
   }
 
+  setWorld(world) {
+    this._simulationUI.setWorld(world);
+  }
+
   update() {
     this._simulationUI.update();
   }

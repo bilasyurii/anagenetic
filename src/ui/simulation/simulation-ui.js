@@ -25,6 +25,12 @@ export default class SimulationUI extends UIElement {
     this._init();
   }
 
+  setWorld(world) {
+    this._analysisPanelContent.setWorld(world);
+
+    return this;
+  }
+
   reset() {
     this._sidePanel.close();
     this._openPanelButton.show();
@@ -33,13 +39,15 @@ export default class SimulationUI extends UIElement {
   }
 
   update() {
-    if (this._cell === null) {
+    if (this._sidePanel.isOpened() === false) {
       return;
     }
 
-    if (this._sidePanel.isOpened() === true) {
+    if (this._cell !== null) {
       this._cellPanelContent.updateInfo();
     }
+
+    this._analysisPanelContent.updateInfo();
   }
 
   onCellSelected(cell) {

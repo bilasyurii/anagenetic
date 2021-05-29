@@ -8,17 +8,17 @@ export default class PermanentBestRandomSpawnStrategy extends SpawnStrategy {
     this._randomFlag = true;
   }
 
-  onCellDied(cell) {
-    if (this._cells.length - 1 < this._startingAmount) {
-      const genome = this._getBestGenome()
-        .clone()
-        .mutate();
+  // onCellDied(cell) {
+  //   if (this._cells.length - 1 < this._startingAmount) {
+  //     const genome = this._getBestGenome()
+  //       .clone()
+  //       .mutate();
 
-      this.onSpawn.post(genome);
-    }
+  //     this.onSpawn.post(genome);
+  //   }
 
-    super.onCellDied(cell);
-  }
+  //   super.onCellDied(cell);
+  // }
 
   _getBestGenome() {
     this._randomFlag = !this._randomFlag;

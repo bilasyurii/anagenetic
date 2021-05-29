@@ -44,6 +44,10 @@ export default class ChemicalContents {
   addMany(data) {
     const count = data.length;
 
+    if (count === 0) {
+      return this;
+    }
+
     for (let i = 0; i < count; ++i) {
       const item = data[i];
       const amount = item.amount;

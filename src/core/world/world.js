@@ -182,7 +182,10 @@ export default class World {
     const size = this.size;
     const walls = this._walls;
     const padding = 50;
-    const fakeFunction = function() {};
+    const tempArr = [];
+    const fakeTakeDamage = function() {
+      return tempArr;
+    };
 
     walls.push(new Bounds(-padding, -padding, 0, size.y + padding));
     walls.push(new Bounds(-padding, -padding, size.x + padding, 0));
@@ -190,7 +193,7 @@ export default class World {
     walls.push(new Bounds(-padding, size.y, size.x + padding, size.y + padding));
 
     ArrayUtils.forEach(walls, function(wall) {
-      wall.takeDamage = fakeFunction;
+      wall.takeDamage = fakeTakeDamage;
     });
   }
 

@@ -22,7 +22,7 @@ export default class Cell {
     this.generation = 0;
 
     this._radius = 0;
-    this._damage = 10;
+    this._damage = 0;
     this._armor = 10;
     this._rotation = 0;
     this._energy = 0;
@@ -392,6 +392,7 @@ export default class Cell {
     this._updateEnergyCapacity();
     this._updateSpeed();
     this._updateRadius();
+    this._updateDamage();
     // this._updateChemicalsRegistries();
   }
 
@@ -410,6 +411,10 @@ export default class Cell {
     if (silent !== true) {
       this.onRadiusChanged.post(this._radius);
     }
+  }
+
+  _updateDamage() {
+    this._damage = Math.min(40, 5 + this._chemicals.getAmount('hillagen'));
   }
 
   _updateStats() {

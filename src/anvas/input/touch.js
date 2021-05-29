@@ -48,6 +48,7 @@ export default class Touch {
       return;
     }
 
+    this._calculateOffset(event);
     this.event = event;
 
     this.onTouchStart.post(event);
@@ -58,6 +59,7 @@ export default class Touch {
       return;
     }
 
+    this._calculateOffset(event);
     this.event = event;
 
     this.onTouchEnd.post(event);
@@ -68,6 +70,7 @@ export default class Touch {
       return;
     }
 
+    this._calculateOffset(event);
     this.event = event;
 
     this.onTouchMove.post(event);
@@ -78,6 +81,7 @@ export default class Touch {
       return;
     }
 
+    this._calculateOffset(event);
     this.event = event;
 
     this.onTouchLeave.post(event);
@@ -88,8 +92,17 @@ export default class Touch {
       return;
     }
 
+    this._calculateOffset(event);
     this.event = event;
 
     this.onTouchEnter.post(event);
+  }
+
+  _calculateOffset(event) {
+    const targetBounds = event.target.getBoundingClientRect();
+    const touch = event.targetTouches[0] || event.changedTouches[0];
+
+    event.offsetX = touch.clientX - targetBounds.x;
+    event.offsetY = touch.clientY - targetBounds.y;
   }
 }

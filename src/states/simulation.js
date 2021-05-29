@@ -251,7 +251,7 @@ export default class SimulationState extends State {
         }
 
         count -= bunch;
-        this._spawnChemical(element, bunch);
+        this._spawnChemical(element, bunch).randomizeTTL();
       }
     }
   }
@@ -266,7 +266,7 @@ export default class SimulationState extends State {
     const toY = size.y - offset;
     const between = Random.between;
 
-    world.create.chemical(element, amount)
+    return world.create.chemical(element, amount)
       .setPositionXY(between(fromX, toX), between(fromY, toY));
   }
 }

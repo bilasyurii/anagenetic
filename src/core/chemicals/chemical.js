@@ -1,4 +1,6 @@
 import Observable from '../../anvas/events/observable';
+import Gene from '../genome/gene';
+import Random from '../utils/random';
 
 export default class Chemical {
   constructor(world, element, count) {
@@ -12,6 +14,7 @@ export default class Chemical {
     this._alive = true;
     this._element = element;
     this._count = count;
+    this._ttl = Gene.MAX_VAL;
   }
 
   get isAlive() {
@@ -76,5 +79,29 @@ export default class Chemical {
         amount: eaten,
       }
     ];
+  }
+
+  die() {
+    this._alive = false;
+    this.world.registerEnergyLoss(this._element.energyEquivalent * this._count)
+    this.onRunOut.post(this);
+  }
+
+  randomizeTTL() {
+    const variety = Gene.VARIETY;
+    const amplitude = variety >> 1;
+
+    this._ttl = (variety - amplitude) + Random.int() % amplitude;
+  }
+
+  update() {
+    const ttl = this._ttl - 1;
+
+    if (ttl === 0) {
+      this._ttl = 0;
+      this.die();
+    } else {
+      this._ttl = ttl;
+    }
   }
 }

@@ -93,6 +93,7 @@ export default class World {
       this._rndTick = Random.int() % Gene.VARIETY;
 
       this._updateCells();
+      this._updateChemicals();
     }
   }
 
@@ -205,6 +206,14 @@ export default class World {
         --i;
         --count;
       }
+    }
+  }
+
+  _updateChemicals() {
+    const chemicals = this._chemicals;
+
+    for (let i = chemicals.length - 1; i >= 0; --i) {
+      chemicals[i].update();
     }
   }
 

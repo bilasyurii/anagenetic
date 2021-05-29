@@ -7,6 +7,7 @@ import RegistryManager from '../memory/registry-manager';
 import VMUtils from '../utils/vm-utils';
 import VM from '../vm/vm';
 import Gene from '../genome/gene';
+import Math2 from '../../anvas/utils/math2';
 
 export default class Cell {
   constructor(world) {
@@ -389,8 +390,7 @@ export default class Cell {
   }
 
   _updateEnergyCapacity() {
-    // TODO
-    this._energyCapacity = 255;
+    this._energyCapacity = Math2.min(255, this._chemicals.getAmount('dion') * 2 + 200);
   }
 
   _updateRadius(silent = false) {
@@ -406,6 +406,7 @@ export default class Cell {
     const ttl = this._ttl - 1;
 
     if (ttl === 0) {
+      this._ttl = 0;
       this.die();
       return;
     } else {

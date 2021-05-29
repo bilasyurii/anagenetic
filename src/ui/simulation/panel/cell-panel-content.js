@@ -16,16 +16,21 @@ export default class CellPanelContent extends UIElement {
     this._cellInfoWrapper = null;
     this._cellInfos = {};
     this._genomeLibrary = null;
+    this._importExport = null;
 
     this._init();
   }
 
   get dependencies() {
-    return ['genomeLibrary'];
+    return ['genomeLibrary', 'importExport'];
   }
 
   set genomeLibrary(genomeLibrary) {
     this._genomeLibrary = genomeLibrary;
+  }
+
+  set importExport(importExport) {
+    this._importExport = importExport;
   }
 
   setCell(cell) {
@@ -117,7 +122,7 @@ export default class CellPanelContent extends UIElement {
     this.create
       .button()
       .setText('Export to File')
-      .setClick(() => console.log('Export to File'))
+      .setClick(() => this._exportToFile())
       .addTo(buttons);
   }
 
@@ -151,5 +156,9 @@ export default class CellPanelContent extends UIElement {
 
   _saveToLibrary() {
     this._genomeLibrary.addGenome(this._genome);
+  }
+
+  _exportToFile() {
+    this._importExport.exportGenome(this._genome);
   }
 }

@@ -19,6 +19,11 @@ export default class SimulationGenomePicker extends UIElement {
     this._init();
   }
 
+  reset() {
+    this._items = [];
+    this._genomesContainer$.children().remove();
+  }
+
   getGenomes() {
     return ArrayUtils.map(this._items, function(item) {
       return item.getGenome();

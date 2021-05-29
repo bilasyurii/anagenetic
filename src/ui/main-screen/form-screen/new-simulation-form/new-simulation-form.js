@@ -42,6 +42,7 @@ export default class NewSimulationForm extends UIElement {
   }
 
   reset() {
+    this._simulationGenomePicker.reset();
     this._worldWidthInput.setValue(1000);
     this._worldHeightInput.setValue(1000);
     this._mutationStrategyInput.setValue('pick');

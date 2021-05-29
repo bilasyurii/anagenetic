@@ -82,6 +82,10 @@ export default class Chemical {
   }
 
   die() {
+    if (this._alive === false) {
+      return;
+    }
+
     this._alive = false;
     this.world.registerEnergyLoss(this._element.energyEquivalent * this._count)
     this.onRunOut.post(this);

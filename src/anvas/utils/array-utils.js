@@ -99,7 +99,7 @@ export default class ArrayUtils {
     const length = array.length;
 
     for (let i = 0; i < length; ++i) {
-      expression(array[i]);
+      expression(array[i], i);
     }
 
     return array;

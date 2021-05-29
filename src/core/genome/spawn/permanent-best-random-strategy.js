@@ -9,7 +9,7 @@ export default class PermanentBestRandomSpawnStrategy extends SpawnStrategy {
   }
 
   onCellDied(cell) {
-    if (this._cells.length < this._startingAmount) {
+    if (this._cells.length - 1 < this._startingAmount) {
       const genome = this._getBestGenome()
         .clone()
         .mutate();

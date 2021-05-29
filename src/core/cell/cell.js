@@ -234,17 +234,21 @@ export default class Cell {
     }
   }
 
-  spawnChemical(elementCode, angle) {
-    const element = ElementRegistry.get(elementCode);
-
-    if (this._chemicals.spend(element.name, 1) === false) {
+  spawnChemical(elementCode, angle, count = 1, forceAmount = 500) {
+    if (count === 0) {
       return false;
     }
 
-    const chemical = this.world.create.chemical(element, 1);
+    const element = ElementRegistry.get(elementCode);
+
+    if (this._chemicals.spend(element.name, count) === false) {
+      return false;
+    }
+
+    const chemical = this.world.create.chemical(element, count);
     const force = VMUtils
       .getDirection(angle, Vec2.temp)
-      .mul(500);
+      .mul(forceAmount);
 
     chemical
       .setPosition(this.position)
@@ -363,6 +367,14 @@ export default class Cell {
     this._isAlive = false;
     this.world.registerEnergyLoss(this._energy);
     this.onDied.post(this);
+
+    const chemicals = this._chemicals;
+
+    ElementRegistry.forEach((element) => {
+      const amount = chemicals.getAmount(element.name);
+
+      this.spawnChemical(element.code, 0, amount, 0);
+    })
   }
 
   destroy() {

@@ -12,6 +12,15 @@ export default class ChemicalContents {
     this._initElements();
   }
 
+  forEach(callback) {
+    const list = this._elementsList;
+    const count = list.length;
+
+    for (let i = 0; i < count; ++i) {
+      callback(list[i].value, i);
+    }
+  }
+
   updateChanges() {
     this.onChanged.post();
 

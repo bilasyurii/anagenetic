@@ -8,7 +8,10 @@ export default class ElementRegistry {
   }
 
   static register(element) {
-    ElementRegistry._elements.push(element);
+    const elements = ElementRegistry._elements;
+
+    element.code = elements.length;
+    elements.push(element);
     ElementRegistry._dictionary[element.name] = element;
   }
 

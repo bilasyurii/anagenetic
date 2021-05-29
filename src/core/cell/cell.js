@@ -374,7 +374,7 @@ export default class Cell {
   }
 
   die() {
-    if (this._alive === false) {
+    if (this._isAlive === false) {
       return;
     }
 

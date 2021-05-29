@@ -6,10 +6,11 @@ export default class EntityFactory {
     this.world = world;
   }
 
-  cell() {
+  cell(genome) {
     const world = this.world;
     const cell = new Cell(world);
 
+    cell.genome = genome;
     world.addCell(cell);
 
     return cell;

@@ -8,40 +8,41 @@ export default class SpawnStrategy {
 
     this._config = null;
     this._cellIndex = 0;
-    this._additionalSpawnEnabled = false;
     this._startingAmount = 0;
-    this._genomes = [];
+    this._cells = [];
+    this._bestCellsCapacity = 3;
+    this._bestCells = [];
   }
 
   onCellAdded(cell) {
-    if (this._additionalSpawnEnabled === false) {
-      return false;
-    }
-
-    this._genomes.push(cell.genome);
+    this._cells.push(cell);
 
     return true;
   }
 
   onCellDied(cell) {
-    const cellGenome = cell.genome;
-    const genomes = this._genomes;
-    const count = genomes.length;
+    const cells = this._cells;
+    const count = cells.length;
 
     for (let i = 0; i < count; ++i) {
-      if (genomes[i] === cellGenome) {
-        genomes.splice(i, 1);
-        return;
+      if (cells[i] === cell) {
+        cells.splice(i, 1);
+        break;
       }
     }
+
+    const bestCells = this._bestCells;
+
+    bestCells.push(cell);
+    bestCells.sort(this._comparator);
+
+    this._bestCells = bestCells.slice(-this._bestCellsCapacity);
   }
 
   reset(config) {
-    this._additionalSpawnEnabled = false;
     this._config = config;
     this._cellIndex = 0;
     this._spawnFirstGeneration();
-    this._additionalSpawnEnabled = true;
   }
 
   _spawnFirstGeneration() {
@@ -73,6 +74,29 @@ export default class SpawnStrategy {
         this.onSpawn.post(Genome.random());
       }
     }
+  }
+
+  _getBestCellFromArray(cells) {
+    const count = cells.length;
+
+    let bestCell = null;
+    let bestScore = -1;
+
+    for (let i = 0; i < count; ++i) {
+      const cell = cells[i];
+      const score = cell.score;
+
+      if (score > bestScore) {
+        bestCell = cell;
+        bestScore = score;
+      }
+    }
+
+    return bestCell;
+  }
+
+  _comparator(a, b) {
+    return a.score - b.score;
   }
 
   static onCellAdded(cell) {

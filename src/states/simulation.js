@@ -16,6 +16,7 @@ import VM from '../core/vm/vm.js';
 import Random from '../core/utils/random.js';
 import PermanentBestSpawnStrategy from '../core/genome/spawn/permanent-best-strategy.js';
 import SpawnStrategy from '../core/genome/spawn/spawn-strategy.js';
+import PermanentBestRandomSpawnStrategy from '../core/genome/spawn/permanent-best-random-strategy.js';
 
 export default class SimulationState extends State {
   onInit() {
@@ -37,6 +38,7 @@ export default class SimulationState extends State {
 
     this._spawnStrategies = {
       'permanentBest': new PermanentBestSpawnStrategy(),
+      'permanentBestRandom': new PermanentBestRandomSpawnStrategy(),
     };
 
     this._chemicalViewFactory = new ChemicalViewFactory(this.engine);
@@ -111,7 +113,7 @@ export default class SimulationState extends State {
 
     Random.setSeed(config.randomSeed);
     MutationStrategy.setActive(this._mutationStrategies[config.mutationStrategy]);
-    SpawnStrategy.setActive(this._spawnStrategies['permanentBest']);
+    SpawnStrategy.setActive(this._spawnStrategies['permanentBestRandom']);
     SpawnStrategy.reset(config);
 
     this._spawnChemicals();
@@ -129,11 +131,6 @@ export default class SimulationState extends State {
   }
 
   _onCellDied(cell) {
-    const cellView = new CellView(cell);
-
-    this._worldView.add(cellView);
-    cell.view = cellView;
-    cellView.onSelected.add(this._onCellViewSelected, this);
     SpawnStrategy.onCellDied(cell);
   }
 
@@ -186,9 +183,8 @@ export default class SimulationState extends State {
     const fromY = offset;
     const toY = size.y - offset;
     const between = Random.between;
-    const cell = world.create.cell();
+    const cell = world.create.cell(genome);
 
-    cell.genome = genome;
     cell.chemicals.addMany(chemicals);
     cell
       .addEnergy(energy)

@@ -1,6 +1,13 @@
+import Genome from '../genome';
 import SpawnStrategy from './spawn-strategy';
 
-export default class PermanentBestSpawnStrategy extends SpawnStrategy {
+export default class PermanentBestRandomSpawnStrategy extends SpawnStrategy {
+  constructor() {
+    super();
+
+    this._randomFlag = true;
+  }
+
   onCellDied(cell) {
     if (this._cells.length < this._startingAmount) {
       const genome = this._getBestGenome()
@@ -13,7 +20,13 @@ export default class PermanentBestSpawnStrategy extends SpawnStrategy {
     super.onCellDied(cell);
   }
 
-  _getBestCell() {
+  _getBestGenome() {
+    this._randomFlag = !this._randomFlag;
+
+    if (this._randomFlag === true) {
+      return Genome.random();
+    }
+
     const bestCells = this._bestCells;
     const count = bestCells.length;
 

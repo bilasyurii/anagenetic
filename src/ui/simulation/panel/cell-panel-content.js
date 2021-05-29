@@ -40,8 +40,8 @@ export default class CellPanelContent extends UIElement {
     cellInfos['Radius'].valueNode.setText(cell.radius);
     cellInfos['Armor'].valueNode.setText(cell.armor);
     cellInfos['Damage'].valueNode.setText(cell.damage);
-    cellInfos['Ancestors'].valueNode.setText(0);
-    cellInfos['Generation'].valueNode.setText(0);
+    cellInfos['Descendants'].valueNode.setText(cell.descendants);
+    cellInfos['Generation'].valueNode.setText(cell.generation);
     cellInfos['Billanium'].valueNode.setText(chemicals.getAmount('billanium'));
     cellInfos['Chubium'].valueNode.setText(chemicals.getAmount('chubium'));
     cellInfos['Dion'].valueNode.setText(chemicals.getAmount('dion'));
@@ -77,7 +77,7 @@ export default class CellPanelContent extends UIElement {
     this._initCellInfo('Radius');
     this._initCellInfo('Armor');
     this._initCellInfo('Damage');
-    this._initCellInfo('Ancestors');
+    this._initCellInfo('Descendants');
     this._initCellInfo('Generation');
     this._initCellInfo('Billanium');
     this._initCellInfo('Chubium');

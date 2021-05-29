@@ -18,6 +18,7 @@ export default class Cell {
     this.onRadiusChanged = new Observable();
     this.onDied = new Observable();
     this.isCell = true;
+    this.generation = 0;
 
     this._radius = 0;
     this._damage = 10;
@@ -29,6 +30,7 @@ export default class Cell {
     this._isAlive = true;
     this._directionAngle = 0;
     this._vmUpdated = false;
+    this._descendants = 0;
 
     this._view = null;
     this._rigidBody = null;
@@ -109,6 +111,32 @@ export default class Cell {
 
   get chemicals() {
     return this._chemicals;
+  }
+
+  get descendants() {
+    return this._descendants;
+  }
+
+  get score() {
+    const descendants = this._descendants;
+    const descendantsScore = (descendants < 2 ? descendants * 50 : descendants * 100);
+    const generationScore = this.generation * 5;
+
+    let ttlScore;
+
+    if (this._isAlive === true) {
+      ttlScore = 0;
+    } else {
+      ttlScore = 255 - this._ttl;
+    }
+
+    let score = descendantsScore + generationScore + ttlScore;
+
+    if (descendants === 0) {
+      score *= 0.25;
+    }
+
+    return score;
   }
 
   reduceEnergy(amount) {
@@ -228,18 +256,18 @@ export default class Cell {
     }
 
     const energy = (currentEnergy - 10) * 0.5;
+    const newGenome = this.genome
+      .clone()
+      .mutate();
 
     this._energy = energy;
     this.world.registerEnergyLoss(10);
 
-    const cell = this.world.create.cell();
+    const cell = this.world.create.cell(newGenome);
 
+    cell.generation = this.generation + 1;
     chemicals.divideTo(cell.chemicals);
     this.memory.copyTo(cell.memory);
-
-    cell.genome = this.genome
-      .clone()
-      .mutate();
 
     const force = VMUtils
       .randomDirection(Vec2.temp)
@@ -249,6 +277,8 @@ export default class Cell {
       .addEnergy(energy)
       .setPosition(this.position)
       .addForce(force);
+
+    ++this._descendants;
 
     return true;
   }

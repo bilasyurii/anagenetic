@@ -29,6 +29,7 @@ export default class AnalysisPanelContent extends UIElement {
     analyticInfos['Cells alive'].valueNode.setText(world.cellsCount);
     analyticInfos['Energy loss'].valueNode.setText(world.energyLoss.toFixed(2));
     analyticInfos['Chemicals'].valueNode.setText(world.chemicalsCount);
+    analyticInfos['Generations'].valueNode.setText(world.generations);
     analyticInfos['Oldest generation'].valueNode.setText(world.oldestGeneration);
     analyticInfos['Biggest family'].valueNode.setText(world.biggestFamily);
     analyticInfos['Photosynthesis'].valueNode.setText(world.photosynthesis);
@@ -63,6 +64,7 @@ export default class AnalysisPanelContent extends UIElement {
     this._initAnalyticInfo('Cells alive');
     this._initAnalyticInfo('Energy loss');
     this._initAnalyticInfo('Chemicals');
+    this._initAnalyticInfo('Generations');
     this._initAnalyticInfo('Oldest generation');
     this._initAnalyticInfo('Biggest family');
     this._initAnalyticInfo('Photosynthesis');

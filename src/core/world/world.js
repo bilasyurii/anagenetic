@@ -35,6 +35,7 @@ export default class World {
     this._oldestGeneration = 0;
     this._biggestFamily = 0;
     this._photosynthesis = 0;
+    this._generations = 0;
 
     this._init();
   }
@@ -81,6 +82,10 @@ export default class World {
 
   get photosynthesis() {
     return this._photosynthesis;
+  }
+
+  get generations() {
+    return this._generations;
   }
 
   getElementAmount(name) {
@@ -295,6 +300,7 @@ export default class World {
 
   _onCellDied(cell) {
     cell.destroy();
+    ++this._generations;
 
     const cells = this._cells;
     const count = cells.length;

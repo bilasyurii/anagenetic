@@ -434,8 +434,15 @@ export default class Cell {
   }
 
   _updateEnergyCapacity() {
-    this._energyCapacity = Math2.min(255, 200 + this._chemicals.getAmount('dion') * 2);
-    this._energy = Math2.min(this._energy, this._energyCapacity);
+    const capacity = Math2.min(255, 200 + this._chemicals.getAmount('dion') * 2);
+    const energy = this._energy;
+
+    this._energyCapacity = capacity;
+
+    if (energy > capacity) {
+      this._energy = capacity;
+      this.world.registerEnergyLoss(energy - capacity);
+    }
   }
 
   _updateSpeed() {

@@ -366,8 +366,8 @@ export default class Cell {
     const { food, left } = this._chemicals.takeDamage(reducedDamage);
 
     if (left !== 0) {
-      this.reduceEnergy(left);
       this.world.registerEnergyLoss(Math2.min(this._energy, left));
+      this.reduceEnergy(left);
     }
 
     return food;
@@ -376,6 +376,7 @@ export default class Cell {
   die() {
     this._isAlive = false;
     this.world.registerEnergyLoss(this._energy);
+    this._energy = 0;
     this.onDied.post(this);
 
     const chemicals = this._chemicals;

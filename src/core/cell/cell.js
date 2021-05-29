@@ -8,6 +8,7 @@ import VMUtils from '../utils/vm-utils';
 import VM from '../vm/vm';
 import Gene from '../genome/gene';
 import Math2 from '../../anvas/utils/math2';
+import SimulationConfig from '../utils/simulation-config';
 
 export default class Cell {
   constructor(world) {
@@ -261,18 +262,19 @@ export default class Cell {
     }
 
     const currentEnergy = this._energy;
+    const energyToDivide = SimulationConfig.energyToDivide;
 
-    if (currentEnergy < 20) {
+    if (currentEnergy < energyToDivide + 10) {
       return false;
     }
 
-    const energy = (currentEnergy - 10) * 0.5;
+    const energy = (currentEnergy - energyToDivide) * 0.5;
     const newGenome = this.genome
       .clone()
       .mutate();
 
     this._energy = energy;
-    this.world.registerEnergyLoss(10);
+    this.world.registerEnergyLoss(energyToDivide);
 
     const cell = this.world.create.cell(newGenome);
 

@@ -29,6 +29,7 @@ export default class WorldView extends Group {
     const engine = this.engine;
     const create = engine.create;
     const bmd = WorldView._getBitmap(engine);
+    const fakeFunction = function() {};
 
     this.world.forEachWall((wall) => {
       const width = wall.width;
@@ -38,6 +39,7 @@ export default class WorldView extends Group {
       view.width = width;
       view.height = height;
       view.dataObject = wall;
+      view.takeDamage = fakeFunction;
 
       view.position.set(wall.minX, wall.minY);
 

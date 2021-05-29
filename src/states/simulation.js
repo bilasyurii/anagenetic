@@ -17,6 +17,7 @@ import Random from '../core/utils/random.js';
 import PermanentBestSpawnStrategy from '../core/genome/spawn/permanent-best-strategy.js';
 import SpawnStrategy from '../core/genome/spawn/spawn-strategy.js';
 import PermanentBestRandomSpawnStrategy from '../core/genome/spawn/permanent-best-random-strategy.js';
+import SimulationConfig from '../core/utils/simulation-config.js';
 
 export default class SimulationState extends State {
   onInit() {
@@ -62,7 +63,7 @@ export default class SimulationState extends State {
 
   start(config) {
     this._config = config;
-
+    SimulationConfig.setup(config);
     this._cleanup();
     this._setup();
     UIMediator.setup();

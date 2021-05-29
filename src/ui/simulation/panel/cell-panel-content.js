@@ -15,8 +15,17 @@ export default class CellPanelContent extends UIElement {
     this._genome = null;
     this._cellInfoWrapper = null;
     this._cellInfos = {};
+    this._genomeLibrary = null;
 
     this._init();
+  }
+
+  get dependencies() {
+    return ['genomeLibrary'];
+  }
+
+  set genomeLibrary(genomeLibrary) {
+    this._genomeLibrary = genomeLibrary;
   }
 
   setCell(cell) {
@@ -102,7 +111,7 @@ export default class CellPanelContent extends UIElement {
     this.create
       .button()
       .setText('Save to Library')
-      .setClick(() => console.log('Save to Library'))
+      .setClick(() => this._saveToLibrary())
       .addTo(buttons);
 
     this.create
@@ -138,5 +147,9 @@ export default class CellPanelContent extends UIElement {
 
   _updateGenome() {
     this._genomeViewer.setFromGenome(this._genome);
+  }
+
+  _saveToLibrary() {
+    this._genomeLibrary.addGenome(this._genome);
   }
 }

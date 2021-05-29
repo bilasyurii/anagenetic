@@ -31,6 +31,7 @@ export default class AnalysisPanelContent extends UIElement {
     analyticInfos['Chemicals'].valueNode.setText(world.chemicalsCount);
     analyticInfos['Oldest generation'].valueNode.setText(world.oldestGeneration);
     analyticInfos['Biggest family'].valueNode.setText(world.biggestFamily);
+    analyticInfos['Photosynthesis'].valueNode.setText(world.photosynthesis);
     analyticInfos['Billanium'].valueNode.setText(world.getElementAmount('billanium'));
     analyticInfos['Chubium'].valueNode.setText(world.getElementAmount('chubium'));
     analyticInfos['Dion'].valueNode.setText(world.getElementAmount('dion'));
@@ -64,6 +65,7 @@ export default class AnalysisPanelContent extends UIElement {
     this._initAnalyticInfo('Chemicals');
     this._initAnalyticInfo('Oldest generation');
     this._initAnalyticInfo('Biggest family');
+    this._initAnalyticInfo('Photosynthesis');
     this._initAnalyticInfo('Billanium');
     this._initAnalyticInfo('Chubium');
     this._initAnalyticInfo('Dion');

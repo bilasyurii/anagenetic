@@ -15,6 +15,7 @@ export default class PhotosynthesisCommand extends Command {
     }
 
     context.cell.addEnergy(chubiumAmount);
+    context.world.registerPhotosynthesis(chubiumAmount);
 
     return true;
   }

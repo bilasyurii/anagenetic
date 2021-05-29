@@ -34,6 +34,7 @@ export default class World {
     this._elementAmounts = {};
     this._oldestGeneration = 0;
     this._biggestFamily = 0;
+    this._photosynthesis = 0;
 
     this._init();
   }
@@ -78,6 +79,10 @@ export default class World {
     }
   }
 
+  get photosynthesis() {
+    return this._photosynthesis;
+  }
+
   getElementAmount(name) {
     return this._elementAmounts[name];
   }
@@ -120,6 +125,10 @@ export default class World {
     this._energyLoss -= compensation;
   }
 
+  registerPhotosynthesis(amount) {
+    this._photosynthesis += amount;
+  }
+
   update() {
     if (this._isRunning === false) {
       return;
@@ -127,9 +136,8 @@ export default class World {
 
     if (--this._timeToUpdate === 0) {
       this._timeToUpdate = this.updateInterval;
-
       this._rndTick = Random.int() % Gene.VARIETY;
-
+      this._photosynthesis = 0;
       this._updateCells();
       this._updateChemicals();
     }

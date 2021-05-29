@@ -144,7 +144,7 @@ export default class SimulationState extends State {
   _update() {
     const world = this._world;
 
-    if (world === null) {
+    if (world === null || world.isRunning === false) {
       return;
     }
 

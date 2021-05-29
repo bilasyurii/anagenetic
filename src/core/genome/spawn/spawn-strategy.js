@@ -49,6 +49,8 @@ export default class SpawnStrategy {
   }
 
   reset(config) {
+    this._cells = [];
+    this._bestCells = [];
     this._config = config;
     this._cellIndex = 0;
     this._spawnFirstGeneration();

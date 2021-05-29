@@ -33,6 +33,10 @@ export default class World {
     this._init();
   }
 
+  get isRunning() {
+    return this._isRunning;
+  }
+
   get rndTick() {
     return this._rndTick;
   }

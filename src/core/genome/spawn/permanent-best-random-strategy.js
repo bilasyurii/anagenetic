@@ -8,6 +8,11 @@ export default class PermanentBestRandomSpawnStrategy extends PermanentBestSpawn
     this._randomFlag = true;
   }
 
+  reset(config) {
+    this._randomFlag = true;
+    super.reset(config);
+  }
+
   _getBestGenome() {
     this._randomFlag = !this._randomFlag;
 

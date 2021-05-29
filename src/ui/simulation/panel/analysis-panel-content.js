@@ -28,6 +28,11 @@ export default class AnalysisPanelContent extends UIElement {
 
     analyticInfos['Cells alive'].valueNode.setText(world.cellsCount);
     analyticInfos['Energy loss'].valueNode.setText(world.energyLoss.toFixed(2));
+    analyticInfos['Chemicals'].valueNode.setText(world.chemicalsCount);
+    analyticInfos['Billanium'].valueNode.setText(world.getElementAmount('billanium'));
+    analyticInfos['Chubium'].valueNode.setText(world.getElementAmount('chubium'));
+    analyticInfos['Dion'].valueNode.setText(world.getElementAmount('dion'));
+    analyticInfos['Hillagen'].valueNode.setText(world.getElementAmount('hillagen'));
   }
 
   _init() {
@@ -54,6 +59,11 @@ export default class AnalysisPanelContent extends UIElement {
 
     this._initAnalyticInfo('Cells alive');
     this._initAnalyticInfo('Energy loss');
+    this._initAnalyticInfo('Chemicals');
+    this._initAnalyticInfo('Billanium');
+    this._initAnalyticInfo('Chubium');
+    this._initAnalyticInfo('Dion');
+    this._initAnalyticInfo('Hillagen');
   }
 
   _initButtons() {

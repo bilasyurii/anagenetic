@@ -5,6 +5,7 @@ import Vec2 from '../../anvas/geom/vec2';
 import ArrayUtils from '../../anvas/utils/array-utils';
 import Math2 from '../../anvas/utils/math2';
 import Cell from '../cell/cell';
+import ElementRegistry from '../chemicals/element-registry';
 import Gene from '../genome/gene';
 import Random from '../utils/random';
 import EntityFactory from './entity-factory';
@@ -30,6 +31,7 @@ export default class World {
     this._walls = [];
     this._cells = [];
     this._chemicals = [];
+    this._elementAmounts = {};
 
     this._init();
   }
@@ -46,8 +48,16 @@ export default class World {
     return this._cells.length;
   }
 
+  get chemicalsCount() {
+    return this._chemicals.length;
+  }
+
   get energyLoss() {
     return this._energyLoss;
+  }
+
+  getElementAmount(name) {
+    return this._elementAmounts[name];
   }
 
   play() {
@@ -72,6 +82,7 @@ export default class World {
 
   addChemical(chemical) {
     this._chemicals.push(chemical);
+    this._elementAmounts[chemical.element.name] += chemical.count;
 
     chemical.onRunOut.add(this._onChemicalRunOut, this);
     this.onChemicalAdded.post(chemical);
@@ -170,8 +181,15 @@ export default class World {
   }
 
   _init() {
+    this._setupElementAmounts();
     this._initFactory();
     this._initWalls();
+  }
+
+  _setupElementAmounts() {
+    const amounts = this._elementAmounts;
+
+    ElementRegistry.forEach((element) => amounts[element.name] = 0);
   }
 
   _initFactory() {
@@ -233,6 +251,8 @@ export default class World {
   _onChemicalRunOut(chemical) {
     const chemicals = this._chemicals;
     const count = chemicals.length;
+
+    this._elementAmounts[chemical.element.name] -= chemical.count;
 
     for (let i = 0; i < count; ++i) {
       if (chemicals[i] === chemical) {

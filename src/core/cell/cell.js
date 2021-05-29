@@ -390,7 +390,7 @@ export default class Cell {
 
   destroy() {
     this._chemicals.onChanged.remove(this._onChemicalsChanged, this);
-    this.view.destroy();
+    this._view.destroy();
   }
 
   _init() {

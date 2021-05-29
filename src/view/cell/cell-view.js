@@ -42,10 +42,15 @@ export default class CellView extends Group {
 
   destroy() {
     const cell = this.cell;
+    const view = this._view;
+    const input = view && view.input;
 
     cell.onSizeChanged.remove(this._onSizeChanged, this);
     cell.onDied.remove(this._onDied, this);
-    this._view.input.onDown.remove(this._onInputDown, this);
+
+    if (input) {
+      this._view.input.onDown.remove(this._onInputDown, this);
+    }
 
     super.destroy();
   }

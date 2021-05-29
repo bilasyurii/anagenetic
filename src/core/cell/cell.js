@@ -27,6 +27,7 @@ export default class Cell {
     this._rotation = 0;
     this._energy = 0;
     this._energyCapacity = 0;
+    this._speed = 0;
     this._ttl = Gene.MAX_VAL;
     this._isAlive = true;
     this._directionAngle = 0;
@@ -206,7 +207,7 @@ export default class Cell {
   }
 
   move(angle) {
-    const speed = 50;
+    const speed = this._speed;
     const x = Math.cos(angle) * speed;
     const y = Math.sin(angle) * speed;
 
@@ -385,19 +386,24 @@ export default class Cell {
 
   _onChemicalsChanged() {
     this._updateEnergyCapacity();
+    this._updateSpeed();
     this._updateRadius();
     // this._updateChemicalsRegistries();
   }
 
   _updateEnergyCapacity() {
-    this._energyCapacity = Math2.min(255, this._chemicals.getAmount('dion') * 2 + 200);
+    this._energyCapacity = Math2.min(255, 200 + this._chemicals.getAmount('dion') * 2);
+  }
+
+  _updateSpeed() {
+    this._speed = Math.min(100, 50 + this._chemicals.getAmount('billanium'));
   }
 
   _updateRadius(silent = false) {
     // TODO
     this._radius = 10;
 
-    if (silent === false) {
+    if (silent !== true) {
       this.onRadiusChanged.post(this._radius);
     }
   }

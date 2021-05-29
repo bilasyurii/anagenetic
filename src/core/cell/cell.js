@@ -23,7 +23,7 @@ export default class Cell {
 
     this._radius = 0;
     this._damage = 0;
-    this._armor = 10;
+    this._armor = 0;
     this._rotation = 0;
     this._energy = 0;
     this._energyCapacity = 0;
@@ -393,6 +393,7 @@ export default class Cell {
     this._updateSpeed();
     this._updateRadius();
     this._updateDamage();
+    this._updateArmor();
     // this._updateChemicalsRegistries();
   }
 
@@ -401,7 +402,7 @@ export default class Cell {
   }
 
   _updateSpeed() {
-    this._speed = Math.min(100, 50 + this._chemicals.getAmount('billanium'));
+    this._speed = Math2.min(100, 50 + this._chemicals.getAmount('billanium'));
   }
 
   _updateRadius(silent = false) {
@@ -414,7 +415,11 @@ export default class Cell {
   }
 
   _updateDamage() {
-    this._damage = Math.min(40, 5 + this._chemicals.getAmount('hillagen'));
+    this._damage = Math2.min(40, 5 + this._chemicals.getAmount('hillagen'));
+  }
+
+  _updateArmor() {
+    this._armor = Math2.min(30, this._chemicals.getAmount('dion'));
   }
 
   _updateStats() {

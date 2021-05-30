@@ -19,6 +19,7 @@ import SpawnStrategy from '../core/genome/spawn/spawn-strategy.js';
 import PermanentBestRandomSpawnStrategy from '../core/genome/spawn/permanent-best-random-strategy.js';
 import SimulationConfig from '../core/utils/simulation-config.js';
 import Math2 from '../anvas/utils/math2.js';
+import ExtinctionBestSpawnStrategy from '../core/genome/spawn/extinction-best-strategy.js';
 
 export default class SimulationState extends State {
   onInit() {
@@ -42,6 +43,7 @@ export default class SimulationState extends State {
     this._spawnStrategies = {
       'permanentBest': new PermanentBestSpawnStrategy(),
       'permanentBestRandom': new PermanentBestRandomSpawnStrategy(),
+      'extinctionBest': new ExtinctionBestSpawnStrategy(),
     };
 
     this._chemicalViewFactory = new ChemicalViewFactory(this.engine);
@@ -120,7 +122,7 @@ export default class SimulationState extends State {
 
     Random.setSeed(config.randomSeed);
     MutationStrategy.setActive(this._mutationStrategies[config.mutationStrategy]);
-    SpawnStrategy.setActive(this._spawnStrategies['permanentBestRandom']);
+    SpawnStrategy.setActive(this._spawnStrategies['extinctionBest']);
     SpawnStrategy.reset(config);
 
     this._spawnChemicals(true);

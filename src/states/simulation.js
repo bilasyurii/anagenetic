@@ -18,6 +18,7 @@ import PermanentBestSpawnStrategy from '../core/genome/spawn/permanent-best-stra
 import SpawnStrategy from '../core/genome/spawn/spawn-strategy.js';
 import PermanentBestRandomSpawnStrategy from '../core/genome/spawn/permanent-best-random-strategy.js';
 import SimulationConfig from '../core/utils/simulation-config.js';
+import Math2 from '../anvas/utils/math2.js';
 
 export default class SimulationState extends State {
   onInit() {
@@ -122,7 +123,7 @@ export default class SimulationState extends State {
     SpawnStrategy.setActive(this._spawnStrategies['permanentBestRandom']);
     SpawnStrategy.reset(config);
 
-    this._spawnChemicals();
+    this._spawnChemicals(true);
   }
 
   _calculateCellSpawnCost() {
@@ -152,6 +153,7 @@ export default class SimulationState extends State {
     const energyLoss = world.energyLoss;
 
     SpawnStrategy.requestSpawn(~~(energyLoss / spawnCost));
+    this._spawnChemicals(false);
 
     this.onUpdate.post();
   }
@@ -230,15 +232,32 @@ export default class SimulationState extends State {
     }
   }
 
-  _spawnChemicals() {
+  _spawnChemicals(free) {
     const chemicals = this._config.worldChemicals;
     const elementsCount = chemicals.length;
+    const world = this._world;
+    const min = Math2.min;
+    const getElement = ElementRegistry.getByName;
 
     for (let i = 0; i < elementsCount; ++i) {
       const elementConfig = chemicals[i];
-      const element = ElementRegistry.getByName(elementConfig.name);
+      const name = elementConfig.name;
+      const element = getElement(name);
 
       let count = elementConfig.amount;
+
+      if (free === false) {
+        const worldAmount = world.getElementAmount(name);
+        const energyLoss = world.energyLoss;
+        const energyEquivalent = element.energyEquivalent;
+        const availableCount = ~~(energyLoss / energyEquivalent);
+
+        count = min(count - worldAmount, availableCount);
+
+        if (count > 0) {
+          world.compensateEnergyLoss(count * energyEquivalent);
+        }
+      }
 
       while (count > 0) {
         let bunch;

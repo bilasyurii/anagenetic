@@ -5,6 +5,7 @@ export default class Chemical {
   constructor(world, element, count) {
     this.world = world;
 
+    this.onAmountReduced = new Observable();
     this.onRunOut = new Observable();
     this.isChemical = true;
 
@@ -59,6 +60,7 @@ export default class Chemical {
 
   takeDamage(amount) {
     const count = this._count;
+    const elementName = this._element.name;
 
     let eaten;
 
@@ -72,11 +74,13 @@ export default class Chemical {
       this.onRunOut.post(this);
     }
 
+    this.onAmountReduced.post(elementName, eaten);
+
     return [
       {
-        name: this._element.name,
+        name: elementName,
         amount: eaten,
-      }
+      },
     ];
   }
 
@@ -85,8 +89,12 @@ export default class Chemical {
       return;
     }
 
+    const element = this._element;
+    const count = this._count;
+
     this._alive = false;
-    this.world.registerEnergyLoss(this._element.energyEquivalent * this._count)
+    this.onAmountReduced.post(element.name, count)
+    this.world.registerEnergyLoss(element.energyEquivalent * count)
     this.onRunOut.post(this);
   }
 

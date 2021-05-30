@@ -117,6 +117,7 @@ export default class World {
     this._elementAmounts[chemical.element.name] += chemical.count;
 
     chemical.onRunOut.add(this._onChemicalRunOut, this);
+    chemical.onAmountReduced.add(this._onElementAmountReduced, this);
     this.onChemicalAdded.post(chemical);
 
     return this;
@@ -283,11 +284,13 @@ export default class World {
     }
   }
 
+  _onElementAmountReduced(elementName, amount) {
+    this._elementAmounts[elementName] -= amount;
+  }
+
   _onChemicalRunOut(chemical) {
     const chemicals = this._chemicals;
     const count = chemicals.length;
-
-    this._elementAmounts[chemical.element.name] -= chemical.count;
 
     for (let i = 0; i < count; ++i) {
       if (chemicals[i] === chemical) {

@@ -6,6 +6,7 @@ import ZoomControls from './controls/zoom-controls';
 import MenuPanelContent from './panel/menu-panel-content';
 import AnalysisPanelContent from './panel/analysis-panel-content';
 import UIElement from '../core/ui-element';
+import SpawnStrategy from '../../core/genome/spawn/spawn-strategy';
 
 export default class SimulationUI extends UIElement {
   constructor(factory, dom) {
@@ -141,5 +142,16 @@ export default class SimulationUI extends UIElement {
     });
 
     analysisPanelContent.onClose.add(closePanel);
+    analysisPanelContent.onBestGenomeRequested.add(this._onBestGenomeRequested, this);
+  }
+
+  _onBestGenomeRequested() {
+    const bestCell = SpawnStrategy.getBestCell();
+
+    if (!bestCell) {
+      return;
+    }
+
+    this.onCellSelected(bestCell);
   }
 }

@@ -39,6 +39,12 @@ export default class SpawnStrategy {
     this._bestCells = bestCells.slice(-this._bestCellsCapacity);
   }
 
+  getBestCell() {
+    const bestCells = this._bestCells;
+
+    return bestCells[bestCells.length - 1];
+  }
+
   requestSpawn(count) {
     for (let i = 0; i < count; ++i) {
       this._spawnRequestedOnce();
@@ -120,6 +126,10 @@ export default class SpawnStrategy {
 
   static onCellDied(cell) {
     return SpawnStrategy._active.onCellDied(cell);
+  }
+
+  static getBestCell() {
+    return SpawnStrategy._active.getBestCell();
   }
 
   static reset(config) {

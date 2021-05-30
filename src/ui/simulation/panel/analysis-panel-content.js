@@ -6,6 +6,7 @@ export default class AnalysisPanelContent extends UIElement {
     super(factory, dom);
 
     this.onClose = new Observable();
+    this.onBestGenomeRequested = new Observable();
 
     this._analyticInfoWrapper = null;
     this._analyticInfos = {};
@@ -82,7 +83,7 @@ export default class AnalysisPanelContent extends UIElement {
     this.create
       .button()
       .setText('Best genome')
-      .setClick(() => console.log('Best genome'))
+      .setClick(() => this.onBestGenomeRequested.post())
       .addTo(buttons);
   }
 

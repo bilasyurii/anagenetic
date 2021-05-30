@@ -61,7 +61,9 @@ export default class CellView extends Group {
     this._initView();
     this._initBody();
     this._setupEvents();
-    this._onSizeChanged(this.cell.radius);
+
+    const cell = this.cell;
+    this._onSizeChanged(cell.mass, cell.radius);
   }
 
   _initView() {

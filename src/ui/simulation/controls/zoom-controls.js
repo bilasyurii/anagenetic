@@ -25,6 +25,12 @@ export default class ZoomControls extends UIElement {
       return this;
     }
 
+    const eps = 0.001;
+
+    if (zoom > (6 + eps) || zoom < (0.4 - eps)) {
+      return this;
+    }
+
     this._zoom = zoom;
 
     if (silent !== true) {

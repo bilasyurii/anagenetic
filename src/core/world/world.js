@@ -11,8 +11,9 @@ import Random from '../utils/random';
 import EntityFactory from './entity-factory';
 
 export default class World {
-  constructor(spacePartitioning, size) {
-    this.size = size;
+  constructor(spacePartitioning, config) {
+    this.config = config;
+    this.size = new Vec2(config.worldWidth, config.worldHeight);
 
     this.onChemicalAdded = new Observable();
     this.onCellAdded = new Observable();

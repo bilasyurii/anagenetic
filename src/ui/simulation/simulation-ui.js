@@ -28,6 +28,7 @@ export default class SimulationUI extends UIElement {
 
   setWorld(world) {
     this._analysisPanelContent.setWorld(world);
+    this._menuPanelContent.setWorld(world);
 
     return this;
   }

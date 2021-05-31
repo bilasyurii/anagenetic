@@ -8,7 +8,22 @@ export default class MenuPanelContent extends UIElement {
     this.onClose = new Observable();
     this.onAnalysisOpen = new Observable();
 
+    this._importExport = null;
+    this._world = null;
+
     this._init();
+  }
+
+  get dependencies() {
+    return ['importExport'];
+  }
+
+  set importExport(service) {
+    this._importExport = service;
+  }
+
+  setWorld(world) {
+    this._world = world;
   }
 
   _init() {
@@ -40,8 +55,12 @@ export default class MenuPanelContent extends UIElement {
 
     this.create
       .button()
-      .setText('Export')
-      .setClick(() => console.log('Export'))
+      .setText('Export simulation')
+      .setClick(() => this._exportSimulation())
       .addTo(buttons);
+  }
+
+  _exportSimulation() {
+    this._importExport.exportWorld(this._world);
   }
 }

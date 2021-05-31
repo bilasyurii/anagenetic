@@ -4,6 +4,7 @@ import UIElement from '../../../core/ui-element';
 import Observable from '../../../../anvas/events/observable';
 import ElementRegistry from '../../../../core/chemicals/element-registry';
 import StringUtils from '../../../../utils/string-utils';
+import Genome from '../../../../core/genome/genome';
 
 export default class NewSimulationForm extends UIElement {
   constructor(factory, dom) {
@@ -18,17 +19,28 @@ export default class NewSimulationForm extends UIElement {
     this._worldWidthInput = null;
     this._worldHeightInput = null;
     this._mutationStrategyInput = null;
+    this._spawnStrategyInput = null;
     this._cellsAmountInput = null;
     this._cellStartingEnergyInput = null;
     this._divisionEnergyInput = null;
-    this._spawnAdditionalCellsInput = null;
+    this._firstAllPredefinedInput = null;
     this._randomSeedInput = null;
     this._cellContentsInputs = null;
     this._worldChemicalsInputs = null;
     this._simulationGenomePicker = null;
     this._buttons = null;
+    this._importExport = null;
+    this._importSimulationCallback = null;
 
     this._init();
+  }
+
+  get dependencies() {
+    return ['importExport'];
+  }
+
+  set importExport(service) {
+    this._importExport = service;
   }
 
   onGenomeSelected(genome) {
@@ -46,10 +58,11 @@ export default class NewSimulationForm extends UIElement {
     this._worldWidthInput.setValue(1000);
     this._worldHeightInput.setValue(1000);
     this._mutationStrategyInput.setValue('pick');
+    this._spawnStrategyInput.setValue('permanentBestRandom');
     this._cellsAmountInput.setValue(20);
     this._cellStartingEnergyInput.setValue(20);
     this._divisionEnergyInput.setValue(10);
-    this._spawnAdditionalCellsInput.setValue('false');
+    this._firstAllPredefinedInput.setValue('false');
     this._randomSeedInput.setValue(~~(Math.random() * 2147483648));
     this._resetChemicalsInputs();
 
@@ -61,15 +74,17 @@ export default class NewSimulationForm extends UIElement {
     this._initWorldWidthInput();
     this._initWorldHeightInput();
     this._initMutationStrategyInput();
+    this._initSpawnStrategyInput();
     this._initCellsAmountInput();
     this._initCellsStartingEnergyInput();
     this._initDivisionEnergyInput();
-    this._initSpawnAdditionalCellsInput();
+    this._initFirstAllPredefinedInput();
     this._initRandomSeedCellsInput();
     this._initCellContentsInputs();
     this._initWorldChemicalsInputs();
     this._initSimulationGenomePicker();
     this._initButtons();
+    this._initCallbacks();
     this._setupEvents();
   }
 
@@ -107,6 +122,34 @@ export default class NewSimulationForm extends UIElement {
     );
   }
 
+  _initSpawnStrategyInput() {
+    this._spawnStrategyInput = this._initFormInput(
+      'Spawn strategy: ',
+      this.create.selectInput().setOptions([
+        {
+          value: 'permanentBest',
+          text: 'Permanent Best',
+        },
+        {
+          value: 'permanentBestRandom',
+          text: 'Permanent Best Random',
+        },
+        {
+          value: 'extinctionBest',
+          text: 'Extinction Best',
+        },
+        {
+          value: 'extinctionTop3',
+          text: 'Extinction Top 3',
+        },
+        {
+          value: 'extinctionMixed',
+          text: 'ExtinctionMixed',
+        },
+      ])
+    );
+  }
+
   _initEnergyAmountInput() {
     this._energyAmountInput = this._initFormInput(
       'World energy amount:',
@@ -135,9 +178,9 @@ export default class NewSimulationForm extends UIElement {
     );
   }
 
-  _initSpawnAdditionalCellsInput() {
-    this._spawnAdditionalCellsInput = this._initFormInput(
-      'Spawn additional cells:',
+  _initFirstAllPredefinedInput() {
+    this._firstAllPredefinedInput = this._initFormInput(
+      'All first predefined:',
       this.create.selectInput().setOptions([
         {
           value: 'true',
@@ -198,6 +241,10 @@ export default class NewSimulationForm extends UIElement {
       .addTo(buttons);
   }
 
+  _initCallbacks() {
+    this._importSimulationCallback = (config) => this._importConfig(config);
+  }
+
   _setupEvents() {
     const picker = this._simulationGenomePicker;
 
@@ -243,10 +290,11 @@ export default class NewSimulationForm extends UIElement {
       worldWidth: parseInt(this._worldWidthInput.getValue()),
       worldHeight: parseInt(this._worldHeightInput.getValue()),
       mutationStrategy: this._mutationStrategyInput.getValue(),
+      spawnStrategy: this._spawnStrategyInput.getValue(),
       startingCellsAmount: parseInt(this._cellsAmountInput.getValue()),
       cellsStartingEnergy: parseInt(this._cellStartingEnergyInput.getValue()),
       energyToDivide: parseInt(this._divisionEnergyInput.getValue()),
-      spawnAdditionalCells: this._spawnAdditionalCellsInput.getValue() === 'true',
+      firstAllPredefined: this._firstAllPredefinedInput.getValue() === 'true',
       randomSeed: parseInt(this._randomSeedInput.getValue()),
       genomes: this._simulationGenomePicker.getGenomes(),
       cellChemicals: this._getChemicals(this._cellContentsInputs),
@@ -257,7 +305,7 @@ export default class NewSimulationForm extends UIElement {
   }
 
   _importSimulation() {
-    // TODO
+    this._importExport.importWorld(this._importSimulationCallback);
   }
 
   _resetChemicalsInputs() {
@@ -288,5 +336,37 @@ export default class NewSimulationForm extends UIElement {
     });
 
     return result;
+  }
+
+  _importConfig(config) {
+    this._worldWidthInput.setValue(config.worldWidth);
+    this._worldHeightInput.setValue(config.worldHeight);
+    this._mutationStrategyInput.setValue(config.mutationStrategy);
+    this._spawnStrategyInput.setValue(config.spawnStrategy);
+    this._cellsAmountInput.setValue(config.startingCellsAmount);
+    this._cellStartingEnergyInput.setValue(config.cellsStartingEnergy);
+    this._divisionEnergyInput.setValue(config.energyToDivide);
+    this._firstAllPredefinedInput.setValue(config.firstAllPredefined);
+    this._randomSeedInput.setValue(config.randomSeed);
+
+    const cellChemicals = config.cellChemicals;
+    const worldChemicals = config.worldChemicals;
+    const cells = this._cellContentsInputs;
+    const world = this._worldChemicalsInputs;
+
+    cells['billanium'].setValue(cellChemicals[0].amount);
+    cells['hillagen'].setValue(cellChemicals[1].amount);
+    cells['chubium'].setValue(cellChemicals[2].amount);
+    cells['dion'].setValue(cellChemicals[3].amount);
+
+    world['billanium'].setValue(worldChemicals[0].amount);
+    world['hillagen'].setValue(worldChemicals[1].amount);
+    world['chubium'].setValue(worldChemicals[2].amount);
+    world['dion'].setValue(worldChemicals[3].amount);
+
+    const picker = this._simulationGenomePicker;
+
+    picker.reset();
+    config.genomes.forEach((genome) => picker.addGenome(genome));
   }
 }

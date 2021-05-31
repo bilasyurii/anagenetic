@@ -34,7 +34,7 @@ export default class SimulationGenomePicker extends UIElement {
     const items = this._items;
 
     if (ArrayUtils.find(items, function(item) {
-      return item.getGenome() === genome;
+      return item.getGenome().compare(genome) === 0;
     })) {
       return this;
     }

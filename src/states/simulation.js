@@ -111,7 +111,7 @@ export default class SimulationState extends State {
     const spacePartitioning = engine.physics.spacePartitioning;
     const world = this._world = new World(
       spacePartitioning,
-      new Vec2(config.worldWidth, config.worldHeight)
+      config
     );
     const worldView = this._worldView = new WorldView(world);
 
@@ -126,7 +126,7 @@ export default class SimulationState extends State {
 
     Random.setSeed(config.randomSeed);
     MutationStrategy.setActive(this._mutationStrategies[config.mutationStrategy]);
-    SpawnStrategy.setActive(this._spawnStrategies['extinctionMixed']);
+    SpawnStrategy.setActive(this._spawnStrategies[config.spawnStrategy]);
     SpawnStrategy.reset(config);
 
     this._spawnChemicals(true);

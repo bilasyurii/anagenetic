@@ -36,6 +36,16 @@ export default class ImportExportService {
     });
   }
 
+  importWorld(callback) {
+    this.import((data) => {
+      const json = JSON.parse(data);
+
+      json.genomes = ArrayUtils.map(json.genomes, Genome.fromJSON);
+
+      callback(json);
+    });
+  }
+
   exportGenome(genome) {
     const name = genome.name || 'unnamed';
 
@@ -50,6 +60,28 @@ export default class ImportExportService {
     });
 
     this.export(JSON.stringify(json), 'unnamed.library');
+
+    return this;
+  }
+
+  exportWorld(world) {
+    const config = world.config;
+    const json = {
+      cellChemicals: config.cellChemicals,
+      cellsStartingEnergy: config.cellsStartingEnergy,
+      energyToDivide: config.energyToDivide,
+      genomes: config.genomes.map((genome) => genome.json()),
+      mutationStrategy: config.mutationStrategy,
+      spawnStrategy: config.spawnStrategy,
+      randomSeed: config.randomSeed,
+      startingCellsAmount: config.startingCellsAmount,
+      worldChemicals: config.worldChemicals,
+      worldWidth: config.worldWidth,
+      worldHeight: config.worldHeight,
+      firstAllPredefined: config.firstAllPredefined,
+    };
+
+    this.export(JSON.stringify(json), 'unnamed.simulation');
 
     return this;
   }

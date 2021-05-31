@@ -127,7 +127,7 @@ export default class SimulationState extends State {
     Random.setSeed(config.randomSeed);
     MutationStrategy.setActive(this._mutationStrategies[config.mutationStrategy]);
     SpawnStrategy.setActive(this._spawnStrategies[config.spawnStrategy]);
-    SpawnStrategy.reset(config);
+    SpawnStrategy.reset(config, world);
 
     this._spawnChemicals(true);
   }

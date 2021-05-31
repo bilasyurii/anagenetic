@@ -7,6 +7,7 @@ export default class SpawnStrategy {
     this.onSpawn = new Observable();
 
     this._config = null;
+    this._world = null;
     this._cellIndex = 0;
     this._startingAmount = 0;
     this._cells = [];
@@ -51,10 +52,11 @@ export default class SpawnStrategy {
     }
   }
 
-  reset(config) {
+  reset(config, world) {
     this._cells = [];
     this._bestCells = [];
     this._config = config;
+    this._world = world;
     this._cellIndex = 0;
     this._spawnFirstGeneration();
   }
@@ -132,8 +134,8 @@ export default class SpawnStrategy {
     return SpawnStrategy._active.getBestCell();
   }
 
-  static reset(config) {
-    SpawnStrategy._active.reset(config);
+  static reset(config, world) {
+    SpawnStrategy._active.reset(config, world);
   }
 
   static setActive(strategy) {

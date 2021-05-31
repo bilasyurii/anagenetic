@@ -3,6 +3,8 @@ import SpawnStrategy from './spawn-strategy';
 export default class ExtinctionBestSpawnStrategy extends SpawnStrategy {
   requestSpawn(count) {
     if (this._cells.length === 0 && count >= this._startingAmount) {
+      this._world.registerExtinction();
+
       for (let i = 0; i < count; ++i) {
         this._spawnRequestedOnce();
       }

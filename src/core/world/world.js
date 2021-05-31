@@ -37,6 +37,7 @@ export default class World {
     this._biggestFamily = 0;
     this._photosynthesis = 0;
     this._generations = 0;
+    this._extinctions = 0;
 
     this._init();
   }
@@ -89,6 +90,10 @@ export default class World {
     return this._generations;
   }
 
+  get extinctions() {
+    return this._extinctions;
+  }
+
   getElementAmount(name) {
     return this._elementAmounts[name];
   }
@@ -134,6 +139,10 @@ export default class World {
 
   registerPhotosynthesis(amount) {
     this._photosynthesis += amount;
+  }
+
+  registerExtinction() {
+    ++this._extinctions;
   }
 
   update() {

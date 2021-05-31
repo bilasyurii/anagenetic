@@ -1,4 +1,5 @@
 import Observable from '../../anvas/events/observable';
+import Math2 from '../../anvas/utils/math2';
 import ElementRegistry from './element-registry';
 
 export default class ChemicalContents {
@@ -31,6 +32,19 @@ export default class ChemicalContents {
 
   getAmount(name) {
     return this._elementsAmounts[name].value;
+  }
+
+  getLoad() {
+    const list = this._elementsList;
+    const count = list.length;
+
+    let load = 0;
+
+    for (let i = 0; i < count; ++i) {
+      load += list[i].value;
+    }
+
+    return Math2.min(load, 255);
   }
 
   setAmount(name, amount) {

@@ -480,7 +480,9 @@ export default class Cell {
       .setTTL(this._ttl)
       .setRndTick(this.world.rndTick)
       .setDirection(this._directionAngle)
-      .setEnergy(this._energy);
+      .setEnergy(this._energy)
+      .setSize(~~((this._radius - 10) * 0.1 * 255))
+      .setLoad(this._chemicals.getLoad());
   }
 }
 

@@ -50,8 +50,8 @@ export default class CellPanelContent extends UIElement {
     cellInfos['Energy'].valueNode.setText(cell.energy.toFixed(2));
     cellInfos['Energy capacity'].valueNode.setText(cell.energyCapacity);
     cellInfos['TTL'].valueNode.setText(cell.ttl);
-    cellInfos['Mass'].valueNode.setText(cell.mass);
-    cellInfos['Radius'].valueNode.setText(cell.radius);
+    cellInfos['Mass'].valueNode.setText(cell.mass.toFixed(2));
+    cellInfos['Radius'].valueNode.setText(cell.radius.toFixed(2));
     cellInfos['Armor'].valueNode.setText(cell.armor);
     cellInfos['Damage'].valueNode.setText(cell.damage);
     cellInfos['Speed'].valueNode.setText(cell.speed);

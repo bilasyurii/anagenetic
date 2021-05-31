@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class CheckRCommand extends Command {
   constructor() {
-    super('check r', 'CHR', 'Description', 2);
+    super('check r', 'CHR', 'Check if there is something in the direction, stored in the registry.', 2);
   }
 
   execute(context) {

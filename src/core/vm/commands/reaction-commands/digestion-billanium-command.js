@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class DigestionBillaniumCommand extends Command {
   constructor() {
-    super('digestion billanium', 'DGB', 'Description', 0)
+    super('digestion billanium', 'DGB', 'Digest hillagen and billanium to get energy.', 0)
   }
 
   execute(context) {

@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class StoreCommand extends Command {
   constructor() {
-    super('store', 'STR', 'Description', 2);
+    super('store', 'STR', 'Store contents of some registry into the memory.', 2);
   }
 
   execute(context) {

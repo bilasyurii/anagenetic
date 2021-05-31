@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class MoveRCommand extends Command {
   constructor() {
-    super('move r', 'MVR', 'Description', 1);
+    super('move r', 'MVR', 'Move in direction stored in registry.', 1);
   }
 
   execute(context) {

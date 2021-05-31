@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class FragmentationHillagenCommand extends Command {
   constructor() {
-    super('fragmentation hillagen', 'FRH', 'Description', 0)
+    super('fragmentation hillagen', 'FRH', 'Turn dion into hillagen.', 0)
   }
 
   execute(context) {

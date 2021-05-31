@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class CompareRCommand extends Command {
   constructor() {
-    super('compare r', 'CMP', 'Description', 2);
+    super('compare r', 'CMP', 'Compare our genome with a genome of the cell, that is in direction, stored in the registry. If the difference is less, than some value, stored in registry, advance.', 2);
   }
 
   execute(context) {

@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class DivideCommand extends Command {
   constructor() {
-    super('divide', 'DIV', 'Description', 0);
+    super('divide', 'DIV', 'Try to divide a cell.', 0);
   }
 
   execute(context) {

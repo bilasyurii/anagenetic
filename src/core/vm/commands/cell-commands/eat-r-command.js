@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class EatRCommand extends Command {
   constructor() {
-    super('eat r', 'EAT', 'Description', 1);
+    super('eat r', 'EAT', 'Try to eat something in direction, stored in registry.', 1);
   }
 
   execute(context) {

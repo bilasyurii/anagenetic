@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class DigestionHillagenCommand extends Command {
   constructor() {
-    super('digestion hillagen', 'DGH', 'Description', 0)
+    super('digestion hillagen', 'DGH', 'Digest hillagen to get energy.', 0)
   }
 
   execute(context) {

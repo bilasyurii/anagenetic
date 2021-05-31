@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class CheckCommand extends Command {
   constructor() {
-    super('check', 'CHE', 'Description', 2);
+    super('check', 'CHE', 'Check if there is something in the specified direction.', 2);
   }
 
   execute(context) {

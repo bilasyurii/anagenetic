@@ -3,7 +3,7 @@ import ConditionalCommandUtils from '../../command-utils/conditional-command-uti
 
 export default class EqualsRRCommand extends Command {
   constructor() {
-    super('equals rr', 'EQR', 'Description', 3);
+    super('equals rr', 'EQR', 'Check if values of two registries are equal. If not, advance.', 3);
   }
 
   execute(context) {

@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class IfCommand extends Command {
   constructor() {
-    super('if', 'IFF', 'Description', 2);
+    super('if', 'IFF', 'Check if some condition is true. It mustn\'t be zero to be true. If not, advance.', 2);
   }
 
   execute(context) {

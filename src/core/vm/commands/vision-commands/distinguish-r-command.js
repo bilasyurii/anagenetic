@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class DistinguishRCommand extends Command {
   constructor() {
-    super('distinguish r', 'DIS', 'Description', 2);
+    super('distinguish r', 'DIS', 'Distinguish type of entity, that is in some direction, stored in registry.', 2);
   }
 
   execute(context) {

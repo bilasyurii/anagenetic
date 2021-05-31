@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class JumpCommand extends Command {
   constructor() {
-    super('jump', 'JMP', 'Description', 1);
+    super('jump', 'JMP', 'Jump (advance) the command pointer farther.', 1);
   }
 
   execute(context) {

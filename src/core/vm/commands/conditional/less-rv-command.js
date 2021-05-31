@@ -3,7 +3,7 @@ import ConditionalCommandUtils from '../../command-utils/conditional-command-uti
 
 export default class LessRVCommand extends Command {
   constructor() {
-    super('less rv', 'LEV', 'Description', 3)
+    super('less rv', 'LEV', 'Check if value in first registry is less, than some value. If not, advance.', 3)
   }
 
   execute(context) {

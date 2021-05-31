@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class FragmentationBillaniumCommand extends Command {
   constructor() {
-    super('fragmentation billanium', 'FRB', 'Description', 0)
+    super('fragmentation billanium', 'FRB', 'Turn dion into billanium.', 0)
   }
 
   execute(context) {

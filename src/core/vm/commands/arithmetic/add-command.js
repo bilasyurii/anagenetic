@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class AddCommand extends Command {
   constructor() {
-    super('add', 'ADD', 'Description', 3);
+    super('add', 'ADD', 'Add two registries and save the result to third one.', 3);
   }
 
   execute(context) {

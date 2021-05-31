@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class SubCommand extends Command {
   constructor() {
-    super('sub', 'SUB', 'Description', 3);
+    super('sub', 'SUB', 'Subtract two registries and save the result to third one.', 3);
   }
 
   execute(context) {

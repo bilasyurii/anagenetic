@@ -3,7 +3,7 @@ import ConditionalCommandUtils from '../../command-utils/conditional-command-uti
 
 export default class EqualsRVCommand extends Command {
   constructor() {
-    super('equals rv', 'EQV', 'Description', 3);
+    super('equals rv', 'EQV', 'Check if values in registry is equal to some value. If not, advance.', 3);
   }
 
   execute(context) {

@@ -3,7 +3,7 @@ import Command from '../../command';
 
 export default class Compare9RCommand extends Command {
   constructor() {
-    super('compare 9 r', 'CM9', 'Description', 2);
+    super('compare 9 r', 'CM9', 'Compare our genome with a genome of the cell, that is in direction, stored in the registry. If the difference is less or equal, than 9, advance.', 2);
   }
 
   execute(context) {

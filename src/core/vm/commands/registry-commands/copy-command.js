@@ -2,7 +2,7 @@ import Command from '../../command';
 
 export default class CopyCommand extends Command {
   constructor() {
-    super('copy', 'CPY', 'Description', 2);
+    super('copy', 'CPY', 'Copy contents of registry into another one.', 2);
   }
 
   execute(context) {
